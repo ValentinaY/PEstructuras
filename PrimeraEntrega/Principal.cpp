@@ -3,7 +3,7 @@
 using namespace std;
 //Implementación de los métodos de la clase Principal. 
 void Principal::loadPersons(){
-	printf("Cargando personas.\n");
+	printf("Probando métodos\n");
 }
 void Principal::loadPackages(){
 	printf("Cargando paquetes.\n");
