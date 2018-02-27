@@ -15,8 +15,15 @@ public:
 	void regPersons(list<Persona> personas);
 	void regPackages();
 	void countPackages();
+	
+	list<Persona> getPersonas(){
+		return personas;
+	}
+	list<Oficina> getOficinas(){
+		return oficinas;
+	}
 };
 
-#include "Principal.hxx"
+//#include "Principal.hxx"
 
 #endif

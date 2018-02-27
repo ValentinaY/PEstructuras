@@ -1,14 +1,12 @@
-#ifndef Principal_HXX
-#define PRINCIPAL_HXX
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <list>
+#include "Principal.h"
 
 using namespace std;
 
-void loadPersons(char* archivo, list<Persona> personas){
+void Principal::loadPersons(char* archivo, list<Persona> personas){
 	
 	cout<<"Estamos cargando personas\n";
 	
@@ -49,11 +47,11 @@ void loadPersons(char* archivo, list<Persona> personas){
 	}
 }
 
-void loadPackages(){
+void Principal::loadPackages(){
 	cout<<"Estamos cargando paquetes\n";
 }
 
-void regPersons(list<Persona> personas){
+void Principal::regPersons(list<Persona> personas){
 	cout<<"Estamos registrando personas\n";
 	
 	Persona persona;
@@ -87,11 +85,10 @@ void regPersons(list<Persona> personas){
 	cout<<"La información de "<<persona.getNombre()<<" ha sido cargada exitosamente."<<endl;
 	
 }
-void regPackages(){
+void Principal::regPackages(){
 	cout<<"Estamos registrando paquetes\n";
 }
-void countPackages(){	
+void Principal::countPackages(){	
 	cout<<"Estamos contando paquetes\n";
 }
 
-#endif
