@@ -1,5 +1,4 @@
-#ifndef Persona_HXX
-#define Persona_HXX
+#include "Persona.h"
 
 void Persona::setNombre(string nname){
 	nombre=nname;
@@ -20,4 +19,3 @@ void Persona::setTelefono(string nphone){
 	telefono=nphone;
 }
 
-#endif

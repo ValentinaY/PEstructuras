@@ -42,6 +42,4 @@ public:
 	void setTelefono(string nphone);
 };
 
-#include "Persona.hxx"
-
 #endif // Persona_H
