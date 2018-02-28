@@ -11,15 +11,20 @@ constexpr unsigned int str2int(const char* str, int h = 0)
 void showhelp();
 int main(){
 	Principal principal;
-	char read[30];
-	
+	char road[30];
+	char file[50];
+	char read[6];
+
 	bool finished=false;
 	//Esto puede funcionar con un break. Pero, sería una mala práctica, etc. y en el taller de anagramas se usaba así.22
 	while(!finished){
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
 		cout<<"\n$";
-		cin>>read;
+		cin>>road;
 
+		for(int i=0;i<5;i++){
+			road[i]=read[i];
+		}
 		/*str2int convierte strings a enteros porque no es posible compararlas directamente, lo dice  0x499602D2 :) y el método está en: 
 		 https://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c.22
 		 */
