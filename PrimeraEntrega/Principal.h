@@ -3,11 +3,12 @@
  
 #include "Oficina.h"
 #include "Persona.h"
+#include "Region.h"
 
 //Clase principal, equivalente a Empresa.
 class Principal{
 protected:
-	list<Oficina> oficinas;
+	list<Region> regiones;
 	list<Persona> personas;
 public:
 	void loadPersons(char* archivo, list<Persona> personas);
@@ -19,8 +20,8 @@ public:
 	list<Persona> getPersonas(){
 		return personas;
 	}
-	list<Oficina> getOficinas(){
-		return oficinas;
+	list<Region> getRegiones(){
+		return regiones;
 	}
 };
 

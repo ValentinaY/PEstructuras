@@ -17,7 +17,7 @@ int main(){
 	//Esto puede funcionar con un break. Pero, sería una mala práctica, etc. y en el taller de anagramas se usaba así.22
 	while(!finished){
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
-		cout<<"$";
+		cout<<"\n$";
 		cin>>read;
 
 		/*str2int convierte strings a enteros porque no es posible compararlas directamente, lo dice  0x499602D2 :) y el método está en: 

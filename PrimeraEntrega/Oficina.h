@@ -2,7 +2,6 @@
 #define Oficina_H
 
 #include "Paquete.h"
-#include "Region.h"
 #include <list>
 
 using namespace std;
@@ -14,7 +13,6 @@ protected:
 	string direccion;
 	string ciudad;
 	list<Paquete> paquetes;
-	list<Region> regiones;
 public:
 	string getCode(){
 		return codeID;
@@ -38,10 +36,6 @@ public:
 
 	list<Paquete> getPaquetes(){
 		return paquetes;
-	}
-	
-	list<Region> getRegiones(){
-		return regiones;
 	}
 };
 
