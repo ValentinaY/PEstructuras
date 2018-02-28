@@ -11,6 +11,7 @@ protected:
 	list<Region> regiones;
 	list<Persona> personas;
 public:
+	void loadRegions();
 	void loadPersons(char* archivo, list<Persona> personas);
 	void loadPackages();
 	void regPersons(list<Persona> personas);

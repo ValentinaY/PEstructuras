@@ -6,6 +6,22 @@
 
 using namespace std;
 
+void Principal::loadRegions(){
+	Region r;
+	r.setNombre("Caribe, playitas bellas");
+	Principal::regiones.push_front(r);
+	r.setNombre("Selva");
+	Principal::regiones.push_front(r);
+	r.setNombre("Chocó");
+	Principal::regiones.push_front(r);
+	r.setNombre("Rolos");
+	Principal::regiones.push_front(r);
+	r.setNombre("Paisitas");
+	Principal::regiones.push_front(r);
+	r.setNombre("Llanos orientales");
+	Principal::regiones.push_front(r);
+}
+
 void Principal::loadPersons(char* archivo, list<Persona> personas){
 	
 	cout<<"Estamos cargando personas\n";
@@ -88,7 +104,24 @@ void Principal::regPersons(list<Persona> personas){
 void Principal::regPackages(){
 	cout<<"Estamos registrando paquetes\n";
 }
-void Principal::countPackages(){	
-	cout<<"Estamos contando paquetes\n";
+void Principal::countPackages(){
+	cout<<"Contando paquetes..."<<endl;	
+	
+	list<Region>::iterator itr;
+	list<Oficina>::iterator ito;
+	Region temp;
+	list<Oficina> oficinas;
+	int cont=0;
+	for(itr=regiones.begin();itr!=regiones.end();++itr){
+		temp=(*itr);
+		oficinas=temp.getOficinas();
+		for(ito=oficinas.begin();ito!=oficinas.end();++ito){
+			cont+=ito->getPaquetes().size();
+		}
+		cout<<"La región "+itr->getNombre()+" tiene ";
+		cout<<cont;
+		cout<<" paquetes."<<endl;
+		cont=0;
+	}	
 }
 

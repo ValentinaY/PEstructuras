@@ -24,6 +24,9 @@ int main(){
 		 https://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c.22
 		 */
 
+		//Cargamos las regiones (las quemamos) :).
+		principal.loadRegions();
+
 		//Se evalua el caso según el comando.
 		switch(str2int(read)){
 			case str2int("ayuda"):{
