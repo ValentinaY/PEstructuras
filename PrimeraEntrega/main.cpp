@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Principal.h"
+#include <string>
+#include <cstring>
 using namespace std;
 
 //No sé dónde debería ir este método, en una clase Utils no habrían muchos entonces no vale la pena compilar tantos archivos.
@@ -11,20 +13,20 @@ constexpr unsigned int str2int(const char* str, int h = 0)
 void showhelp();
 int main(){
 	Principal principal;
-	char road[30];
-	char file[50];
-	char read[6];
-
+	char *road;
+	char *read;
+	char *file;
 	bool finished=false;
 	//Esto puede funcionar con un break. Pero, sería una mala práctica, etc. y en el taller de anagramas se usaba así.22
 	while(!finished){
+		road = new char[30]; read= new char[6]; file = new char[24];
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
 		cout<<"\n$";
-		cin>>road;
+		cin.getline(road,30,'\n'); string r(road); string f(road);r=r.substr(0,6);
+		if(f.length()>6){f=f.substr(6,23); 		strcpy(file,f.c_str()); }
 
-		for(int i=0;i<5;i++){
-			road[i]=read[i];
-		}
+		strcpy(read,r.c_str());
+
 		/*str2int convierte strings a enteros porque no es posible compararlas directamente, lo dice  0x499602D2 :) y el método está en: 
 		 https://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c.22
 		 */
@@ -39,7 +41,7 @@ int main(){
 				break;
 			}
 			case str2int("carpe"):{
-				principal.loadPersons(read, principal.getPersonas());
+				principal.loadPersons(file, principal.getPersonas());
 				break;
 			}
 			case str2int("carpa"):{
