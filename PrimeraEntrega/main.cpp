@@ -13,6 +13,7 @@ constexpr unsigned int str2int(const char* str, int h = 0)
 void showhelp();
 int main(){
 	Principal principal;
+	//El arreglo con el comando es read y el arreglo con el archivo es file.
 	char *road;
 	char *read;
 	char *file;
