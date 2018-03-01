@@ -12,4 +12,9 @@ void Region::setOficina(Oficina* ofic){
 void Region::setPaquetes(list <Paquete> paq){
 	paquetes = paq;
 }
+void Region::addPaquetes(list <Paquete> paq){
+	for(list<Paquete>::iterator it=paq.begin(); it != paq.end() ;it++){
+		paquetes.push_back((*it));
+	}
+}
 

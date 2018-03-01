@@ -41,7 +41,8 @@ public:
 	}
 
 	void setPaquetes(list <Paquete> paq);
-	
+
+	void addPaquetes(list <Paquete> paq);	
 
 	void mostrarDatos(){
 		cout<<"Nombre: "<<nombre<<endl;

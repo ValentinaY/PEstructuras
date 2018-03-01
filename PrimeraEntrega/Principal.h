@@ -15,7 +15,8 @@ public:
 	list<Persona> regPersons(list<Persona> personas);
 	list<Oficina> regPackages(list<Oficina> oficinas, list<Persona> personas);
 	void countPackages(list<Oficina> oficinas);
-	
+	float toFloat(string a);
+
 	list<Persona> getPersonas(){
 		return personas;
 	}

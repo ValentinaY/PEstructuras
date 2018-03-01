@@ -15,5 +15,11 @@ void Oficina::setCiudad(string cciudad){
 }
 void Oficina::setRegiones(list <Region> reg){
 	regiones = reg;
+}	
+
+void Oficina::addRegiones(list <Region> reg){
+	for(list<Region>::iterator it=reg.begin(); it != reg.end() ;it++){
+		regiones.push_back((*it));
+	}
 }
 	

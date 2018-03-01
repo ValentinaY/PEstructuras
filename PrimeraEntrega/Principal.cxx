@@ -134,17 +134,22 @@ list<Oficina> Principal::loadPackages(char* archivo, list<Oficina> oficinas, lis
 	cout<<"Estamos cargando paquetes\n";
 	bool esta = false, saltar = false;
 
-	Paquete paquete;
-	Persona persona;
-	Oficina oficina;
 	ifstream entrada;
 	string linea;
-	Region region;
 	entrada.open(archivo);
 	if(entrada.is_open()){
+
+		getline(entrada, linea);	
+		
 		getline(entrada, linea, ',');	
 		while(!entrada.eof()){	
 			saltar = false;
+			Paquete paquete;
+			Persona persona;
+			Region region;
+			list <Region> regiones;
+			list <Paquete> paquetes;
+			Oficina oficina;
 			for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
 				if(linea.compare((*it).getId())==0){
 					persona = (*it);
@@ -154,29 +159,26 @@ list<Oficina> Principal::loadPackages(char* archivo, list<Oficina> oficinas, lis
 				}
 			}
 			if(esta == false){
-				saltar = true;
 				cout<<"Esa persona no se encuentra en nuestro registro\n";
 			}
-			esta = false;
+				esta = false;
 
-			getline(entrada, linea, ',');
-			for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
-				if(linea == (*it).getId()){
-					persona = *it;
-					paquete.setDestinatario(persona);
-					esta = true;
-					break;
+				getline(entrada, linea, ',');
+				for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
+					if(linea.compare((*it).getId())==0){
+						persona = *it;
+						paquete.setDestinatario(persona);
+						esta = true;
+						break;
+					}
 				}
-			}
-			if(esta == false){
-				saltar = true;
-				cout<<"Esa persona no se encuentra en nuestro registro\n";
-			}
+				if(esta == false){
+					cout<<"Esa persona no se encuentra en nuestro registro\n";
+				}
 
-			if(!saltar){
 				
 				getline(entrada, linea, ',');
-				paquete.setPeso(stof(linea.c_str(),0)); //función de string a float
+				paquete.setPeso(toFloat(linea)); //función de string a float
 				
 				getline(entrada, linea, ',');
 				paquete.setTipo(linea);
@@ -187,24 +189,55 @@ list<Oficina> Principal::loadPackages(char* archivo, list<Oficina> oficinas, lis
 				//Si no existe of
 				getline(entrada, linea, ',');
 				oficina.setCode(linea);
-//Si no existe of
+
 				getline(entrada, linea, ',');
 				oficina.setNombre(linea);
-//Si no existe of
+
 				getline(entrada, linea, ',');
 				oficina.setDireccion(linea);
-//Si no existe of
+
 				getline(entrada, linea, ',');
 				oficina.setCiudad(linea);
-//Si no existe Reg
+
 				getline(entrada, linea, ',');
 				region.setCodigo(linea);
-//Si no existe Reg
 				getline(entrada, linea);
 				region.setNombre(linea);
 				getline(entrada, linea, ',');
-				//Añadir a listas, conectar reversos, devolver oficinas
-			}		
+
+				bool ya = false;
+				paquetes.push_back(paquete);
+
+				cout<<"Leido el paquete con número guía: "<<paquete.getNumGuia()<<endl;
+				for(list<Oficina>::iterator ito = oficinas.begin(); ito != oficinas.end() || ya; ito++){
+					if(oficina.getCode().compare((*ito).getCode())==0){
+						regiones = (*ito).getRegiones();
+						oficina =(*ito);
+						for(list<Region>::iterator itr = regiones.begin();itr != regiones.end() || ya; itr++){
+							if((*itr).getCodigo().compare(region.getCodigo())==0){
+								region = (*itr);
+								region.addPaquetes(paquetes);
+
+					region.setOficina(&oficina);
+					paquete.setRegion(&region);
+					regiones.push_back(region);
+					oficina.setRegiones(regiones);
+					oficinas.push_back(oficina);
+								ya = true;
+							}
+						}
+					}
+				}
+
+				
+				if(!ya){
+					paquete.setRegion(&region);
+					region.setOficina(&oficina);
+					region.setPaquetes(paquetes);
+					regiones.push_back(region);
+					oficina.setRegiones(regiones);
+					oficinas.push_back(oficina);
+				}
 					
 		} //while
 		entrada.close();
@@ -356,8 +389,15 @@ list<Oficina> Principal::regPackages(list<Oficina> oficinas, list<Persona> perso
 
 	paquete.setRegion(&region);
 	region.setOficina(&oficina);
-	region.getPaquetes().push_back(paquete);
-	oficina.getRegiones().push_back(region);
+
+	list<Paquete> paquetes = region.getPaquetes();
+	paquetes.push_back(paquete);
+	region.setPaquetes(paquetes);
+
+	list<Region> regiones = oficina.getRegiones();
+	regiones.push_back(region);
+	oficina.setRegiones(regiones);
+
 	oficinas.push_back(oficina);
 	return oficinas;
 
@@ -373,12 +413,16 @@ void Principal::countPackages(list<Oficina> oficinas){
 	for(list<Oficina>::iterator ito = oficinas.begin(); ito != oficinas.end(); ito++){
 		list<Region> regiones = (*ito).getRegiones();
 		for(list<Region>::iterator itr = regiones.begin();itr != regiones.end(); itr++){
-			regionesTotales.push_front((*itr));
+			cout<<"Hay "<<(*itr).getPaquetes().size()<<" paquetes por entregar en la region de reparto "<<(*itr).getNombre()<<endl;
 		}
-	}
-
-	for(list<Region>::iterator itr = regionesTotales.begin();itr != regionesTotales.end(); itr++){
-		cout<<"Hay "<<(*itr).getPaquetes().size()<<"paquetes por entregar en la region de reparto"<<(*itr).getNombre()<<endl;
 	}
 }
 
+float Principal::toFloat(string a){
+	float x= 0;
+	for(int i=0;i<a.size();i++){
+		x*10;
+		x+= (int) (a[i]) - 48;
+	}
+	return x;
+}

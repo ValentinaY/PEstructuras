@@ -41,6 +41,8 @@ public:
 		return regiones;
 	}
 
+	void addRegiones(list <Region> reg);
+	
 	void setRegiones(list <Region> reg);
 	
 	void mostrarDatos(){
