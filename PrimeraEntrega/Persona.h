@@ -2,6 +2,7 @@
 #define Persona_H
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -40,7 +41,13 @@ public:
 		return telefono;
 	}
 	void setTelefono(string nphone);
-	string mostrarDatos();
+	void mostrarDatos(){
+		cout<<"Nombre: "<<nombre<<endl;
+		cout<<"Apellido: "<<apellido<<endl;
+		cout<<"Identificación: "<<id<<endl;
+		cout<<"Ciudad: "<<direccion<<endl;
+		cout<<"Teléfono: "<<telefono<<endl;
+	}
 };
 
 #endif // Persona_H

@@ -2,6 +2,7 @@
 #define Paquete_H
 
 #include <string>
+#include <iostream>
 #include "Persona.h"
 using namespace std;
 class Paquete{
@@ -36,8 +37,14 @@ public:
 		return numGuia;
 	}
 	void setNumGuia(string nguia);
-
-	string mostrarDatos();
+	
+	void mostrarDatos(){
+		cout<<"Remitente: "<<remitente.getNombre()<<endl;
+		cout<<"Destinatario: "<<destinatario.getNombre()<<endl;
+		cout<<"Peso: "<<peso<<endl;
+		cout<<"Tipo: "<<tipo<<endl;
+		cout<<"Número Guía: "<<numGuia<<endl;
+	}
 
 };
 

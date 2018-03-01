@@ -1,4 +1,5 @@
 #include "Oficina.h"
+
 using namespace std;
 void Oficina::setCode(string ncode){
 	codeID=ncode;
@@ -13,9 +14,4 @@ void Oficina::setCiudad(string cciudad){
 	ciudad=cciudad;
 }
 
-string mostrarDatos(){
-	cout<<"Código: "<<codeID<<endl
-	<<"Nombre: "<<nombre<<endl
-	<<"Dirección: "<<direccion<<endl
-	<<"Ciudad: "<<ciudad<<endl;
-}
+	

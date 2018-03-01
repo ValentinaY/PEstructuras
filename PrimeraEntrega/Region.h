@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Oficina.h"
+#include <iostream>
 
 using namespace std;
 class Region{
@@ -25,7 +26,10 @@ public:
 	list<Oficina> getOficinas(){
 		return oficinas;
 	}
-	string mostrarDatos();
+	void mostrarDatos(){
+		cout<<"Nombre: "<<nombre<<endl;
+		cout<<"Código: "<<codigo<<endl;
+	}
 };
 
 #endif

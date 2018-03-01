@@ -20,10 +20,4 @@ void Persona::setTelefono(string nphone){
 	telefono=nphone;
 }
 
-string mostrarDatos(){
-	cout<<"Nombre: "<<nombre<<endl
-	<<"Apellido: "<<apellido<<endl
-	<<"Identificación: "<<id<<endl
-	<<"Ciudad: "<<direccion<<endl
-	<<"Teléfono: "<<telefono<<endl;
-}
+

@@ -3,6 +3,7 @@
 
 #include "Paquete.h"
 #include <list>
+#include <iostream>
 
 using namespace std;
 
@@ -38,7 +39,12 @@ public:
 		return paquetes;
 	}
 	
-	string mostrarDatos();
+	void mostrarDatos(){
+		cout<<"Código: "<<codeID<<endl;
+		cout<<"Nombre: "<<nombre<<endl;
+		cout<<"Dirección: "<<direccion<<endl;
+		cout<<"Ciudad: "<<ciudad<<endl;
+	}
 };
 
 #endif
