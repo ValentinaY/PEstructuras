@@ -35,42 +35,30 @@ void Principal::loadPersons(char* archivo, list<Persona> personas){
 		cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
 	
 	else{
-		string linea, aux;
+		string linea;
 		getline(lector, linea);
+		getline(lector, linea, ',');
 		while(!lector.eof()){
-			getline(lector, linea, ',');
-			//Eliminar las ' '
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setNombre(aux);
+			persona.setNombre(linea);
 			
 			getline(lector, linea, ',');
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setApellido(aux);
+			persona.setApellido(linea);
 			
 			getline(lector, linea, ',');
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setId(aux);
+			persona.setId(linea);
 			
 			getline(lector, linea, ',');
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setDireccion(aux);
+			persona.setDireccion(linea);
 			
 			getline(lector, linea, ',');
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setCiudad(aux);
+			persona.setCiudad(linea);
 			
-			getline(lector, linea, ',');
-			linea.erase(linea.end()-1,linea.end());
-			aux = linea.erase(0,1);
-			persona.setTelefono(aux);
+			getline(lector, linea);
+			persona.setTelefono(linea);
 			
 			persona.mostrarDatos();
 			personas.push_front(persona);
+			getline(lector, linea, ',');
 		}
 		lector.close();
 		cout<<"La información desde "<<archivo<<" ha sido cargada exitosamente."<<endl;

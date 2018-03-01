@@ -46,7 +46,7 @@ public:
 		cout<<"Apellido: "<<apellido<<endl;
 		cout<<"Identificación: "<<id<<endl;
 		cout<<"Ciudad: "<<direccion<<endl;
-		cout<<"Teléfono: "<<telefono<<endl;
+		cout<<"Teléfono: "<<telefono<<endl<<endl;
 	}
 };
 
