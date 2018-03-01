@@ -40,6 +40,7 @@ public:
 		return telefono;
 	}
 	void setTelefono(string nphone);
+	string mostrarDatos();
 };
 
 #endif // Persona_H

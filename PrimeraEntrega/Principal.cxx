@@ -30,32 +30,45 @@ void Principal::loadPersons(char* archivo, list<Persona> personas){
 	ifstream lector;
 	lector.open(archivo);
 	if(!lector.is_open())
-		cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-	else if(!lector.is_open())
 		cout<<"El archivo "<<archivo<<" no existe o es ilegible."<<endl;
+	else	if(!lector.is_open())
+		cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
+	
 	else{
 		string linea, aux;
+		getline(lector, linea);
 		while(!lector.eof()){
 			getline(lector, linea, ',');
 			//Eliminar las ' '
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setNombre(aux);
+			
+			getline(lector, linea, ',');
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setApellido(aux);
+			
+			getline(lector, linea, ',');
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setId(aux);
+			
+			getline(lector, linea, ',');
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setDireccion(aux);
+			
+			getline(lector, linea, ',');
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setCiudad(aux);
+			
+			getline(lector, linea, ',');
 			linea.erase(linea.end()-1,linea.end());
 			aux = linea.erase(0,1);
 			persona.setTelefono(aux);
+			
 			personas.push_front(persona);
 		}
 		lector.close();

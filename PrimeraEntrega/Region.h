@@ -25,6 +25,7 @@ public:
 	list<Oficina> getOficinas(){
 		return oficinas;
 	}
+	string mostrarDatos();
 };
 
 #endif

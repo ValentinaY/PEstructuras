@@ -16,3 +16,10 @@ void Paquete::setTipo(string ntipo){
 void Paquete::setNumGuia(string nguia){
 	numGuia=nguia;
 }
+string mostrarDatos(){
+	cout<<"Remitente: "<<remitente.getNombre()<<endl
+	<<"Destinatario: "<<destinatario.getNombre()<<endl
+	<<"Peso: "<<peso<<endl
+	<<"Tipo: "<<tipo<<endl
+	<<"Número Guía: "<<numGuia<<endl;
+}

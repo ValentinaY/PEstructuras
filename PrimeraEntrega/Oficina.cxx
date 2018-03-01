@@ -11,3 +11,10 @@ void Oficina::setDireccion(string ddireccion){
 void Oficina::setCiudad(string cciudad){
 	ciudad=cciudad;
 }
+
+string mostrarDatos(){
+	cout<<"Código: "<<codeID<<endl
+	<<"Nombre: "<<nombre<<endl
+	<<"Dirección: "<<direccion<<endl
+	<<"Ciudad: "<<ciudad<<endl;
+}

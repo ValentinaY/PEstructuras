@@ -37,6 +37,8 @@ public:
 	}
 	void setNumGuia(string nguia);
 
+	string mostrarDatos();
+
 };
 
 #endif

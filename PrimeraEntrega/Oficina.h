@@ -37,6 +37,8 @@ public:
 	list<Paquete> getPaquetes(){
 		return paquetes;
 	}
+	
+	string mostrarDatos();
 };
 
 #endif
