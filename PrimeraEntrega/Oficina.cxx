@@ -13,5 +13,7 @@ void Oficina::setDireccion(string ddireccion){
 void Oficina::setCiudad(string cciudad){
 	ciudad=cciudad;
 }
-
+void Oficina::setRegiones(list <Region> reg){
+	regiones = reg;
+}
 	

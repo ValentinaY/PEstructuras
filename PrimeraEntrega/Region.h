@@ -2,15 +2,22 @@
 #define Region_H
 
 #include <string>
+#include <list>
 #include "Oficina.h"
+#include "Paquete.h"
 #include <iostream>
 
 using namespace std;
+
+class Oficina;
+class Paquete;
+
 class Region{
 private:
 	string nombre;
-	long codigo;
-	list<Oficina> oficinas;
+	string codigo;
+	Oficina* oficina;
+	list<Paquete> paquetes;
 
 public:
 	string getNombre(){
@@ -18,14 +25,24 @@ public:
 	}
 	void setNombre(string nname);
 	
-	long getCodigo(){
+	string getCodigo(){
 		return codigo;
 	}
-	void setCodigo(long ncodigo);
+	void setCodigo(string ncodigo);
 
-	list<Oficina> getOficinas(){
-		return oficinas;
+	Oficina* getOficina(){
+		return oficina;
 	}
+
+	void setOficina(Oficina* ofic);
+
+	list<Paquete> getPaquetes(){
+		return paquetes;
+	}
+
+	void setPaquetes(list <Paquete> paq);
+	
+
 	void mostrarDatos(){
 		cout<<"Nombre: "<<nombre<<endl;
 		cout<<"Código: "<<codigo<<endl;

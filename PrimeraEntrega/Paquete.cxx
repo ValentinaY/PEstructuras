@@ -17,4 +17,7 @@ void Paquete::setTipo(string ntipo){
 void Paquete::setNumGuia(string nguia){
 	numGuia=nguia;
 }
+void Paquete::setRegion(Region* reg){
+	region = reg;
+}
 

@@ -5,6 +5,9 @@
 #include <iostream>
 #include "Persona.h"
 using namespace std;
+
+class Region;
+
 class Paquete{
 private:
 	Persona remitente;
@@ -12,6 +15,8 @@ private:
 	float peso;
 	string tipo;
 	string numGuia;
+	Region* region;
+
 public:
 	Persona getRemitente(){
 		return remitente;
@@ -38,6 +43,12 @@ public:
 	}
 	void setNumGuia(string nguia);
 	
+	Region* getRegion(){
+		return region;
+	}
+
+	void setRegion(Region* reg);
+
 	void mostrarDatos(){
 		cout<<"Remitente: "<<remitente.getNombre()<<endl;
 		cout<<"Destinatario: "<<destinatario.getNombre()<<endl;

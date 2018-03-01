@@ -1,11 +1,13 @@
 #ifndef Oficina_H
 #define Oficina_H
 
-#include "Paquete.h"
+#include "Region.h"
 #include <list>
 #include <iostream>
 
 using namespace std;
+
+class Region;
 
 class Oficina{
 protected:
@@ -13,7 +15,7 @@ protected:
 	string nombre;
 	string direccion;
 	string ciudad;
-	list<Paquete> paquetes;
+	list<Region> regiones;
 public:
 	string getCode(){
 		return codeID;
@@ -35,9 +37,11 @@ public:
 	}
 	void setCiudad(string cciudad);
 
-	list<Paquete> getPaquetes(){
-		return paquetes;
+	list<Region> getRegiones(){
+		return regiones;
 	}
+
+	void setRegiones(list <Region> reg);
 	
 	void mostrarDatos(){
 		cout<<"Código: "<<codeID<<endl;

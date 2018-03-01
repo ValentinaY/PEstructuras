@@ -3,29 +3,27 @@
  
 #include "Oficina.h"
 #include "Persona.h"
-#include "Region.h"
 
 //Clase principal, equivalente a Empresa.
 class Principal{
 protected:
-	list<Region> regiones;
 	list<Persona> personas;
+	list<Oficina> oficinas;
 public:
-	void loadRegions();
 	list<Persona> loadPersons(char* archivo, list<Persona> personas);
-	void loadPackages();
+	list<Oficina> loadPackages(char* archivo, list<Oficina> oficinas, list<Persona> personas);
 	list<Persona> regPersons(list<Persona> personas);
-	void regPackages();
-	void countPackages();
+	list<Oficina> regPackages(list<Oficina> oficinas, list<Persona> personas);
+	void countPackages(list<Oficina> oficinas);
 	
 	list<Persona> getPersonas(){
 		return personas;
 	}
-	list<Region> getRegiones(){
-		return regiones;
+	list<Oficina> getOficinas(){
+		return oficinas;
 	}
 	void setPersonas(list<Persona> x);
-	void setRegiones(list<Region> x);
+	void setOficinas(list<Oficina> x);
 };
 
 //#include "Principal.hxx"
