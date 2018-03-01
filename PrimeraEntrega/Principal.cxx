@@ -6,6 +6,14 @@
 
 using namespace std;
 
+
+void Principal::setPersonas(list<Persona> x){
+	personas = x;
+}
+void Principal::setRegiones(list<Region> x){
+	regiones = x;
+}
+
 void Principal::loadRegions(){
 	Region r;
 	r.setNombre("Caribe, playitas bellas");
@@ -22,10 +30,9 @@ void Principal::loadRegions(){
 	Principal::regiones.push_front(r);
 }
 
-void Principal::loadPersons(char* archivo, list<Persona> personas){
+list<Persona> Principal::loadPersons(char* archivo, list<Persona> personas){
 	
-	cout<<"Estamos cargando personas\n";
-	
+	bool si = false;
 	Persona persona;
 	ifstream lector;
 	lector.open(archivo);
@@ -35,6 +42,7 @@ void Principal::loadPersons(char* archivo, list<Persona> personas){
 		cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
 	
 	else{
+		cout<<"Estamos cargando las personas\n";
 		string linea;
 		getline(lector, linea);
 		getline(lector, linea, ',');
@@ -56,12 +64,23 @@ void Principal::loadPersons(char* archivo, list<Persona> personas){
 			getline(lector, linea);
 			persona.setTelefono(linea);
 			
-			persona.mostrarDatos();
-			personas.push_front(persona);
+			for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
+			if(persona.getId().compare((*it).getId())==0){	
+				cout<<"La persona con documento "<<(*it).getId()<<" ya existe."<<endl;
+				si = true;
+				break;
+			}
+	}
+			if(!si){
+				persona.mostrarDatos();
+				personas.push_front(persona);
+			}
 			getline(lector, linea, ',');
+			si = false;
 		}
 		lector.close();
 		cout<<"La información desde "<<archivo<<" ha sido cargada exitosamente."<<endl;
+		return personas;
 	}
 }
 
@@ -69,38 +88,48 @@ void Principal::loadPackages(){
 	cout<<"Estamos cargando paquetes\n";
 }
 
-void Principal::regPersons(list<Persona> personas){
+list<Persona> Principal::regPersons(list<Persona> personas){
 	cout<<"Estamos registrando personas\n";
 	
 	Persona persona;
 	string aux;
 	cout<<"Nombre de la persona: ";
-	cin>>aux;
+	getline(cin, aux);
 	persona.setNombre(aux);
 	cout<<"Apellidos de la persona: ";
-	cin>>aux;
+	getline(cin, aux);
 	persona.setApellido(aux);
 	cout<<"Numero de identificacion: ";
 	cin>>aux;
 	persona.setId(aux);
-	cout<<"Direccion: ";
-	cin>>aux;
-	persona.setDireccion(aux);
 	cout<<"Ciudad: ";
 	cin>>aux;
 	persona.setCiudad(aux);
+	cout<<"Direccion: ";
+	getline(cin, aux);
+	getline(cin, aux);
+	persona.setDireccion(aux);
 	cout<<"Telefono: ";
 	cin>>aux;
 	persona.setTelefono(aux);
 	
 	for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
-		if(persona.getId() == (*it).getId()){	
+		cout<<(*it).getId()<<"::"<<endl;
+	}
+	
+	for(list<Persona>::iterator it = personas.begin(); it != personas.end(); it++){
+		if(persona.getId().compare((*it).getId())==0){	
+			cout<<(*it).getId()<<endl;
 			cout<<"La persona ya existe."<<endl;
 			break;
 		}
-	}
+	}	
+	personas.push_front(persona);
 	
-	cout<<"La información de "<<persona.getNombre()<<" ha sido cargada exitosamente."<<endl;
+	cout<<"La información ha sido cargada exitosamente así:"<<endl;
+	
+	persona.mostrarDatos();
+	return personas;
 	
 }
 void Principal::regPackages(){

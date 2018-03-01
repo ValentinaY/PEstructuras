@@ -12,9 +12,9 @@ protected:
 	list<Persona> personas;
 public:
 	void loadRegions();
-	void loadPersons(char* archivo, list<Persona> personas);
+	list<Persona> loadPersons(char* archivo, list<Persona> personas);
 	void loadPackages();
-	void regPersons(list<Persona> personas);
+	list<Persona> regPersons(list<Persona> personas);
 	void regPackages();
 	void countPackages();
 	
@@ -24,6 +24,8 @@ public:
 	list<Region> getRegiones(){
 		return regiones;
 	}
+	void setPersonas(list<Persona> x);
+	void setRegiones(list<Region> x);
 };
 
 //#include "Principal.hxx"

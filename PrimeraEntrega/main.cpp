@@ -41,7 +41,7 @@ int main(){
 				break;
 			}
 			case str2int("carpe"):{
-				principal.loadPersons(file, principal.getPersonas());
+				principal.setPersonas(principal.loadPersons(file, principal.getPersonas()));
 				break;
 			}
 			case str2int("carpa"):{
@@ -49,7 +49,7 @@ int main(){
 				break;
 			}
 			case str2int("regpe"):{
-				principal.regPersons(principal.getPersonas());
+				principal.setPersonas(principal.regPersons(principal.getPersonas()));
 				break;
 			}
 			case str2int("regpa"):{
