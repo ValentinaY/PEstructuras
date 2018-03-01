@@ -1,4 +1,5 @@
 #include "Oficina.h"
+using namespace std;
 void Oficina::setCode(string ncode){
 	codeID=ncode;
 }

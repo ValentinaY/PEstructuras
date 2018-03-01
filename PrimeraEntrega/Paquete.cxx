@@ -1,5 +1,6 @@
 #include <string>
 #include "Paquete.h"
+using namespace std;
 
 void Paquete::setRemitente(Persona nremitente){
 	remitente=nremitente;

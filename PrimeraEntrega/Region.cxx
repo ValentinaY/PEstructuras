@@ -1,4 +1,5 @@
 #include "Region.h"
+using namespace std;
 void Region::setNombre(string nnombre){
 	nombre=nnombre;
 }

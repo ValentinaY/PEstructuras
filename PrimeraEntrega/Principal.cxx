@@ -69,6 +69,7 @@ void Principal::loadPersons(char* archivo, list<Persona> personas){
 			aux = linea.erase(0,1);
 			persona.setTelefono(aux);
 			
+			persona.mostrarDatos();
 			personas.push_front(persona);
 		}
 		lector.close();

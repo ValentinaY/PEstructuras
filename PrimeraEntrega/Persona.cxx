@@ -1,4 +1,5 @@
 #include "Persona.h"
+using namespace std;
 
 void Persona::setNombre(string nname){
 	nombre=nname;
