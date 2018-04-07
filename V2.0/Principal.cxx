@@ -27,7 +27,8 @@ void Principal::showregions(){
 	}
 }
 
-list<Region> Principal::loadregions(char* file){
+//Función que carga una una las regiones leídas.
+void Principal::loadregions(char* file){
 	ifstream reader;
 	list<Region> regiones;
 	Region actual;

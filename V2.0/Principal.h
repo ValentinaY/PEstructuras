@@ -12,7 +12,7 @@ protected:
 public:
 	void showregions();
 	list<Person> loadpersons(char* file, list<Person> persons);
-	list<Region> loadregions(char* file);
+	void loadregions(char* file);
 	list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
 	list<Person> regpersons(list<Person> personas);
 	list<Office> regpackages(list<Office> oficinas, list<Person> personas);
