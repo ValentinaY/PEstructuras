@@ -1,19 +1,19 @@
 #include <string>
 #include "Package.h"
 
-void Package::setsender(Person nsender){
+void Package::setSender(Person* nsender){
 	Package::sender=nsender;
 }
-void Package::setreceiver(Person nreceiver){
+void Package::setReceiver(Person* nreceiver){
 	Package::receiver=nreceiver;
 }
-void Package::setweight(float nweight){
+void Package::setWeight(float nweight){
 	Package::weight=nweight;
 }
-void Package::settype(string ntype){
+void Package::setType(string ntype){
 	Package::type=ntype;
 }
-void Package::setguiden(string nguiden){
+void Package::setGuiden(string nguiden){
 	Package::guiden=nguiden;
 }
 

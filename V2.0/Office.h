@@ -17,39 +17,43 @@ protected:
 	string city;
 	list<Region> regions;
 public:
-	string getcode(){
+	string getCode(){
 		return codeID;
 	}
-	void setcode(string ncode);
+	void setCode(string ncode);
 
-	string getname(){
+	string getName(){
 		return name;
 	}
-	void setname(string nname);
+	void setName(string nname);
 
-	string getaddress(){
+	string getAddress(){
 		return address;
 	}
-	void setaddress(string naddress);
+	void setAddress(string naddress);
 
-	string getcity(){
+	string getCity(){
 		return city;
 	}
-	void setcity(string ncity);
+	void setCity(string ncity);
 
-	list<Region> getregions(){
+	list<Region> getRegions(){
 		return regions;
 	}
 
-	void addregions(list <Region> reg);
-	void addregion(Region nregion);
-	void setregions(list <Region> reg);
+	void addRegions(list <Region> reg);
+	void addRegion(Region nregion);
+	void setRegions(list <Region> reg);
 	
 	void toString(){
 		cout<<"Código: "<<codeID<<endl;
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
+		cout<<"Regiones :"<<endl;
+		for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
+			cout<<"\t"<<it->getName();
+		}
 	}
 };
 

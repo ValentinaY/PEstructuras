@@ -16,23 +16,23 @@ private:
 	list<Package> packages;
 
 public:
-	string getname(){
+	string getName(){
 		return name;
 	}
-	void setname(string nname);
+	void setName(string nname);
 	
-	string getcode(){
+	string getCode(){
 		return code;
 	}
-	void setcode(string ncode);
+	void setCode(string ncode);
 
-	list<Package> getpackages(){
+	list<Package> getPackages(){
 		return packages;
 	}
 
-	void setpackages(list <Package> paq);
+	void setPackages(list <Package> paq);
 
-	void addpackages(list <Package> paq);	
+	void addPackages(list <Package> paq);
 
 	void mostrarDatos(){
 		cout<<"Nombre: "<<name<<endl;

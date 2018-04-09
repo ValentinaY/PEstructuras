@@ -17,35 +17,35 @@ private:
 public:
 	/* Los getters no se implementan aparte http://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/
 	*/
-	string getname(){
+	string getName(){
 		return name;
 	}
-	void setname(string nname);
+	void setName(string nname);
 	
-	string getid(){
+	string getId(){
 		return id;
 	}
-	void setid(string nidnum);
+	void setId(string nidnum);
 
-	string getlname(){
+	string getLname(){
 		return lname;
 	}
-	void setlname(string nlname);
+	void setLname(string nlname);
 	
-	string getaddress(){
+	string getAddress(){
 		return address;
 	}
-	void setaddress(string naddress);
+	void setAddress(string naddress);
 
-	string getcity(){
+	string getCity(){
 		return city;
 	}
-	void setcity(string ncity);
+	void setCity(string ncity);
 
-	string getphone(){
+	string getPhone(){
 		return phone;
 	}
-	void setphone(string nphone);
+	void setPhone(string nphone);
 
 	void toString(){
 		cout<<"Nombre: "<<name<<endl;

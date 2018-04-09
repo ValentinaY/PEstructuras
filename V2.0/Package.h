@@ -8,41 +8,41 @@ using namespace std;
 
 class Package{
 private:
-	Person sender;
-	Person receiver;
+	Person* sender;
+	Person* receiver;
 	float weight;
 	string type;
 	string guiden;
 
 public:
-	Person getsender(){
+	Person* getSender(){
 		return sender;
 	}
-	void setsender(Person nsender);
+	void setSender(Person* nsender);
 	
-	Person getreceiver(){
+	Person* getReceiver(){
 		return receiver;
 	}
-	void setreceiver(Person nreceiver);
+	void setReceiver(Person* nreceiver);
 	
-	float getweight(){
+	float getWeight(){
 		return weight;
 	}
-	void setweight(float s);
+	void setWeight(float s);
 	
-	string gettype(){
+	string getType(){
 		return type;
 	}
-	void settype(string ntype);
+	void setType(string ntype);
 	
-	string getguiden(){
+	string getGuiden(){
 		return guiden;
 	}
-	void setguiden(string nguide);
+	void setGuiden(string nguide);
 
 	void toString(){
-		cout<<"Remitente: "<<sender.getname()<<endl;
-		cout<<"Destinatario: "<<receiver.getname()<<endl;
+		cout<<"Remitente: "<<sender->getLname()<<endl;
+		cout<<"Destinatario: "<<receiver->getLname()<<endl;
 		cout<<"Peso: "<<weight<<endl;
 		cout<<"Tipo: "<<type<<endl;
 		cout<<"Número Guía: "<<guiden<<endl;
