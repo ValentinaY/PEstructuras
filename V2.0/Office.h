@@ -45,15 +45,18 @@ public:
 	void addRegion(Region nregion);
 	void setRegions(list <Region> reg);
 	
-	void toString(){
+	void showData(){
 		cout<<"Código: "<<codeID<<endl;
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Regiones :"<<endl;
-		for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
+		if(regions.empty())
+			cout<<"No tiene regiones asociadas"<<endl;
+		else
+			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
 			cout<<"\t"<<it->getName();
-		}
+			}
 	}
 };
 

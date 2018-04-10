@@ -53,7 +53,7 @@ int main(){
 				break;
 			}
 			case str2int("carpe"):{
-				principal.setpersons(principal.loadpersons(file, principal.getpersons()));
+				principal.setPersons(principal.loadpersons(file, principal.getpersons()));
 				break;
 			}
 			case str2int("carpa"):{

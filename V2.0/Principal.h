@@ -10,8 +10,23 @@ protected:
 	list<Person> persons;
 	list<Office> offices;
 public:
+
+	void regOffice();
+	void regRegion();
+	/*cargar personas
+		paquetes
+		oficinas
+		regiones
+	registrar per
+		paq
+		oficinas
+		regiones
+	contar paq
+	repartir*/
+
 	void showregions();
-	list<Person> loadpersons(char* file, list<Person> persons);
+
+	void loadpersons(char* file, list<Person> persons);
 	void loadregions(char* file);
 	list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
 	list<Person> regpersons(list<Person> personas);

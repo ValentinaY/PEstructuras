@@ -34,7 +34,7 @@ public:
 
 	void addPackages(list <Package> paq);
 
-	void mostrarDatos(){
+	void showData(){
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Código: "<<code<<endl;
 	}

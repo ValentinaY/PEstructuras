@@ -14,6 +14,6 @@ void Package::setType(string ntype){
 	Package::type=ntype;
 }
 void Package::setGuiden(string nguiden){
-	Package::guiden=nguiden;
+	Package::guideN=nguiden;
 }
 

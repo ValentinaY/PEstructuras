@@ -3,7 +3,7 @@ void Person::setName(string nname){
 	name=nname;
 }
 void Person::setLname(string nlname){
-	Person::lname=nlname;
+	Person::lName=nlname;
 }
 void Person::setId(string nidnum){
 	Person::id=nidnum;

@@ -12,7 +12,7 @@ private:
 	Person* receiver;
 	float weight;
 	string type;
-	string guiden;
+	string guideN;
 
 public:
 	Person* getSender(){
@@ -36,16 +36,16 @@ public:
 	void setType(string ntype);
 	
 	string getGuiden(){
-		return guiden;
+		return guideN;
 	}
 	void setGuiden(string nguide);
 
-	void toString(){
+	void showData(){
 		cout<<"Remitente: "<<sender->getLname()<<endl;
 		cout<<"Destinatario: "<<receiver->getLname()<<endl;
 		cout<<"Peso: "<<weight<<endl;
 		cout<<"Tipo: "<<type<<endl;
-		cout<<"Número Guía: "<<guiden<<endl;
+		cout<<"Número Guía: "<<guideN<<endl;
 	}
 
 };

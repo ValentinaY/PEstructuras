@@ -9,14 +9,12 @@ using namespace std;
 class Person{
 private:
 	string name;
-	string lname;
+	string lName;
 	string id;
 	string address;
 	string city;
 	string phone;
 public:
-	/* Los getters no se implementan aparte http://www.learncpp.com/cpp-tutorial/89-class-code-and-header-files/
-	*/
 	string getName(){
 		return name;
 	}
@@ -28,7 +26,7 @@ public:
 	void setId(string nidnum);
 
 	string getLname(){
-		return lname;
+		return lName;
 	}
 	void setLname(string nlname);
 	
@@ -47,9 +45,9 @@ public:
 	}
 	void setPhone(string nphone);
 
-	void toString(){
+	void showData(){
 		cout<<"Nombre: "<<name<<endl;
-		cout<<"Apellido: "<<lname<<endl;
+		cout<<"Apellido: "<<lName<<endl;
 		cout<<"Identificación: "<<id<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Dirección: "<<address<<endl;
