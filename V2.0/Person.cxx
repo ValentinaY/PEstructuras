@@ -1,21 +1,21 @@
 #include "Person.h"
 void Person::setName(string nname){
-	name=nname;
+	this->name=nname;
 }
 void Person::setLname(string nlname){
-	Person::lName=nlname;
+	this->lName=nlname;
 }
 void Person::setId(string nidnum){
-	Person::id=nidnum;
+	this->id=nidnum;
 }
 void Person::setAddress(string naddress){
-	Person::address=naddress;
+	this->address=naddress;
 }
 void Person::setCity(string ncity){
-	Person::city=ncity;
+	this->city=ncity;
 }
 void Person::setPhone(string nphone){
-	Person::phone=nphone;
+	this->phone=nphone;
 }
 
 

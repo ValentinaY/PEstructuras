@@ -6,15 +6,6 @@
 
 using namespace std;
 
-
-/* comando: registrarOficina
-posibles salidas en pantalla:
-(Oficina ya existe) La oficina con identificacion ofi_id ya se encuentra registrada en el
-sistema.
-(Resultado exitoso) La oficina con identificacion ofi_id ha sido registrada exitosamente.
-descripción: Permite insertar en el sistema la información asociada de una oficina. La información básica
-de la oficina (código de identificación, nombre, dirección, ciudad) debe solicitarse al usuario por teclado y
-validarse adecuadamente */
 void Principal::regOffice(){
 
 	cout<<"Registro de oficinas:\n";
@@ -22,7 +13,6 @@ void Principal::regOffice(){
 	Office newOffice;
 	string aux;
 	cout<<"Nombre de la oficina: ";
-	cin.ignore();
 	getline(cin, aux);
 	newOffice.setName(aux);
 	cout<<"Código: ";
@@ -32,81 +22,93 @@ void Principal::regOffice(){
 	cin>>aux;
 	newOffice.setAddress(aux);
 	cout<<"Ciudad: ";
-	getline(cin,aux);
+	cin>>aux;
 	newOffice.setCity(aux);
 
-	for(list<Office>::iterator it = offices.begin(); it != offices.end(); it++){
+	if(offices.existence(newOffice))
+		return;
+
+	/*
+	for(list<Office>::iterator it = this->offices(); it != this->offices.end(); it++){
 		if(newOffice.getCode().compare((*it).getCode())==0){
-			cout<<"Error :"<<(*it).getCode()<<endl;
+			cout<<"Error con código: "<<(*it).getCode()<<endl;
 			cout<<"La oficina con ese código ya existe."<<endl;
-			break;
+			return;
 		}
 	}
+	 */
 
-	offices.push_front(newOffice);
+	this->offices.insert(newOffice);
 
 	cout<<"La información ha sido cargada exitosamente así:"<<endl;
 	newOffice.showData();
 }
-/*
-• comando: registrarRegion
-posibles salidas en pantalla:
-(Región ya existe) La region con codigo reg_id ya se encuentra registrada en el sistema.
-(Resultado exitoso) La region con codigo reg_id ha sido registrada exitosamente.
-descripción: Permite insertar en el sistema la información asociada de una región, e interconectarla con la
-oficina respectiva. La información básica de la región (nombre, código, identificación de la oficina a la que
-pertenece) debe solicitarse al usuario por teclado y validarse adecuadamente.
- */
+
+
 void Principal::regRegion(){
 	cout<<"Registro de Regiones:\n";
 
 	Region newRegion;
-	Office* office = NULL;
+	Node<Office>* nodoOffice = NULL;
+	Office* office;
+	Office of;
 	string aux;
-	cin.ignore();
 	// While, erificacion a max 3
 	int cont = 0;
-	while(office == NULL){
+	bool find = true;
+	while(find){
+		if(cont >= 2)
+			return;
+
 		cout<<"Código de la Oficina: ";
 		getline(cin, aux);
-		newRegion.setCode(aux);
-		for(list<Region>::iterator it = offices.begin(); it != offices.end(); it++){
+		of.setCode(aux);
+
+		nodoOffice = offices.search(of);
+		if(nodoOffice != NULL)
+			find = false;
+		/*
+		for(list<Office>::iterator it = this->offices.begin(); it != this->offices.end(); it ++){
 			if(aux.compare((*it).getCode())==0){
-				office = it;
+				office = &(*it);
+				find = false;
 				break;
 			}
 		}
-		if(office == NULL)
+		 */
+		if(find)
 			cout<<"El código de oficina no existe, intente nuevamente \n";
 
-		if(cont >= 3)
-			return;
+
 
 		cont ++;
 	}
+
+	office = &(nodoOffice->getData());
 
 	cout<<"Nombre de la región: ";
 	getline(cin, aux);
 	newRegion.setName(aux);
 	cout<<"Código: ";
-	getline(cin, aux);
+	cin>> aux;
 	newRegion.setCode(aux);
 
-	for(list<Region>::iterator it = office->getRegions().begin(); it != office->getRegions().end(); it++){
+	list<Region>::iterator it = office->getRegions().begin();
+	for(unsigned int i = 0; i<office->getRegions().size(); i++, it++){
 		if(newRegion.getCode().compare((*it).getCode())==0){
 			cout<<"Error :"<<(*it).getCode()<<endl;
-			cout<<"La región con ese código ya existe."<<endl;
-			cout<<"La información no fue cargada"<<endl;
+			cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
 			return;
 		}
 	}
 
 	office->addRegion(newRegion);
-	cout<<"La información ha sido cargada exitosamente así:"<<endl;
+	office->showData();
+	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
 	newRegion.showData();
 }
 
-
+/*
 void Principal::setpersons(list<Person> x){
 	Principal::persons = x;
 }
@@ -122,8 +124,8 @@ void Principal::showregions(){
 	for(ito==offices.begin();ito!=offices.end();ito++){
 		regions=(*ito).getRegions();
 		for(itr==regions.begin();itr!=regions.end();itr++){
-			printf("%s\t",(*itr).getCode());
-			printf("%s\n",(*itr).getName());
+			//	printf("%s\t",(*itr).getCode());
+			//	printf("%s\n",(*itr).getName());
 		}
 	}
 }
@@ -174,28 +176,28 @@ void Principal::loadpersons(char* archivo, list<Person> personas){
 			getline(lector, linea, ',');
 			if(lector.eof()){
 				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return personas;
+				return;
 			}
 			persona.setLname(linea);
 
 			getline(lector, linea, ',');
 			if(lector.eof()){
 				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return personas;
+				return;
 			}
 			persona.setId(linea);
 
 			getline(lector, linea, ',');
 			if(lector.eof()){
 				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return personas;
+				return;
 			}
 			persona.setAddress(linea);
 
 			getline(lector, linea, ',');
 			if(lector.eof()){
 				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return personas;
+				return;
 			}
 			persona.setCity(linea);
 
@@ -218,7 +220,7 @@ void Principal::loadpersons(char* archivo, list<Person> personas){
 		}
 		lector.close();
 		cout<<"La información desde "<<archivo<<" ha sido cargada exitosamente."<<endl;
-		return personas;
+		return;
 	}
 }
 
@@ -271,7 +273,7 @@ list<Person> Principal::regpersons(list<Person> personas){
 
 list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<Person> personas){
 	cout<<"Estamos cargando Packages\n";
-	bool esta = false, saltar = false;
+	bool esta = false;
 
 	ifstream entrada;
 	string linea;
@@ -282,7 +284,6 @@ list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<
 
 		getline(entrada, linea, ',');	
 		while(!entrada.eof()){	
-			saltar = false;
 			Package paquete;
 			Person persona;
 			Region region;
@@ -292,7 +293,7 @@ list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<
 			for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
 				if(linea.compare((*it).getId())==0){
 					persona = (*it);
-					paquete.setSender(persona);
+					paquete.setSender(&persona);
 					esta = true;
 					break;
 				}
@@ -306,7 +307,7 @@ list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<
 			for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
 				if(linea.compare((*it).getId())==0){
 					persona = *it;
-					paquete.setReceiver(persona);
+					paquete.setReceiver(&persona);
 					esta = true;
 					break;
 				}
@@ -336,10 +337,10 @@ list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<
 			oficina.setAddress(linea);
 
 			getline(entrada, linea, ',');
-			oficina.setcity(linea);
+			oficina.setCity(linea);
 
 			getline(entrada, linea, ',');
-			region.setcode(linea);
+			region.setCode(linea);
 			getline(entrada, linea);
 			region.setName(linea);
 			getline(entrada, linea, ',');
@@ -349,7 +350,7 @@ list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<
 
 			cout<<"Leido el Package con número guía: "<<paquete.getGuiden()<<endl;
 			for(list<Office>::iterator ito = oficinas.begin(); ito != oficinas.end() || ya; ito++){
-				if(oficina.getCode().compare((*ito).getcode())==0){
+				if(oficina.getCode().compare((*ito).getCode())==0){
 					regiones = (*ito).getRegions();
 					oficina =(*ito);
 					for(list<Region>::iterator itr = regiones.begin();itr != regiones.end() || ya; itr++){
@@ -403,7 +404,7 @@ list<Office> Principal::regpackages(list<Office> oficinas, list<Person> personas
 		for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
 			if(temp.compare((*it).getId())==0){
 				persona = *it;
-				paquete.setSender(persona);
+				paquete.setSender(&persona);
 				esta = true;
 				break;
 			}
@@ -426,7 +427,7 @@ list<Office> Principal::regpackages(list<Office> oficinas, list<Person> personas
 		for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
 			if(temp.compare((*it).getId())==0){
 				persona = *it;
-				paquete.setReceiver(persona);
+				paquete.setReceiver(&persona);
 				esta = true;
 				break;
 			}
@@ -557,14 +558,14 @@ void Principal::addregion(Region region, string ocode){
 		}
 	}
 	else{
-		printf("Error al agregar la región con código %s.\n",region.getCode());
+		//	printf("Error al agregar la región con código %s.\n",region.getCode());
 	}
 }
-
+ */
 float Principal::toFloat(string a){
 	float x= 0;
-	for(int i=0;i<a.size();i++){
-		x*10;
+	for(unsigned int i=0;i<a.size();i++){
+		x = x*10;
 		x+= (int) (a[i]) - 48;
 	}
 	return x;

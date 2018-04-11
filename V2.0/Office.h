@@ -2,12 +2,11 @@
 #define Office_H
 
 #include "Region.h"
+#include "Package.h"
 #include <list>
 #include <iostream>
 
 using namespace std;
-
-class Region;
 
 class Office{
 protected:
@@ -16,7 +15,11 @@ protected:
 	string address;
 	string city;
 	list<Region> regions;
+	list<Package> packages;
 public:
+
+	Office();
+
 	string getCode(){
 		return codeID;
 	}
@@ -45,6 +48,14 @@ public:
 	void addRegion(Region nregion);
 	void setRegions(list <Region> reg);
 	
+	list<Package> getPackages(){
+		return packages;
+	}
+
+	void setPackages(list <Package> paq);
+	void addPackage(Package paq);
+	void addPackages(list <Package> paq);
+
 	void showData(){
 		cout<<"Código: "<<codeID<<endl;
 		cout<<"Nombre: "<<name<<endl;
@@ -55,8 +66,12 @@ public:
 			cout<<"No tiene regiones asociadas"<<endl;
 		else
 			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
-			cout<<"\t"<<it->getName();
+				cout<<"\t Código: "<<it->getName()<<endl;
 			}
+	}
+
+	bool operator == (Office o){
+		return codeID == o.getCode();
 	}
 };
 
