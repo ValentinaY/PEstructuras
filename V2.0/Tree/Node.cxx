@@ -312,7 +312,7 @@ void Node::showRegions(){
 			(*it)->showRegions();
 		}
 	}
-	std::cout << this->dato.showRegions() << "\t";
+	this->dato.showRegions();
 }
 
 // eof - Node.hxx
