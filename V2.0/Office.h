@@ -84,6 +84,12 @@ public:
 		}
 	}
 
+	void showPackages(){
+		for(list<Package>::iterator it=packages.begin(); it != packages.end() ;it++){
+			it->showData();
+		}
+	}
+
 	bool operator == (Office o){
 		return codeID == o.getCode();
 	}

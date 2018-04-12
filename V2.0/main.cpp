@@ -91,7 +91,7 @@ int main(){
 			break;
 		}
 		case str2int("mospa"):{
-			principal.showPackages(file);;
+			principal.showPackages(file);
 			break;
 		}
 		case str2int("mosof"):{

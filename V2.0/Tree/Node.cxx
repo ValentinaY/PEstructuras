@@ -300,9 +300,6 @@ Node* Node::searchGeneral(string ciudad){
 		}
 	}
 	return NULL;
-
-
-
 }
 
 void Node::showRegions(){

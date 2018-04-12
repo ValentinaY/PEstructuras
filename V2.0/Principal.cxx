@@ -511,7 +511,14 @@ void Principal::showPersons(){
 }
 
 void Principal::showPackages(char* codeOf){
-	//TODO
+	string codigo = codeOf;
+	Office ofAux;
+	ofAux.setCode(codigo);
+	Node* x = offices.search(ofAux);
+	if(x != NULL)
+		x->getData().showPackages();
+	else
+		cout<<"La oficina con código"<<codigo<<" no existe";
 }
 
 void Principal::showOffices(){
