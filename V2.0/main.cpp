@@ -81,7 +81,7 @@ int main(){
 //TODO			principal.countPackages();
 			break;
 		}
-		case str2int("cntpa"):{
+		case str2int("entpa"):{
 //TODO			principal.sendPackages();
 			break;
 		}
