@@ -1,43 +1,45 @@
-#ifndef __Tree__H__
-#define __Tree__H__
+#ifndef TREE_H
+#define TREE_H
 
 #include "Node.h"
+#include "../Office.h"
 
-template <class T>
 class Tree {
 protected:
-	Node<T>* root;
+	Node* root;
 
 public:
 	//definicion mas corta del tipo
-	typedef std::list< Node<T>* > TList;
+	typedef std::list< Node* > TList;
 
 public:
 	//constructores
 	Tree();
-	Tree(const T& val);
+	Tree(const Office& val);
 	//destructor
 	~Tree();
 	//verificador
 	bool isEmpty();
 	//manipuladores raiz
-	Node<T>* getRoot();
-	void setRoot(Node<T>* nraiz);
+	Node* getRoot();
+	void setRoot(Node* nraiz);
 	//modificadores Tree
-	bool insert(T& padre, T& n);
-	bool insert(T& n);
-	bool erase(T& n);
-	Node<T>* search(T& val);
-	bool existence(T& val);
+	bool insert(Office& padre, Office& n);
+	bool insert(Office& n);
+	bool erase(Office& n);
+	Node* search(Office& val);
+	bool existence(Office& val);
 	int height();
 	unsigned int size();
 	void preOrden();
 	void posOrden();
 	void inOrden();
 	void nivelOrden();
-};
 
-#include "Tree.hxx"
+	// Métodos de oficinas
+	Node* searchGeneral(string ciudad);
+	void showRegions();
+};
 
 #endif // __Tree__H__
 

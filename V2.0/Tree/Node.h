@@ -1,55 +1,58 @@
-#ifndef __Node__H__
-#define __Node__H__
+#ifndef NODE_H
+#define NODE_H
 
 #include <iostream>
 #include <list>
+#include "../Office.h"
 
-template< class T >
 class Node {
 public:
 	//definicion mas corta del tipo
-	typedef std::list< Node<T>* > TList;
+	typedef std::list<Node*> TList;
 
 public:
 	//constructores
 	Node();
-	Node(const T& val);
+	Node(const Office& val);
 	//destructor
 	~Node();
 	//manipuladores dato
-	T& getData();
-	void setData(T& val);
+	Office& getData();
+	void setData(Office& val);
 
 	//manipuladores lista descendientes
-	TList& obtenerDesc();
-	void fijarDesc(TList& listaDesc);
+	TList& getDesc();
+	void setDesc(TList& listaDesc);
 
 	//modificadores lista descendientes
-	void adicionarDesc(T& nval);
-	bool eliminarDesc(T& val);
-	Node<T>* buscarDesc(T& val);
+	void adicionarDesc(Office& nval);
+	bool eliminarDesc(Office& val);
+	Node* buscarDesc(Office& val);
 	void limpiarLista();
 	unsigned int numDesc();
 
 	//operaciones para arbol
-	bool insertarNode(T& padre, T& n);
-	bool insertarNode(T& n);
-	bool eliminarNode(T& n);
-	Node<T>* buscarNode(T& val);
-	bool buscarExistenciaNode(T& val);
+	bool insertarNode(Office& padre, Office& n);
+	bool insertarNode(Office& n);
+	bool eliminarNode(Office& n);
+	Node* buscarNode(Office& val);
+	bool buscarExistenciaNode(Office& val);
 	int altura();
 	unsigned int tamano();
 	void preOrden();
 	void posOrden();
 	void inOrden();
 	void nivelOrden(int nivel, int lvActual);
+	void nivelOrdenR(int nivel, int lvActual);
+
+	// Metodos Oficina
+	Node* searchGeneral(string ciudad);
+	void showRegions();
 
 protected:
-	T dato;
+	Office dato;
 	TList desc;
 };
-
-#include "Node.hxx"
 
 #endif // __Node__H__
 

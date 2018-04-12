@@ -1,27 +1,31 @@
+#ifndef TREE_HXX
+#define TREE_HXX
+
 #include "Tree.h"
+#include <list>
 
 // ------------------------------------------------------------------------
-template< class T >
-Tree<T>::Tree() : root(NULL){
+
+Tree::Tree() : root(NULL){
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Tree<T>::Tree(const T& val) {
-	Node<T> *nNode = new Node<T>(val);
+
+Tree::Tree(const Office& val) {
+	Node *nNode = new Node(val);
 	this->root = nNode;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Tree<T>::~Tree() {
+
+Tree::~Tree() {
 	if (this->root != NULL)
 		delete this->root;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Tree<T>::isEmpty() {
+
+bool Tree::isEmpty() {
 	if (this->root == NULL)
 		return true;
 	else
@@ -29,20 +33,20 @@ bool Tree<T>::isEmpty() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>* Tree<T>::getRoot() {
+
+Node* Tree::getRoot() {
 	return this->root;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Tree<T>::setRoot(Node<T>* nraiz) {
+
+void Tree::setRoot(Node* nraiz) {
 	this->root = nraiz;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Tree<T>::insert(T& padre, T& n) {
+
+bool Tree::insert(Office& padre, Office& n) {
 	bool ins = false;
 	if (!this->isEmpty()) {
 		ins = this->root->insertarNode(padre,n);
@@ -51,15 +55,15 @@ bool Tree<T>::insert(T& padre, T& n) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Tree<T>::insert(T& n) {
+
+bool Tree::insert(Office& n) {
 
 	if (!this->isEmpty()) {
 		this->root->insertarNode(n);
 		return true;
 	}
 	else{
-		Node<T> x;
+		Node x;
 		x.setData(n);
 		this->setRoot(&x);
 	}
@@ -67,9 +71,9 @@ bool Tree<T>::insert(T& n) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Tree<T>::erase(T& n) {
-	if(root->obtenerDato() == n){
+
+bool Tree::erase(Office& n) {
+	if(root->getData() == n){
 		root=NULL;
 		return true;
 	}
@@ -77,54 +81,54 @@ bool Tree<T>::erase(T& n) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>* Tree<T>::search(T& val) {
+
+Node* Tree::search(Office& val) {
 	return root->buscarNode(val);
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Tree<T>::existence(T& val) {
+
+bool Tree::existence(Office& val) {
 	return root->buscarExistenciaNode(val);
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-int Tree<T>::height() {
+
+int Tree::height() {
 	return root->altura();
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-unsigned int Tree<T>::size() {
+
+unsigned int Tree::size() {
 	return root->tamano();
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Tree<T>::preOrden() {
+
+void Tree::preOrden() {
 	if (!this->isEmpty()) {
 		this->root->preOrden();
 		std::cout << std::endl;
 	}
-	else 
+	else
 		std::cout<<"Vacío \n";
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Tree<T>::posOrden() {
+
+void Tree::posOrden() {
 	if (!this->isEmpty()) {
 		this->root->posOrden();
 		std::cout << std::endl;
 	}
-	else 
+	else
 		std::cout<<"Vacío \n";
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Tree<T>::inOrden() {
+
+void Tree::inOrden() {
 	if (!this->isEmpty()) {
 		this->root->inOrden();
 		std::cout << std::endl;
@@ -134,15 +138,31 @@ void Tree<T>::inOrden() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Tree<T>::nivelOrden() {
+
+void Tree::nivelOrden() {
 	if (!this->isEmpty()) {
-		for(int i = 0; i <= this->height() ;i++)
-			this->root->nivelOrden(i,0);
-		std::cout << std::endl;
+		this->root->nivelOrden(0,0);
+		for(int i = 1; i <= this->height() ;i++){
+			this->root->nivelOrdenR(i,0);
+			std::cout << std::endl;
+		}
 	}
-	else 
+	else
 		std::cout<<"Vacío \n";
 }
 
+
+// Métodos de oficinas
+
+// ------------------------------------------------------------------------
+Node* Tree::searchGeneral(string ciudad){
+	return this->root->searchGeneral(ciudad);
+}
+
+void Tree::showRegions(){
+	this->root->showRegions();
+}
+
+
 // eof - Tree.hxx
+#endif

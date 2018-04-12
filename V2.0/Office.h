@@ -47,7 +47,7 @@ public:
 	void addRegions(list <Region> reg);
 	void addRegion(Region nregion);
 	void setRegions(list <Region> reg);
-	
+
 	list<Package> getPackages(){
 		return packages;
 	}
@@ -62,12 +62,26 @@ public:
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Regiones :"<<endl;
+	}
+
+	void showDataR(){
+		cout<<"Código: "<<codeID<<endl;
+		cout<<"Nombre: "<<name<<endl;
+		cout<<"Dirección: "<<address<<endl;
+		cout<<"Ciudad: "<<city<<endl;
+		cout<<"Regiones :"<<endl;
 		if(regions.empty())
 			cout<<"No tiene regiones asociadas"<<endl;
 		else
 			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
 				cout<<"\t Código: "<<it->getName()<<endl;
 			}
+	}
+
+	void showRegions(){
+		for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
+			it->showData();
+		}
 	}
 
 	bool operator == (Office o){

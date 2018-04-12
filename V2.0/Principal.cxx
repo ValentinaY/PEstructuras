@@ -6,129 +6,7 @@
 
 using namespace std;
 
-void Principal::regOffice(){
-
-	cout<<"Registro de oficinas:\n";
-
-	Office newOffice;
-	string aux;
-	cout<<"Nombre de la oficina: ";
-	getline(cin, aux);
-	newOffice.setName(aux);
-	cout<<"Código: ";
-	getline(cin, aux);
-	newOffice.setCode(aux);
-	cout<<"Dirección: ";
-	cin>>aux;
-	newOffice.setAddress(aux);
-	cout<<"Ciudad: ";
-	cin>>aux;
-	newOffice.setCity(aux);
-
-	if(offices.existence(newOffice))
-		return;
-
-	/*
-	for(list<Office>::iterator it = this->offices(); it != this->offices.end(); it++){
-		if(newOffice.getCode().compare((*it).getCode())==0){
-			cout<<"Error con código: "<<(*it).getCode()<<endl;
-			cout<<"La oficina con ese código ya existe."<<endl;
-			return;
-		}
-	}
-	 */
-
-	this->offices.insert(newOffice);
-
-	cout<<"La información ha sido cargada exitosamente así:"<<endl;
-	newOffice.showData();
-}
-
-
-void Principal::regRegion(){
-	cout<<"Registro de Regiones:\n";
-
-	Region newRegion;
-	Node<Office>* nodoOffice = NULL;
-	Office* office;
-	Office of;
-	string aux;
-	// While, erificacion a max 3
-	int cont = 0;
-	bool find = true;
-	while(find){
-		if(cont >= 2)
-			return;
-
-		cout<<"Código de la Oficina: ";
-		getline(cin, aux);
-		of.setCode(aux);
-
-		nodoOffice = offices.search(of);
-		if(nodoOffice != NULL)
-			find = false;
-		/*
-		for(list<Office>::iterator it = this->offices.begin(); it != this->offices.end(); it ++){
-			if(aux.compare((*it).getCode())==0){
-				office = &(*it);
-				find = false;
-				break;
-			}
-		}
-		 */
-		if(find)
-			cout<<"El código de oficina no existe, intente nuevamente \n";
-
-
-
-		cont ++;
-	}
-
-	office = &(nodoOffice->getData());
-
-	cout<<"Nombre de la región: ";
-	getline(cin, aux);
-	newRegion.setName(aux);
-	cout<<"Código: ";
-	cin>> aux;
-	newRegion.setCode(aux);
-
-	list<Region>::iterator it = office->getRegions().begin();
-	for(unsigned int i = 0; i<office->getRegions().size(); i++, it++){
-		if(newRegion.getCode().compare((*it).getCode())==0){
-			cout<<"Error :"<<(*it).getCode()<<endl;
-			cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
-			return;
-		}
-	}
-
-	office->addRegion(newRegion);
-	office->showData();
-	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
-	newRegion.showData();
-}
-
 /*
-void Principal::setpersons(list<Person> x){
-	Principal::persons = x;
-}
-void Principal::setoffices(list<Office> x){
-	Principal::offices = x;
-}
-
-void Principal::showregions(){
-	list<Office>::iterator ito;
-	list<Region>::iterator itr;
-	list<Office> offices=Principal::offices;
-	list<Region> regions;
-	for(ito==offices.begin();ito!=offices.end();ito++){
-		regions=(*ito).getRegions();
-		for(itr==regions.begin();itr!=regions.end();itr++){
-			//	printf("%s\t",(*itr).getCode());
-			//	printf("%s\n",(*itr).getName());
-		}
-	}
-}
 
 //Función que carga una una las regiones leídas.
 void Principal::loadregions(char* file){
@@ -154,122 +32,6 @@ void Principal::loadregions(char* file){
 	reader.close();
 	//	return regiones;
 }
-
-void Principal::loadpersons(char* archivo, list<Person> personas){
-
-	bool si = false;
-	Person persona;
-	ifstream lector;
-	lector.open(archivo);
-	if(!lector.is_open())
-		cout<<"El archivo "<<archivo<<" no existe o es ilegible."<<endl;
-
-
-	else{
-		cout<<"Estamos cargando las personas\n";
-		string linea;
-		getline(lector, linea);
-		getline(lector, linea, ',');
-		while(!lector.eof()){
-			persona.setName(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setLname(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setId(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setAddress(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setCity(linea);
-
-			getline(lector, linea);
-			persona.setPhone(linea);
-
-			for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
-				if(persona.getId().compare((*it).getId())==0){	
-					cout<<"La persona con documento "<<(*it).getId()<<" ya existe."<<endl;
-					si = true;
-					break;
-				}
-			}
-			if(!si){
-				persona.showData();
-				personas.push_front(persona);
-			}
-			getline(lector, linea, ',');
-			si = false;
-		}
-		lector.close();
-		cout<<"La información desde "<<archivo<<" ha sido cargada exitosamente."<<endl;
-		return;
-	}
-}
-
-list<Person> Principal::regpersons(list<Person> personas){
-	cout<<"Estamos registrando personas\n";
-
-	Person persona;
-	string aux;
-	cout<<"Nombre de la persona: ";
-	cin.ignore();
-	getline(cin, aux);
-	persona.setName(aux);
-	cout<<"Apellidos de la persona: ";
-	getline(cin, aux);
-	persona.setLname(aux);
-	cout<<"Numero de identificacion: ";
-	cin>>aux;
-	persona.setId(aux);
-	cout<<"Ciudad: ";
-	cin>>aux;
-	persona.setCity(aux);
-	cout<<"Direccion: ";
-	getline(cin, aux);
-	getline(cin, aux);
-	persona.setAddress(aux);
-	cout<<"Telefono: ";
-	cin>>aux;
-	persona.setPhone(aux);
-
-	for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
-		cout<<(*it).getId()<<"::"<<endl;
-	}
-
-	for(list<Person>::iterator it = personas.begin(); it != personas.end(); it++){
-		if(persona.getId().compare((*it).getId())==0){	
-			cout<<(*it).getId()<<endl;
-			cout<<"La persona ya existe."<<endl;
-			break;
-		}
-	}	
-	personas.push_front(persona);
-
-	cout<<"La información ha sido cargada exitosamente así:"<<endl;
-
-	persona.showData();
-	return personas;
-
-}
-
 
 list<Office> Principal::loadpackages(char* archivo, list<Office> oficinas, list<Person> personas){
 	cout<<"Estamos cargando Packages\n";
@@ -547,21 +309,219 @@ void Principal::countpackages(list<Office> oficinas){
 	}
 }
 
-void Principal::addregion(Region region, string ocode){
-	list<Office>::iterator it;
-	list<Office> noficinas= Principal::offices;
-	if(!noficinas.empty()){
-		for(it==noficinas.begin(); it!=noficinas.end();it++){
-			if((*it).getCode()==ocode){
-				(*it).addRegion(region);
-			}
-		}
-	}
+*/
+
+void Principal::loadPersons(char* archivo){
+
+	bool si = false;
+	Person persona;
+	ifstream lector;
+	lector.open(archivo);
+	if(!lector.is_open())
+		cout<<"El archivo "<<archivo<<" no existe o es ilegible."<<endl;
+
+
 	else{
-		//	printf("Error al agregar la región con código %s.\n",region.getCode());
+		cout<<"Estamos cargando las personas\n";
+		string linea;
+		getline(lector, linea);
+		getline(lector, linea, ',');
+		while(!lector.eof()){
+			persona.setName(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setLname(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setId(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setAddress(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<archivo<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setCity(linea);
+
+			getline(lector, linea);
+			persona.setPhone(linea);
+
+			for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+				if(persona.getId().compare((*it).getId())==0){
+					cout<<"La persona con documento "<<(*it).getId()<<" ya existe."<<endl;
+					si = true;
+					break;
+				}
+			}
+			if(!si){
+				persona.showData();
+				persons.push_front(persona);
+			}
+			getline(lector, linea, ',');
+			si = false;
+		}
+		lector.close();
+		cout<<"La información desde "<<archivo<<" ha sido cargada exitosamente."<<endl;
+		return;
 	}
 }
- */
+
+void Principal::regPersons(){
+	cout<<"Estamos registrando personas\n";
+
+	Person persona;
+	string aux;
+	cout<<"Nombre de la persona: ";
+	cin.ignore();
+	getline(cin, aux);
+	persona.setName(aux);
+	cout<<"Apellidos de la persona: ";
+	getline(cin, aux);
+	persona.setLname(aux);
+	cout<<"Numero de identificacion: ";
+	cin>>aux;
+	persona.setId(aux);
+	cout<<"Ciudad: ";
+	cin>>aux;
+	persona.setCity(aux);
+	cout<<"Direccion: ";
+	getline(cin, aux);
+	getline(cin, aux);
+	persona.setAddress(aux);
+	cout<<"Telefono: ";
+	cin>>aux;
+	persona.setPhone(aux);
+
+	for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+		if(persona.getId().compare((*it).getId())==0){
+			cout<<(*it).getId()<<endl;
+			cout<<"La persona ya existe."<<endl;
+			break;
+		}
+	}
+	persons.push_front(persona);
+
+	cout<<"La información ha sido cargada exitosamente así:"<<endl;
+	persona.showData();
+
+}
+
+void Principal::regOffices(){
+
+	cout<<"Registro de oficinas:\n";
+
+	Office newOffice;
+	string aux;
+	cout<<"Nombre de la oficina: ";
+	getline(cin, aux);
+	newOffice.setName(aux);
+	cout<<"Código: ";
+	getline(cin, aux);
+	newOffice.setCode(aux);
+	cout<<"Dirección: ";
+	cin>>aux;
+	newOffice.setAddress(aux);
+	cout<<"Ciudad: ";
+	cin>>aux;
+	newOffice.setCity(aux);
+
+	if(offices.existence(newOffice))
+		return;
+
+	Node* auxiliar = offices.searchGeneral(newOffice.getCity());
+	if(auxiliar != NULL){
+		auxiliar->insertarNode(newOffice);
+	}
+	else{
+		offices.insert(newOffice);
+	}
+	cout<<"La información ha sido cargada exitosamente así:"<<endl;
+	newOffice.showData();
+}
+
+void Principal::regRegions(){
+	cout<<"Registro de Regiones:\n";
+
+	Region newRegion;
+	Node* nodoOffice = NULL;
+	Office* office;
+	Office of;
+	string aux;
+	int cont = 0;
+	bool find = true;
+	while(find){
+		if(cont >= 2)
+			return;
+
+		cout<<"Código de la Oficina: ";
+		getline(cin, aux);
+		of.setCode(aux);
+
+		nodoOffice = offices.search(of);
+		if(nodoOffice != NULL)
+			find = false;
+
+		if(find)
+			cout<<"El código de oficina no existe, intente nuevamente \n";
+		cont ++;
+	}
+
+	office = &(nodoOffice->getData());
+
+	cout<<"Nombre de la región: ";
+	getline(cin, aux);
+	newRegion.setName(aux);
+	cout<<"Código: ";
+	cin>> aux;
+	newRegion.setCode(aux);
+
+	list<Region>::iterator it = office->getRegions().begin();
+	for(unsigned int i = 0; i<office->getRegions().size(); i++, it++){
+		if(newRegion.getCode().compare((*it).getCode())==0){
+			cout<<"Error :"<<(*it).getCode()<<endl;
+			cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
+			return;
+		}
+	}
+
+	office->addRegion(newRegion);
+	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
+	cout<<"Codigo Oficina: "<<office->getCode()<<endl;
+	newRegion.showData();
+}
+
+void Principal::showPersons(){
+	for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+			it->showData();
+		}
+}
+
+void Principal::showPackages(char* codeOf){
+	//TODO
+}
+
+void Principal::showOffices(){
+	offices.nivelOrden();
+}
+
+void Principal::showRegions(){
+	offices.showRegions();
+}
+
 float Principal::toFloat(string a){
 	float x= 0;
 	for(unsigned int i=0;i<a.size();i++){

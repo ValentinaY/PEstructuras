@@ -25,8 +25,12 @@ int main(){
 		road = new char[30]; read= new char[6]; file = new char[24];
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
 		cout<<"\n$";
-		cin.getline(road,30,'\n'); string r(road); string f(road);r=r.substr(0,5);
-		if(f.length()>6){f=f.substr(6,23); 		strcpy(file,f.c_str());}
+		cin.getline(road,30,'\n'); string r(road);
+		string f(road);r=r.substr(0,5);
+		if(f.length()>6){
+			f=f.substr(6,23);
+			strcpy(file,f.c_str());
+		}
 
 		strcpy(read,r.c_str());
 		/*str2int convierte strings a enteros porque no es posible compararlas directamente, lo dice  0x499602D2 :) y el método está en: 
@@ -39,47 +43,66 @@ int main(){
 			showhelp();
 			break;
 		}
-		case str2int("mosre"):{
-			printf("Mostrando regiones\n");
-//			principal.showregions();
-			break;
-		}
+
 		case str2int("carpe"):{
-			//				principal.setPersons(principal.loadpersons(file, principal.getpersons()));
+			principal.loadPersons(file);
 			break;
 		}
 		case str2int("carpa"):{
-//			principal.setoffices(principal.loadpackages(file, principal.getoffices(),principal.getpersons()));
+//TODO			principal.loadPackages(file);
 			break;
 		}
 		case str2int("carof"):{
+//TODO			principal.loadOffices(file);
 			break;
 		}
 		case str2int("carre"):{
-			printf("Cargando regiones\n");
-//			principal.loadregions(file);
+//TODO			principal.loadregions(file);
 			break;
 		}
+
 		case str2int("regpe"):{
-//			principal.setpersons(principal.regpersons(principal.getpersons()));
+			principal.regPersons();
 			break;
 		}
 		case str2int("regpa"):{
-//			principal.setoffices(principal.regpackages(principal.getoffices(),principal.getpersons()));
+//TODO			principal.regPackages();
 			break;
 		}
 		case str2int("regof"):{
-			principal.regOffice();
+			principal.regOffices();
 			break;
 		}
 		case str2int("regre"):{
-			principal.regRegion();
+			principal.regRegions();
 			break;
 		}
 		case str2int("cntpa"):{
-//			principal.countpackages(principal.getoffices());
+//TODO			principal.countPackages();
 			break;
 		}
+		case str2int("cntpa"):{
+//TODO			principal.sendPackages();
+			break;
+		}
+
+		case str2int("mospe"):{
+			principal.showPersons();
+			break;
+		}
+		case str2int("mospa"):{
+			principal.showPackages(file);;
+			break;
+		}
+		case str2int("mosof"):{
+			principal.showOffices();
+			break;
+		}
+		case str2int("mosre"):{
+			principal.showRegions();
+			break;
+		}
+
 		case str2int("salir"):{
 			finished=true;
 			break;
@@ -96,15 +119,27 @@ int main(){
 
 void showhelp(){
 	cout<<"Bienvenido al sistema de ayuda.\n";
-	cout<<"carpe [nombre_de_archivo]\t Agrega las personas al sistema.\n";
-	cout<<"carpa [nombre_de_archivo]\t Agrega los paquetes al sistema.\n";
-	cout<<"carof [nombre_de_archivo]\t Agrega las oficinas al sistema.\n";
-	cout<<"carre [nombre_de_archivo]\t Agrega las regiones al sistema.\n";
-	cout<<"regpe 			\t Registra personas en el sistema.\n";
-	cout<<"regpa 			\t Registra paquetes en el sistema.\n";
-	cout<<"regof 			\t Registra oficinas en el sistema.\n";
-	cout<<"regre 			\t Registra regiones en el sistema.\n";
-	cout<<"cntpa 			\t Cuenta los paquetes.\n";
-	cout<<"entpa [codigo_oficina]\t Entrega los paquetes de una oficina.\n";
-	cout<<"salir 			\t Salir.\n";
+	cout<<">>> Carga por archivos:\n";
+	cout<<" carpe [nombre_de_archivo]	\t Agrega las personas al sistema.\n";
+	cout<<" carpa [nombre_de_archivo]	\t Agrega los paquetes al sistema.\n";
+	cout<<" carof [nombre_de_archivo]	\t Agrega las oficinas al sistema.\n";
+	cout<<" carre [nombre_de_archivo]	\t Agrega las regiones al sistema.\n";
+
+	cout<<">>> Carga por registro:\n";
+	cout<<" regpe	\t Registra personas en el sistema.\n";
+	cout<<" regpa	\t Registra paquetes en el sistema.\n";
+	cout<<" regof	\t Registra oficinas en el sistema.\n";
+	cout<<" regre	\t Registra regiones en el sistema.\n";
+
+	cout<<">>> Manejo de paquetes:\n";
+	cout<<" cntpa	\t Cuenta todos los paquetes sin entregar.\n";
+	cout<<" entpa [codigo_oficina]	\t Entrega los paquetes de una oficina.\n";
+
+	cout<<">>> Ver datos en sistema:\n";
+	cout<<" mospe	\t Muestra las personas en el sistema.\n";
+	cout<<" mospa [codigo_oficina]	\t Muestra los paquetes sin entregar en una oficina.\n";
+	cout<<" mosof 	\t Muestra las oficinas.\n";
+	cout<<" mosre 	\t Muestra las regiones.\n";
+
+	cout<<"salir 	\t Salir del sistema.\n";
 }

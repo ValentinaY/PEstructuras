@@ -1,22 +1,26 @@
+#ifndef NODE_HXX
+#define NODE_HXX
+
 #include "Node.h"
+
 #include <queue>
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>::Node() {
+
+Node::Node() {
 	this->desc.clear();
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>::Node(const T& val) {
+
+Node::Node(const Office& val) {
 	this->dato = val;
 	this->desc.clear();
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>::~Node() {
+
+Node::~Node() {
 	typename TList::iterator it;
 	for (it = this->desc.begin(); it != this->desc.end(); it++)
 		delete *it;
@@ -24,43 +28,43 @@ Node<T>::~Node() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-T& Node<T>::getData() {
+
+Office& Node::getData() {
 	return this->dato;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::setData(T& val) {
+
+void Node::setData(Office& val) {
 	this->dato = val;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-typename Node<T>::TList& Node<T>::obtenerDesc() {
+
+typename Node::TList& Node::getDesc() {
 	return this->desc;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::fijarDesc(TList& listaDesc) {
+
+void Node::setDesc(TList& listaDesc) {
 	this->desc = listaDesc;
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::adicionarDesc(T& nval) {
-	Node<T> *nNode = new Node<T>;
+
+void Node::adicionarDesc(Office& nval) {
+	Node *nNode = new Node;
 	nNode->dato = nval;	
 	this->desc.push_back(nNode);
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Node<T>::eliminarDesc(T& val) {
+
+bool Node::eliminarDesc(Office& val) {
 	bool i = false;
 	if(this->dato == val){
-		delete this->desc;
+		this->desc.clear();
 		return true;
 	}
 	else
@@ -70,9 +74,9 @@ bool Node<T>::eliminarDesc(T& val) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>* Node<T>::buscarDesc(T& val) {
-	Node<T> *p_it = NULL;
+
+Node* Node::buscarDesc(Office& val) {
+	Node *p_it = NULL;
 
 	if(this->dato == val){
 		p_it = this;
@@ -89,26 +93,26 @@ Node<T>* Node<T>::buscarDesc(T& val) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::limpiarLista() {
+
+void Node::limpiarLista() {
 	this->desc.clear();
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-unsigned int Node<T>::numDesc() {
+
+unsigned int Node::numDesc() {
 	return this->desc.size();
 }
 
 using namespace std;
 // ------------------------------------------------------------------------
-template< class T >
-bool Node<T>::insertarNode(T& padre, T& n) {
+
+bool Node::insertarNode(Office& padre, Office& n) {
 	bool exit= false;
 
 	if(padre == this->getData()){
 
-		Node<T> *nNode = new Node<T>;
+		Node *nNode = new Node;
 		nNode->dato = n;	
 		this->desc.push_back(nNode);
 		return true;
@@ -120,10 +124,10 @@ bool Node<T>::insertarNode(T& padre, T& n) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Node<T>::insertarNode(T& n) {
 
-	Node<T> *nNode = new Node<T>;
+bool Node::insertarNode(Office& n) {
+
+	Node *nNode = new Node;
 	nNode->dato = n;
 	this->desc.push_back(nNode);
 	return true;
@@ -132,12 +136,12 @@ bool Node<T>::insertarNode(T& n) {
 
 // ------------------------------------------------------------------------
 //pista: recursividad
-template< class T >
-bool Node<T>::eliminarNode(T& n) {
+
+bool Node::eliminarNode(Office& n) {
 	bool i = false;
 
 	for (typename TList::iterator it = this->desc.begin(); it != this->desc.end() && (!i); it++){
-		if((*it)->obtenerDato() == n){
+		if((*it)->getData() == n){
 			desc.erase(it);
 			i = true;
 			break;
@@ -151,9 +155,9 @@ bool Node<T>::eliminarNode(T& n) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-Node<T>* Node<T>::buscarNode(T& val) {
-	Node<T> *p_it = NULL;
+
+Node* Node::buscarNode(Office& val) {
+	Node *p_it = NULL;
 
 	if(this->getData() == val){
 		p_it = this;
@@ -169,9 +173,9 @@ Node<T>* Node<T>::buscarNode(T& val) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-bool Node<T>::buscarExistenciaNode(T& val) {
-	Node<T> *p_it = NULL;
+
+bool Node::buscarExistenciaNode(Office& val) {
+	Node *p_it = NULL;
 
 	if(this->getData() == val){
 		return true;
@@ -187,8 +191,8 @@ bool Node<T>::buscarExistenciaNode(T& val) {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-int Node<T>::altura() {
+
+int Node::altura() {
 	int i = 0, j;
 
 	if(this->desc.size() == 0){
@@ -203,8 +207,8 @@ int Node<T>::altura() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-unsigned int Node<T>::tamano() {
+
+unsigned int Node::tamano() {
 	unsigned int i = 0;
 
 	if (this->numDesc() != 0) {
@@ -220,10 +224,10 @@ unsigned int Node<T>::tamano() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::preOrden() {
 
-	std::cout << this->dato << "\t";
+void Node::preOrden() {
+
+	std::cout << this->dato.getCode() << "\t";
 	if (this->numDesc() != 0) {
 		typename TList::iterator it;
 		for (it = desc.begin(); it != desc.end(); it++) {
@@ -233,23 +237,23 @@ void Node<T>::preOrden() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::posOrden() {
+
+void Node::posOrden() {
 	if (this->numDesc() != 0) {
 		typename TList::iterator it;
 		for (it = desc.begin(); it != desc.end(); it++) {
 			(*it)->preOrden();
 		}
 	}
-	std::cout << this->dato << "\t";
+	std::cout << this->dato.getCode() << "\t";
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::inOrden() {
+
+void Node::inOrden() {
 
 	(*desc.begin())->preOrden();
-	std::cout << this->dato << "\t";
+	std::cout << this->dato.getCode() << "\t";
 	if (this->numDesc() != 0) {
 		typename TList::iterator it;
 		it = desc.begin();
@@ -262,8 +266,8 @@ void Node<T>::inOrden() {
 }
 
 // ------------------------------------------------------------------------
-template< class T >
-void Node<T>::nivelOrden(int nivel, int lvActual) {
+
+void Node::nivelOrden(int nivel, int lvActual) {
 	typename TList::iterator it;
 	if (nivel > lvActual)  {
 		for (it = desc.begin(); it != desc.end(); it++) {
@@ -271,8 +275,46 @@ void Node<T>::nivelOrden(int nivel, int lvActual) {
 		}
 	}
 	else if (nivel == lvActual){
-		std::cout<<this->dato<<"\t";
+		this->dato.showData();
+		//		std::cout<<this->dato.getCode()<<"\t";
 	}
 }
 
+void Node::nivelOrdenR(int nivel, int lvActual) {
+	typename TList::iterator it;
+	if (nivel > lvActual)  {
+		for (it = desc.begin(); it != desc.end(); it++) {
+			(*it)->nivelOrden(nivel, lvActual+1);
+		}
+	}
+	else if (nivel == lvActual){
+		this->dato.showDataR();
+		//		std::cout<<this->dato.getCode()<<"\t";
+	}
+}
+
+Node* Node::searchGeneral(string ciudad){
+	for (TList::iterator it = desc.begin(); it != desc.end(); it++) {
+		if((*it)->getData().getCity() == ciudad){
+			return *it;
+		}
+	}
+	return NULL;
+
+
+
+}
+
+void Node::showRegions(){
+	if (this->numDesc() != 0) {
+		typename TList::iterator it;
+		for (it = desc.begin(); it != desc.end(); it++) {
+			(*it)->showRegions();
+		}
+	}
+	std::cout << this->dato.showRegions() << "\t";
+}
+
 // eof - Node.hxx
+
+#endif

@@ -9,52 +9,41 @@
 class Principal{
 protected:
 	list<Person> persons;
-	Tree<Office> offices;
-	Node<Office> raiz;
+	Tree offices;
+	Node raiz;
 public:
 	Principal(){
 		persons.clear();
 
 		Office of;
-		of.setCode("raiz");
+		of.setCode("Principal");
 		raiz.setData(of);
 		offices.setRoot(&raiz);
 	};
 
-	void regOffice();
-	void regRegion();
-	/*cargar personas
-		paquetes
-		oficinas
-		regiones
-	registrar per
-		paq
-		oficinas
-		regiones
-	contar paq
-	repartir*/
+	void loadPersons(char* file);
+//TODO fix	void loadPackages(char* file); //-> list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
+//TODO rev	void loadOffices(char* file);
+//TODO rev	void loadRegions(char* file);
+	void regPersons(); //-> fix	list<Person> regpersons(list<Person> personas);
+//TODO fix	void regPackages(); //-> fix	list<Office> regpackages(list<Office> oficinas, list<Person> personas);
+	void regOffices();
+	void regRegions();
+//TODO fix 	void countPackages(); //-> fix void countpackages(<Office> oficinas);
+//TODO 	|	void sendPackages(char* codeOf);
+	void showPersons();
+	void showPackages(char* codeOf); //TODO
+	void showOffices();
+	void showRegions();
 
-	void showregions();
-
-	void loadpersons(char* file, list<Person> persons);
-	void loadregions(char* file);
-	list<Person> regpersons(list<Person> personas);
-/*	list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
-	list<Office> regpackages(list<Office> oficinas, list<Person> personas);
-	void countpackages(list<Office> oficinas);
-	void addregion(Region region, string ocode);
-
-*/
 	float toFloat(string a);
 
 	list<Person> getpersons(){
 		return persons;
 	}
-	Tree<Office> getoffices(){
+	Tree getoffices(){
 		return offices;
 	}
-	void setpersons(list<Person> x);
-	void setoffices(list<Office> x);
 };
 
 #endif
