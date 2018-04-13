@@ -1,4 +1,16 @@
 #include "Office.h"
+Office::Office(){
+	Office::codeID="";
+	Office::name="";
+	Office::address="";
+	Office::city="";
+	Office::regions.clear();
+}
+
+Office::~Office(){
+	printf("Eliminando...\n");
+}
+
 void Office::setcode(string ncode){
 	Office::codeID=ncode;
 }

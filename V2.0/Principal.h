@@ -13,6 +13,7 @@ public:
 	void showregions();
 	list<Person> loadpersons(char* file, list<Person> persons);
 	void loadregions(char* file);
+	void loadoffices(char* file);
 	list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
 	list<Person> regpersons(list<Person> personas);
 	list<Office> regpackages(list<Office> oficinas, list<Person> personas);
@@ -26,6 +27,7 @@ public:
 	list<Office> getoffices(){
 		return offices;
 	}
+	void addoffice(Office office);
 	void setpersons(list<Person> x);
 	void setoffices(list<Office> x);
 };

@@ -17,6 +17,8 @@ protected:
 	string city;
 	list<Region> regions;
 public:
+	Office();
+	~Office();
 	string getcode(){
 		return codeID;
 	}

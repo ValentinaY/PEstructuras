@@ -49,7 +49,33 @@ void Principal::loadregions(char* file){
 		}
 	}
 	reader.close();
-	return regiones;
+}
+
+//Función que carga una una las regiones leídas.
+void Principal::loadoffices(char* file){
+	ifstream reader;
+	reader.open(file);
+	Office actual;
+	if(!reader.is_open()){
+		printf("Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n");
+	}
+	else{
+		string line="";
+		getline(reader,line);	//Se omite la cabecera del archivo.
+		getline(reader,line,',');
+		while(!reader.eof()){
+			actual.setcode(line);
+			getline(reader,line,',');
+			actual.setname(line);
+			getline(reader,line,',');
+			actual.setaddress(line);
+			getline(reader,line);
+			actual.setcity(line);
+			getline(reader,line,',');
+			addoffice(actual);
+		}
+		reader.close();
+	}
 }
 
 list<Person> Principal::loadpersons(char* archivo, list<Person> personas){
@@ -458,6 +484,10 @@ void Principal::addregion(Region region, string ocode){
 	else{
 		printf("Error al agregar la región con código %s.\n",region.getcode());
 	}
+}
+
+void Principal::addoffice(Office office){
+	Principal::offices.push_back(office);
 }
 
 float Principal::toFloat(string a){

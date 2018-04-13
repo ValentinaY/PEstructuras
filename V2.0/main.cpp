@@ -40,16 +40,18 @@ int main(){
 				break;
 			}
 			case str2int("mosre"):{
-				printf("Mostrando regiones\n");
+				printf("Mostrando regiones...\n");
 				principal.showregions();
 				break;
 			}
 			case str2int("carre"):{
-				printf("Cargando regiones\n");
+				printf("Cargando regiones...\n");
 				principal.loadregions(file);
 				break;
 			}
 			case str2int("carof"):{
+				printf("Cargando oficinas...\n");
+				principal.loadoffices(file);
 				break;
 			}
 			case str2int("carpe"):{
