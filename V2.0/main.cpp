@@ -44,6 +44,11 @@ int main(){
 				principal.showregions();
 				break;
 			}
+			case str2int("mosof"):{
+				printf("Mostrando oficinas...\n");
+				principal.showoffices();
+				break;
+			}
 			case str2int("carre"):{
 				printf("Cargando regiones...\n");
 				principal.loadregions(file);

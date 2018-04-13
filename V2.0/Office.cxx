@@ -8,7 +8,6 @@ Office::Office(){
 }
 
 Office::~Office(){
-	printf("Eliminando...\n");
 }
 
 void Office::setcode(string ncode){

@@ -18,12 +18,23 @@ void Principal::showregions(){
 	list<Region>::iterator itr;
 	list<Office> offices=Principal::offices;
 	list<Region> regions;
-	for(ito==offices.begin();ito!=offices.end();ito++){
+	for(ito=offices.begin();ito!=offices.end();ito++){
 		regions=(*ito).getregions();
 		for(itr==regions.begin();itr!=regions.end();itr++){
 			printf("%s\t",(*itr).getcode());
 			printf("%s\n",(*itr).getname());
 		}
+	}
+}
+
+void Principal::showoffices(){
+	list<Office>::iterator ito;
+	list<Office> offices=Principal::offices;
+	Office office;
+	printf("Hay %d oficinas.\n", offices.size());
+	for(ito=offices.begin();ito!=offices.end();ito++){
+		cout<<"Código: "+(*ito).getcode()<<endl;
+		cout<<"Nombre: "+(*ito).getname()<<endl;
 	}
 }
 

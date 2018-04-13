@@ -11,6 +11,7 @@ protected:
 	list<Office> offices;
 public:
 	void showregions();
+	void showoffices();	
 	list<Person> loadpersons(char* file, list<Person> persons);
 	void loadregions(char* file);
 	void loadoffices(char* file);
