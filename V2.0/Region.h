@@ -13,28 +13,19 @@ class Region{
 private:
 	string name;
 	string code;
-	list<Package> packages;
 
 public:
-	string getname(){
+	string getName(){
 		return name;
 	}
-	void setname(string nname);
+	void setName(string nname);
 	
-	string getcode(){
+	string getCode(){
 		return code;
 	}
-	void setcode(string ncode);
+	void setCode(string ncode);
 
-	list<Package> getpackages(){
-		return packages;
-	}
-
-	void setpackages(list <Package> paq);
-
-	void addpackages(list <Package> paq);	
-
-	void mostrarDatos(){
+	void showData(){
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Código: "<<code<<endl;
 	}

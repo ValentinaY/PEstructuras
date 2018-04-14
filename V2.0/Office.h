@@ -2,12 +2,11 @@
 #define Office_H
 
 #include "Region.h"
+#include "Package.h"
 #include <list>
 #include <iostream>
 
 using namespace std;
-
-class Region;
 
 class Office{
 protected:
@@ -16,42 +15,82 @@ protected:
 	string address;
 	string city;
 	list<Region> regions;
+	list<Package> packages;
 public:
+
 	Office();
-	~Office();
-	string getcode(){
+
+	string getCode(){
 		return codeID;
 	}
-	void setcode(string ncode);
+	void setCode(string ncode);
 
-	string getname(){
+	string getName(){
 		return name;
 	}
-	void setname(string nname);
+	void setName(string nname);
 
-	string getaddress(){
+	string getAddress(){
 		return address;
 	}
-	void setaddress(string naddress);
+	void setAddress(string naddress);
 
-	string getcity(){
+	string getCity(){
 		return city;
 	}
-	void setcity(string ncity);
+	void setCity(string ncity);
 
-	list<Region> getregions(){
+	list<Region> getRegions(){
 		return regions;
 	}
 
-	void addregions(list <Region> reg);
-	void addregion(Region nregion);
-	void setregions(list <Region> reg);
-	
-	void toString(){
+	void addRegions(list <Region> reg);
+	void addRegion(Region nregion);
+	void setRegions(list <Region> reg);
+
+	list<Package> getPackages(){
+		return packages;
+	}
+
+	void setPackages(list <Package> paq);
+	void addPackage(Package paq);
+	void addPackages(list <Package> paq);
+
+	void showData(){
 		cout<<"Código: "<<codeID<<endl;
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
+	}
+
+	void showDataR(){
+		cout<<"Código: "<<codeID<<endl;
+		cout<<"Nombre: "<<name<<endl;
+		cout<<"Dirección: "<<address<<endl;
+		cout<<"Ciudad: "<<city<<endl;
+		cout<<"Regiones :"<<endl;
+		if(regions.empty())
+			cout<<"No tiene regiones asociadas"<<endl;
+		else
+			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
+				cout<<"\t Código: "<<it->getName()<<endl;
+			}
+	}
+
+	void showRegions(){
+		for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
+			it->showData();
+		}
+	}
+
+	void showPackages(){
+		for(list<Package>::iterator it=packages.begin(); it != packages.end() ;it++){
+			it->showData();
+		}
+	}
+
+	bool operator == (Office o){
+		return codeID == o.getCode();
 	}
 };
 

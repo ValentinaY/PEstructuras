@@ -1,38 +1,48 @@
 #include "Office.h"
+
 Office::Office(){
-	Office::codeID="";
-	Office::name="";
-	Office::address="";
-	Office::city="";
-	Office::regions.clear();
+	this->regions.clear();
+	this->packages.clear();
 }
 
-Office::~Office(){
+void Office::setCode(string ncode){
+	this->codeID=ncode;
 }
-
-void Office::setcode(string ncode){
-	Office::codeID=ncode;
+void Office::setName(string nname){
+	this->name=nname;
 }
-void Office::setname(string nname){
-	Office::name=nname;
+void Office::setAddress(string naddress){
+	this->address=naddress;
 }
-void Office::setaddress(string naddress){
-	Office::address=naddress;
+void Office::setCity(string ncity){
+	this->city=ncity;
 }
-void Office::setcity(string ncity){
-	Office::city=ncity;
-}
-void Office::setregions(list <Region> reg){
-	Office::regions = reg;
+void Office::setRegions(list <Region> reg){
+	this->regions = reg;
 }	
 
-void Office::addregions(list <Region> reg){
+void Office::addRegions(list <Region> reg){
 	for(list<Region>::iterator it=reg.begin(); it != reg.end() ;it++){
-		Office::regions.push_back((*it));
+		this->regions.push_back((*it));
 	}
 }
 
-void Office::addregion(Region reg){
-	Office::regions.push_back(reg);
+void Office::addRegion(Region reg){
+	this->regions.push_back(reg);
 }
+
+void Office::setPackages(list <Package> paq){
+	this->packages = paq;
+}
+
+void Office::addPackage(Package paq){
+	this->packages.push_back(paq);
+}
+
+void Office::addPackages(list <Package> paq){
+	for(list<Package>::iterator it=paq.begin(); it != paq.end() ;it++){
+		this->packages.push_back((*it));
+	}
+}
+
 	
