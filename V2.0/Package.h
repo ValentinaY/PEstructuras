@@ -41,8 +41,8 @@ public:
 	void setGuiden(string nguide);
 
 	void showData(){
-		cout<<"Remitente: "<<sender->getLname()<<endl;
-		cout<<"Destinatario: "<<receiver->getLname()<<endl;
+		cout<<"Id. Remitente: "<<sender->getId()<<endl;
+		cout<<"Id. Destinatario: "<<receiver->getId()<<endl;
 		cout<<"Peso: "<<weight<<endl;
 		cout<<"Tipo: "<<type<<endl;
 		cout<<"Número Guía: "<<guideN<<endl;

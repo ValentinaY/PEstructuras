@@ -61,7 +61,6 @@ public:
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
-		cout<<"Regiones :"<<endl;
 	}
 
 	void showDataR(){

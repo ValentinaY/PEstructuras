@@ -66,7 +66,7 @@ int main(){
 			break;
 		}
 		case str2int("regpa"):{
-//TODO			principal.regPackages();
+			principal.regPackages();
 			break;
 		}
 		case str2int("regof"):{
@@ -108,7 +108,7 @@ int main(){
 			break;
 		}
 		default:{
-			cout<<"El comando ingresado es desconocido. Escriba 'ayuda' para ver la lista de comandos.";
+			cout<<"El comando ingresado es desconocido. Escriba 'ayuda' para ver la lista de comandos.\n";
 			break;
 		}
 		}

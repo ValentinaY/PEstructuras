@@ -309,7 +309,8 @@ void Node::showRegions(){
 			(*it)->showRegions();
 		}
 	}
-	this->dato.showRegions();
+	if(this->dato.getCode()!="Principal")
+		this->dato.showRegions();
 }
 
 // eof - Node.hxx

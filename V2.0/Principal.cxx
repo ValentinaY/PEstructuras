@@ -309,7 +309,7 @@ void Principal::countpackages(list<Office> oficinas){
 	}
 }
 
-*/
+ */
 
 void Principal::loadPersons(char* archivo){
 
@@ -385,24 +385,23 @@ void Principal::regPersons(){
 
 	Person persona;
 	string aux;
-	cout<<"Nombre de la persona: ";
-	cin.ignore();
+	cout<<"Nombre de la persona: \n >";
 	getline(cin, aux);
 	persona.setName(aux);
-	cout<<"Apellidos de la persona: ";
+	cout<<"Apellidos de la persona: \n >";
 	getline(cin, aux);
 	persona.setLname(aux);
-	cout<<"Numero de identificacion: ";
+	cout<<"Numero de identificacion: \n >";
 	cin>>aux;
 	persona.setId(aux);
-	cout<<"Ciudad: ";
+	cout<<"Ciudad: \n >";
 	cin>>aux;
 	persona.setCity(aux);
-	cout<<"Direccion: ";
+	cout<<"Direccion: \n >";
 	getline(cin, aux);
 	getline(cin, aux);
 	persona.setAddress(aux);
-	cout<<"Telefono: ";
+	cout<<"Telefono: \n >";
 	cin>>aux;
 	persona.setPhone(aux);
 
@@ -420,22 +419,127 @@ void Principal::regPersons(){
 
 }
 
+void Principal::regPackages(){
+	cout<<"Estamos registrando Packages\n";
+
+	string temp, tempAux;
+	Office oficina;
+	Region region;
+	Person persona;
+	Package paquete;
+	int contador = 0;
+	float aux;
+	bool esta = false;
+
+	do{
+		cout<<"Identificador del remitente: \n >";
+		cin>>temp;
+		for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+			if(temp.compare((*it).getId())==0){
+				persona = *it;
+				paquete.setSender(&persona);
+				esta = true;
+				tempAux = temp;
+				break;
+			}
+		}
+		if(esta == false){
+			cout<<"Esa persona no se encuentra en nuestro registro\n";
+		}
+		contador++;
+		if(contador==5) {
+			cout<<"Numero de intentos excedido.\n";
+			return;
+		}
+	}while(esta ==  false);
+
+	esta = false;
+	contador=0;
+	do{
+		cout<<"Identificador del destinatario: \n >";
+		cin>>temp;
+		if(temp != tempAux){
+			for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+				if(temp.compare((*it).getId())==0){
+					persona = *it;
+					paquete.setReceiver(&persona);
+					esta = true;
+					break;
+				}
+			}
+			if(esta == false){
+				cout<<"Esa persona no se encuentra en nuestro registro\n";
+			}
+			contador++;
+		}
+		else{
+			cout<<"El remitente no puede ser destinatario\n";
+		}
+		if(contador==5) {
+			cout<<"Numero de intentos excedido.\n";
+			return;
+		}
+	}while(esta ==  false);
+
+
+	cout<<"Peso: \n >";
+	cin>>aux;
+	paquete.setWeight(aux);
+	cout<<"Tipo de contenido: \n >";
+	cin.ignore();
+	getline(cin, temp);
+	paquete.setType(temp);
+	cout<<"Número de guia: \n >";
+	getline(cin, tempAux);
+	paquete.setGuiden(tempAux);
+
+	Node* nodoOffice = NULL;
+
+	esta = false;
+	contador = 0;
+	while(!esta){
+		if(contador >= 2){
+			cout<<"Numero de intentos excedido.\n";
+			return;
+		}
+
+		cout<<"Código de la Oficina: \n >";
+		getline(cin, temp);
+		oficina.setCode(temp);
+
+		nodoOffice = offices.search(oficina);
+		if(nodoOffice != NULL){
+			esta = true;
+			cout<<"Oficina hallada";
+		}
+
+		if(!esta)
+			cout<<"El código de oficina no existe, intente nuevamente \n";
+		contador ++;
+	}
+
+	nodoOffice->getData().addPackage(paquete);
+	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
+	paquete.showData();
+
+}
+
 void Principal::regOffices(){
 
 	cout<<"Registro de oficinas:\n";
 
 	Office newOffice;
 	string aux;
-	cout<<"Nombre de la oficina: ";
+	cout<<"Nombre de la oficina: \n >";
 	getline(cin, aux);
 	newOffice.setName(aux);
-	cout<<"Código: ";
+	cout<<"Código: \n >";
 	getline(cin, aux);
 	newOffice.setCode(aux);
-	cout<<"Dirección: ";
+	cout<<"Dirección: \n >";
 	cin>>aux;
 	newOffice.setAddress(aux);
-	cout<<"Ciudad: ";
+	cout<<"Ciudad: \n >";
 	cin>>aux;
 	newOffice.setCity(aux);
 
@@ -445,12 +549,14 @@ void Principal::regOffices(){
 	Node* auxiliar = offices.searchGeneral(newOffice.getCity());
 	if(auxiliar != NULL){
 		auxiliar->insertarNode(newOffice);
+		cout<<"La información ha sido cargada exitosamente así:"<<endl;
+		newOffice.showDataR();
 	}
 	else{
 		offices.insert(newOffice);
+		cout<<"La información ha sido cargada exitosamente así:"<<endl;
+		newOffice.showData();
 	}
-	cout<<"La información ha sido cargada exitosamente así:"<<endl;
-	newOffice.showData();
 }
 
 void Principal::regRegions(){
@@ -506,8 +612,8 @@ void Principal::regRegions(){
 
 void Principal::showPersons(){
 	for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
-			it->showData();
-		}
+		it->showData();
+	}
 }
 
 void Principal::showPackages(char* codeOf){
