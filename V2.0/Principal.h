@@ -22,15 +22,15 @@ public:
 	};
 
 	void loadPersons(char* file);
-	void loadPackages(char* file); //-> list<Office> loadpackages(char* file, list<Office> oficinas, list<Person> persons);
-//TODO rev	void loadOffices(char* file);
-//TODO rev	void loadRegions(char* file);
-	void regPersons(); //-> fix	list<Person> regpersons(list<Person> personas);
+	void loadPackages(char* file);
+	void loadOffices(char* file);
+	void loadRegions(char* file);
+	void regPersons();
 	void regPackages();
 	void regOffices();
 	void regRegions();
-//TODO fix 	void countPackages(); //-> fix void countpackages(<Office> oficinas);
-//TODO 	|	void sendPackages(char* codeOf);
+ 	void countPackages(); //-> fix void countpackages(<Office> oficinas);
+	void sendPackages(char* codeOf);
 	void showPersons();
 	void showPackages(char* codeOf); //TODO
 	void showOffices();
