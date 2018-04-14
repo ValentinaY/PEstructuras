@@ -164,5 +164,12 @@ void Tree::showRegions(){
 }
 
 
+list<Office> Tree::getAllData(){
+	list<Office> run;
+	run.clear();
+	run = this->root->getAllData(run);
+	return run;
+}
+
 // eof - Tree.hxx
 #endif

@@ -313,6 +313,18 @@ void Node::showRegions(){
 		this->dato.showRegions();
 }
 
+list<Office> Node::getAllData(list<Office> run){
+
+	run.push_back(this->dato);
+	if (this->numDesc() != 0) {
+		typename TList::iterator it;
+		for (it = desc.begin(); it != desc.end(); it++) {
+			run = (*it)->getAllData(run);
+		}
+	}
+	return run;
+}
+
 // eof - Node.hxx
 
 #endif

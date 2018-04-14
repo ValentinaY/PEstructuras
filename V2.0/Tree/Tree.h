@@ -39,6 +39,7 @@ public:
 	// Métodos de oficinas
 	Node* searchGeneral(string ciudad);
 	void showRegions();
+	list<Office> getAllData();
 };
 
 #endif // __Tree__H__

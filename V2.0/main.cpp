@@ -25,8 +25,10 @@ int main(){
 		road = new char[30]; read= new char[6]; file = new char[24];
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
 		cout<<"\n$";
-		cin.getline(road,30,'\n'); string r(road);
-		string f(road);r=r.substr(0,5);
+		cin.getline(road,30,'\n');
+		string r(road);
+		string f(road);
+		r=r.substr(0,5);
 		if(f.length()>6){
 			f=f.substr(6,23);
 			strcpy(file,f.c_str());

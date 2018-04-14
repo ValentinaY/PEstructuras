@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include "Region.h"
 #include "Person.h"
 using namespace std;
 
@@ -10,6 +11,7 @@ class Package{
 private:
 	Person* sender;
 	Person* receiver;
+	Region* region;
 	float weight;
 	string type;
 	string guideN;
@@ -19,22 +21,27 @@ public:
 		return sender;
 	}
 	void setSender(Person* nsender);
-	
+
 	Person* getReceiver(){
 		return receiver;
 	}
 	void setReceiver(Person* nreceiver);
-	
+
+	Region* getRegion(){
+		return region;
+	}
+	void setRegion(Region* nregion);
+
 	float getWeight(){
 		return weight;
 	}
 	void setWeight(float s);
-	
+
 	string getType(){
 		return type;
 	}
 	void setType(string ntype);
-	
+
 	string getGuiden(){
 		return guideN;
 	}
@@ -43,6 +50,7 @@ public:
 	void showData(){
 		cout<<"Id. Remitente: "<<sender->getId()<<endl;
 		cout<<"Id. Destinatario: "<<receiver->getId()<<endl;
+		cout<<"Código región: "<<region->getCode()<<endl;
 		cout<<"Peso: "<<weight<<endl;
 		cout<<"Tipo: "<<type<<endl;
 		cout<<"Número Guía: "<<guideN<<endl;

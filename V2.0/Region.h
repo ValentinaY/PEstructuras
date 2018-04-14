@@ -1,8 +1,6 @@
 #ifndef Region_H
 #define Region_H
 
-#include "Package.h"
-
 #include <string>
 #include <list>
 #include <iostream>
