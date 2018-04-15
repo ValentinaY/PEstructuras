@@ -99,16 +99,17 @@ Node* Node::buscarDesc(Office& val) {
 Node* Node::findnode(string code){
 	Node *p_it = NULL;
 	string codef=code;
-	cout<<"Comparando  "+code+" con "+this->dato.getCode()<<endl;
-	if( codef.compare(this->dato.getCode()) == 0 ){
-		p_it = this;
-	}
-	else{
-		typename TList::iterator it;
-		for (it = this->desc.begin(); it != this->desc.end(); it++) {
-			p_it = (*it)->findnode(code);
-			if (p_it != NULL){
-				break;
+	if( codef.size() >=8  && this->getData().getCode().size() >= 8 ){
+		if( codef.compare(0, 8,this->getData().getCode()) == 0 ){
+			p_it = this;
+		}
+		else{
+			typename TList::iterator it;
+			for (it = this->desc.begin(); it != this->desc.end(); it++) {
+				p_it = (*it)->findnode(code);
+				if (p_it != NULL){
+					break;
+				}
 			}
 		}
 	}

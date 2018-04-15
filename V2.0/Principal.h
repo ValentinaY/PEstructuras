@@ -21,20 +21,20 @@ public:
 		offices.setRoot(&raiz);
 	};
 
-	void loadPersons(char* file);
-	void loadPackages(char* file);
 	void loadOffices(char* file);
+	void loadPackages(char* file);
+	void loadPersons(char* file);
 	void loadRegions(char* file);
-	void regPersons();
-	void regPackages();
 	void regOffices();
+	void regPackages();
+	void regPersons();
 	void regRegions();
- 	void countPackages(); //-> fix void countpackages(<Office> oficinas);
-	void sendPackages(char* codeOf);
-	void showPersons();
-	void showPackages(char* codeOf); //TODO
 	void showOffices();
+	void showPackages(char* codeOf); //TODO
+	void showPersons();
 	void showRegions();
+ 	void countPackages();
+	void sendPackages(char codeOf);
 	void addRegion(Region r, string office);
 
 	float toFloat(string a);
