@@ -7,35 +7,72 @@
 using namespace std;
 
 //MÉTODOS DE CARGA------------------------------------------------------------------------------------------------
-//Cargar las oficinas.
-void Principal::loadOffices(char* file){
-	ifstream reader;
-	reader.open(file);
-	printf("Cargando oficinas...\n");
-	if(!reader.is_open()){
-		printf("Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n");
-	}
+//Cargar las personas.
+void Principal::loadPersons(char* file){
+	bool si = false;
+	Person persona;
+	ifstream lector;
+	lector.open(file);
+	if(!lector.is_open())
+		cout<<"El archivo "<<file<<" no existe o es ilegible."<<endl;
+
+
 	else{
-		string line="";
-		bool truee;
-		getline(reader,line);	//Se omite la cabecera del archivo.
-		Office actual;
-		while(!reader.eof()){
-			getline(reader,line,',');
-			if(line.size() == 8){	//Se verifica que las oficinas sean válidas.
-				Office actual;
-				actual.setCode(line);
-				getline(reader,line,',');
-				actual.setName(line);
-				getline(reader,line,',');
-				actual.setAddress(line);
-				getline(reader,line);
-				actual.setCity(line);
-				truee = Principal::offices.insert( actual );
-				printf("Cargando oficina...\n");
+		cout<<"Estamos cargando las personas\n";
+		string linea;
+		getline(lector, linea);
+		getline(lector, linea, ',');
+		while(!lector.eof()){
+			persona.setName(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
+				return;
 			}
+			persona.setLname(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setId(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setAddress(linea);
+
+			getline(lector, linea, ',');
+			if(lector.eof()){
+				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
+				return;
+			}
+			persona.setCity(linea);
+
+			getline(lector, linea);
+			persona.setPhone(linea);
+
+			for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
+				if(persona.getId().compare((*it).getId())==0){
+					cout<<"La persona con documento "<<(*it).getId()<<" ya existe."<<endl;
+					si = true;
+					break;
+				}
+			}
+			if(!si){
+				persona.showData();
+				persons.push_front(persona);
+			}
+			getline(lector, linea, ',');
+			si = false;
 		}
-		reader.close();
+		lector.close();
+		cout<<"La información desde "<<file<<" ha sido cargada exitosamente."<<endl;
+		return;
 	}
 }
 
@@ -175,79 +212,39 @@ void Principal::loadPackages(char* file){
 
 }
 
-//Cargar las personas.
-void Principal::loadPersons(char* file){
-	bool si = false;
-	Person persona;
-	ifstream lector;
-	lector.open(file);
-	if(!lector.is_open())
-		cout<<"El archivo "<<file<<" no existe o es ilegible."<<endl;
-
-
+//Cargar las oficinas.
+void Principal::loadOffices(char* file){
+	ifstream reader;
+	reader.open(file);
+	printf("Cargando oficinas...\n");
+	if(!reader.is_open()){
+		printf("Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n");
+	}
 	else{
-		cout<<"Estamos cargando las personas\n";
-		string linea;
-		getline(lector, linea);
-		getline(lector, linea, ',');
-		while(!lector.eof()){
-			persona.setName(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
-				return;
+		string line="";
+		getline(reader,line);	//Se omite la cabecera del archivo.
+		Office actual;
+		while(!reader.eof()){
+			getline(reader,line,',');
+			if(line.size() == 8){	//Se verifica que las oficinas sean válidas.
+				Office actual;
+				actual.setCode(line);
+				getline(reader,line,',');
+				actual.setName(line);
+				getline(reader,line,',');
+				actual.setAddress(line);
+				getline(reader,line);
+				actual.setCity(line);
+				printf("Cargando oficina...\n");
 			}
-			persona.setLname(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setId(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setAddress(linea);
-
-			getline(lector, linea, ',');
-			if(lector.eof()){
-				cout<<"El archivo "<<file<<" no contiene información válida."<<endl;
-				return;
-			}
-			persona.setCity(linea);
-
-			getline(lector, linea);
-			persona.setPhone(linea);
-
-			for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
-				if(persona.getId().compare((*it).getId())==0){
-					cout<<"La persona con documento "<<(*it).getId()<<" ya existe."<<endl;
-					si = true;
-					break;
-				}
-			}
-			if(!si){
-				persona.showData();
-				persons.push_front(persona);
-			}
-			getline(lector, linea, ',');
-			si = false;
 		}
-		lector.close();
-		cout<<"La información desde "<<file<<" ha sido cargada exitosamente."<<endl;
-		return;
+		reader.close();
 	}
 }
 
 //Cargar las regiones.
 void Principal::loadRegions(char* file){
 	ifstream reader;
-	list<Region> regiones;
 	Region actual;
 	reader.open(file);
 	if(!reader.is_open()){
@@ -263,7 +260,11 @@ void Principal::loadRegions(char* file){
 			getline(reader,line,',');
 			actual.setName(line);
 			getline(reader,line);
-			Principal::addRegion(actual,line);
+			Node* node = Principal::offices.find(line);
+			if(node!= NULL){
+				node->getData().addRegion(actual);
+			}
+			//Principal::addRegion(actual,line); r office
 		}
 	}
 	printf("Regiones cargadas.\n");
@@ -564,13 +565,14 @@ void Principal::showRegions(){
 
 //MÉTODOS DE AGREGACIÓN-------------------------------------------------------------------------------------------
 //Agregar región.
+/*
 void Principal::addRegion(Region r, string office){
 	Node* node = Principal::offices.find(office);
 	if(node!= NULL){
 		string s= node->getData().getCode();
 		node->getData().addRegion(r);
 	}
-}
+}*/
 
 void Principal::countPackages(){
 	cout<<"Contando Packages..."<<endl;

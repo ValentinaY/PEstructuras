@@ -13,6 +13,8 @@ private:
 	string code;
 
 public:
+	Region();
+
 	string getName(){
 		return name;
 	}

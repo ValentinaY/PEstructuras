@@ -15,6 +15,9 @@ private:
 	string city;
 	string phone;
 public:
+
+	Person();
+
 	string getName(){
 		return name;
 	}

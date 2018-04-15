@@ -17,6 +17,8 @@ private:
 	string guideN;
 
 public:
+	Package();
+
 	Person* getSender(){
 		return sender;
 	}

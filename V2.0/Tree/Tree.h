@@ -16,8 +16,6 @@ public:
 	//constructores
 	Tree();
 	Tree(const Office& val);
-	//destructor
-	~Tree();
 	//verificador
 	bool isEmpty();
 	//manipuladores raiz

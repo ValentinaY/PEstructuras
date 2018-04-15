@@ -18,13 +18,6 @@ Tree::Tree(const Office& val) {
 
 // ------------------------------------------------------------------------
 
-Tree::~Tree() {
-	//if (this->root != NULL)
-		//delete this->root;
-}
-
-// ------------------------------------------------------------------------
-
 bool Tree::isEmpty() {
 	if (this->root == NULL)
 		return true;

@@ -1,6 +1,14 @@
 #include <string>
 #include "Package.h"
 
+
+Package::Package(){
+	sender = NULL;
+	receiver = NULL;
+	region = NULL;
+	weight = -1;
+}
+
 void Package::setSender(Person* nsender){
 	this->sender=nsender;
 }

@@ -5,10 +5,6 @@ Office::Office(){
 	this->packages.clear();
 }
 
-Office::Office(const string val){
-	this->codeID=val;
-}	
-
 void Office::setCode(string ncode){
 	this->codeID=ncode;
 }

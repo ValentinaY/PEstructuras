@@ -3,8 +3,6 @@
 
 #include "Node.h"
 
-#include <queue>
-
 // ------------------------------------------------------------------------
 
 Node::Node() {
@@ -16,15 +14,6 @@ Node::Node() {
 Node::Node(const Office& val) {
 	this->dato = val;
 	this->desc.clear();
-}
-
-// ------------------------------------------------------------------------
-
-Node::~Node() {
-	/*typename TList::iterator it;
-	for (it = this->desc.begin(); it != this->desc.end(); it++)
-		delete *it;
-	this->desc.clear();*/
 }
 
 // ------------------------------------------------------------------------

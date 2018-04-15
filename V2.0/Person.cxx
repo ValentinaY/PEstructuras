@@ -1,4 +1,7 @@
 #include "Person.h"
+
+Person::Person(){}
+
 void Person::setName(string nname){
 	this->name=nname;
 }

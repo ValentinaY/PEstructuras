@@ -1,4 +1,6 @@
 #include "Region.h"
+Region::Region(){}
+
 void Region::setName(string nname){
 	this->name=nname;
 }

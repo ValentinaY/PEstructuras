@@ -14,8 +14,6 @@ public:
 	//constructores
 	Node();
 	Node(const Office& val);
-	//destructor
-	~Node();
 	//manipuladores dato
 	Office& getData();
 	Office getdata();
