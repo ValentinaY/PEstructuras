@@ -55,11 +55,11 @@ int main(){
 			break;
 		}
 		case str2int("carof"):{
-//TODO			principal.loadOffices(file);
+			principal.loadOffices(file);
 			break;
 		}
 		case str2int("carre"):{
-//TODO			principal.loadregions(file);
+			principal.loadRegions(file);
 			break;
 		}
 
@@ -84,7 +84,7 @@ int main(){
 			break;
 		}
 		case str2int("entpa"):{
-//TODO			principal.sendPackages();
+//TO			principal.sendPackages();
 			break;
 		}
 
@@ -106,6 +106,7 @@ int main(){
 		}
 
 		case str2int("salir"):{
+			return 0;
 			finished=true;
 			break;
 		}

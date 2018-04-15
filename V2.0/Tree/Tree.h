@@ -28,6 +28,7 @@ public:
 	bool insert(Office& n);
 	bool erase(Office& n);
 	Node* search(Office& val);
+	Node* find(string code);
 	bool existence(Office& val);
 	int height();
 	unsigned int size();

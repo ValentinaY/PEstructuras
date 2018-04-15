@@ -18,6 +18,7 @@ public:
 	~Node();
 	//manipuladores dato
 	Office& getData();
+	Office getdata();
 	void setData(Office& val);
 
 	//manipuladores lista descendientes
@@ -28,6 +29,7 @@ public:
 	void adicionarDesc(Office& nval);
 	bool eliminarDesc(Office& val);
 	Node* buscarDesc(Office& val);
+	Node* findnode(string code);
 	void limpiarLista();
 	unsigned int numDesc();
 

@@ -19,6 +19,7 @@ protected:
 public:
 
 	Office();
+	Office(const string val);	
 
 	string getCode(){
 		return codeID;

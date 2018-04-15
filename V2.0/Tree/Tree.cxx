@@ -86,6 +86,11 @@ Node* Tree::search(Office& val) {
 	return root->buscarNode(val);
 }
 
+//-------------------------------------------------------------------------
+Node* Tree::find(string code){
+	return root->findnode(code);
+}
+
 // ------------------------------------------------------------------------
 
 bool Tree::existence(Office& val) {
@@ -141,7 +146,7 @@ void Tree::inOrden() {
 
 void Tree::nivelOrden() {
 	if (!this->isEmpty()) {
-		this->root->nivelOrden(0,0);
+		this->root->nivelOrden(1,0);
 		for(int i = 1; i <= this->height() ;i++){
 			this->root->nivelOrdenR(i,0);
 			std::cout << std::endl;

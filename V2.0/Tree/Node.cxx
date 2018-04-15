@@ -33,6 +33,9 @@ Office& Node::getData() {
 	return this->dato;
 }
 
+Office Node::getdata(){
+	return this->dato;
+}
 // ------------------------------------------------------------------------
 
 void Node::setData(Office& val) {
@@ -85,6 +88,24 @@ Node* Node::buscarDesc(Office& val) {
 		typename TList::iterator it;
 		for (it = this->desc.begin(); it != this->desc.end(); it++) {
 			p_it = (*it)->buscarDesc(val);
+			if (p_it != NULL)
+				break;
+		}
+	}
+	return p_it;
+}
+
+//-------------------------------------------------------------------------
+Node* Node::findnode(string code){
+	Node *p_it = NULL;
+	string codef=code;
+	if( codef.compare(this->dato.getCode()) ){
+		p_it = this;
+	}
+	else{
+		typename TList::iterator it;
+		for (it = this->desc.begin(); it != this->desc.end(); it++) {
+			p_it = (*it)->findnode(code);
 			if (p_it != NULL)
 				break;
 		}

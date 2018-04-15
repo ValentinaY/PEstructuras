@@ -6,10 +6,9 @@
 
 using namespace std;
 
-/*
 
 //Función que carga una una las regiones leídas.
-void Principal::loadregions(char* file){
+void Principal::loadRegions(char* file){
 	ifstream reader;
 	list<Region> regiones;
 	Region actual;
@@ -22,6 +21,7 @@ void Principal::loadregions(char* file){
 		getline(reader,line);	//Se omite la cabecera del archivo.
 		getline(reader,line,',');
 		while(!reader.eof()){
+			printf("Cagando región...\n");
 			actual.setCode(line);
 			getline(reader,line,',');
 			actual.setName(line);
@@ -29,10 +29,9 @@ void Principal::loadregions(char* file){
 			Principal::addregion(actual,line);
 		}
 	}
+	printf("Regiones cargadas.\n");
 	reader.close();
-	//	return regiones;
 }
- */
 
 void Principal::loadPersons(char* file){
 
@@ -238,12 +237,35 @@ void Principal::loadPackages(char* file){
 
 }
 
+//Función que carga una una las regiones leídas.
 void Principal::loadOffices(char* file){
-
-}
-
-void Principal::loadRegions(char* file){
-
+	ifstream reader;
+	reader.open(file);
+	printf("Cargando oficinas...\n");
+	if(!reader.is_open()){
+		printf("Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n");
+	}
+	else{
+		string line="";
+		bool truee;
+		getline(reader,line);	//Se omite la cabecera del archivo.
+		getline(reader,line,',');
+		Office actual;
+		while(!reader.eof()){
+			Office actual;
+			actual.setCode(line);
+			getline(reader,line,',');
+			actual.setName(line);
+			getline(reader,line,',');
+			actual.setAddress(line);
+			getline(reader,line);
+			actual.setCity(line);
+			getline(reader,line,',');
+			truee = Principal::offices.insert( actual );
+			printf("Cargando oficina...\n");
+		}
+		reader.close();
+	}
 }
 
 void Principal::regPersons(){
@@ -525,6 +547,13 @@ void Principal::showOffices(){
 
 void Principal::showRegions(){
 	offices.showRegions();
+}
+
+void Principal::addregion(Region r, string office){
+	Node* node = Principal::offices.find(office);
+	if(node!= NULL){
+		node->getData().addRegion(r);
+	}
 }
 
 void Principal::countPackages(){
