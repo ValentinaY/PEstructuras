@@ -106,7 +106,6 @@ int main(){
 		}
 
 		case str2int("salir"):{
-			return 0;
 			finished=true;
 			break;
 		}

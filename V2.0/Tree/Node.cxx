@@ -21,10 +21,10 @@ Node::Node(const Office& val) {
 // ------------------------------------------------------------------------
 
 Node::~Node() {
-	typename TList::iterator it;
+	/*typename TList::iterator it;
 	for (it = this->desc.begin(); it != this->desc.end(); it++)
 		delete *it;
-	this->desc.clear();
+	this->desc.clear();*/
 }
 
 // ------------------------------------------------------------------------
