@@ -19,14 +19,14 @@ void Principal::loadRegions(char* file){
 	else{
 		string line="";
 		getline(reader,line);	//Se omite la cabecera del archivo.
-		getline(reader,line,',');
 		while(!reader.eof()){
-			printf("Cagando región...\n");
+			getline(reader,line,',');
+			printf("Cargando región...\n");
 			actual.setCode(line);
 			getline(reader,line,',');
 			actual.setName(line);
-			getline(reader,line,',');
-			Principal::addregion(actual,line);
+			getline(reader,line);
+			Principal::addRegion(actual,line);
 		}
 	}
 	printf("Regiones cargadas.\n");
@@ -249,18 +249,21 @@ void Principal::loadOffices(char* file){
 		string line="";
 		bool truee;
 		getline(reader,line);	//Se omite la cabecera del archivo.
-		getline(reader,line,',');
 		Office actual;
 		while(!reader.eof()){
+			getline(reader,line,',');
 			Office actual;
+			cout<<"Código: "+line<<endl;
 			actual.setCode(line);
 			getline(reader,line,',');
+			cout<<"Nombre: "+line<<endl;
 			actual.setName(line);
 			getline(reader,line,',');
+			cout<<"Diro: "+line<<endl;
 			actual.setAddress(line);
 			getline(reader,line);
+			cout<<"Ciudad: "+line<<endl;
 			actual.setCity(line);
-			getline(reader,line,',');
 			truee = Principal::offices.insert( actual );
 			printf("Cargando oficina...\n");
 		}
@@ -549,9 +552,11 @@ void Principal::showRegions(){
 	offices.showRegions();
 }
 
-void Principal::addregion(Region r, string office){
+void Principal::addRegion(Region r, string office){
 	Node* node = Principal::offices.find(office);
 	if(node!= NULL){
+		string s= node->getData().getCode();
+		cout<<s<<endl;
 		node->getData().addRegion(r);
 	}
 }

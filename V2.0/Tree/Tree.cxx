@@ -147,7 +147,7 @@ void Tree::inOrden() {
 void Tree::nivelOrden() {
 	if (!this->isEmpty()) {
 		this->root->nivelOrden(1,0);
-		for(int i = 1; i <= this->height() ;i++){
+		for(int i = 2; i <= this->height() ;i++){
 			this->root->nivelOrdenR(i,0);
 			std::cout << std::endl;
 		}

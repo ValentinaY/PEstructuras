@@ -35,7 +35,7 @@ public:
 	void showPackages(char* codeOf); //TODO
 	void showOffices();
 	void showRegions();
-	void addregion(Region r, string office);
+	void addRegion(Region r, string office);
 
 	float toFloat(string a);
 
