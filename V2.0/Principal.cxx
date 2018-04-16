@@ -235,6 +235,7 @@ void Principal::loadOffices(char* file){
 				actual.setAddress(line);
 				getline(reader,line);
 				actual.setCity(line);
+				offices.insert( actual );
 				printf("Cargando oficina...\n");
 			}
 		}
