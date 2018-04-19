@@ -29,6 +29,10 @@ public:
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Código: "<<code<<endl;
 	}
+
+	bool operator == (Region o){
+		return code == o.getCode();
+	}
 };
 
 #endif

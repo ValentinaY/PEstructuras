@@ -9,9 +9,9 @@ using namespace std;
 
 class Package{
 private:
-	Person* sender;
-	Person* receiver;
-	Region* region;
+	Person sender;
+	Person receiver;
+	Region region;
 	float weight;
 	string type;
 	string guideN;
@@ -20,20 +20,20 @@ private:
 public:
 	Package();
 
-	Person* getSender(){
+	Person getSender(){
 		return sender;
 	}
-	void setSender(Person* nsender);
+	void setSender(Person &nsender);
 
-	Person* getReceiver(){
+	Person getReceiver(){
 		return receiver;
 	}
-	void setReceiver(Person* nreceiver);
+	void setReceiver(Person &nreceiver);
 
-	Region* getRegion(){
+	Region getRegion(){
 		return region;
 	}
-	void setRegion(Region* nregion);
+	void setRegion(Region &nregion);
 
 	float getWeight(){
 		return weight;
@@ -57,12 +57,14 @@ public:
 	void send();
 
 	void showData(){
-		cout<<"Id. Remitente: "<<sender->getId()<<endl;
-		cout<<"Id. Destinatario: "<<receiver->getId()<<endl;
-		cout<<"Código región: "<<region->getCode()<<endl;
-		cout<<"Peso: "<<weight<<endl;
-		cout<<"Tipo: "<<type<<endl;
-		cout<<"Número Guía: "<<guideN<<endl;
+		cout<<"\tId. Remitente: "<<sender.getId()<<endl;
+		cout<<"\tId. Destinatario: "<<receiver.getId()<<endl;
+		cout<<"\tCódigo región: "<<region.getCode()<<endl;
+		cout<<"\tPeso: "<<weight<<endl;
+		cout<<"\tTipo: "<<type<<endl;
+		cout<<"\tNúmero Guía: "<<guideN<<endl;
+		if(active)
+			cout<<"\t El paquete ya fue repartido"<<endl;
 	}
 };
 

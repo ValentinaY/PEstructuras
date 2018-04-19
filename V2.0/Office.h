@@ -4,6 +4,7 @@
 #include "Region.h"
 #include "Package.h"
 #include <list>
+#include <queue>
 #include <iostream>
 
 using namespace std;
@@ -15,7 +16,7 @@ protected:
 	string address;
 	string city;
 	list<Region> regions;
-	list<Package> packages;
+	queue<Package> packages;
 
 public:
 
@@ -49,19 +50,20 @@ public:
 	void addRegion(Region nregion);
 	void setRegions(list <Region> reg);
 
-	list<Package> getPackages(){
+	queue<Package> getPackages(){
 		return packages;
 	}
 
-	void setPackages(list <Package> paq);
+	void setPackages(queue <Package> paq);
 	void addPackage(Package paq);
-	void addPackages(list <Package> paq);
+	void addPackages(queue <Package> paq);
 
 	void showData(){
 		cout<<"Código: "<<codeID<<endl;
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
+		cout<<endl;
 	}
 
 	void showDataR(){
@@ -76,6 +78,7 @@ public:
 			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
 				cout<<"\t Código: "<<it->getName()<<endl;
 			}
+		cout<<endl;
 	}
 
 	void showRegions(){
@@ -85,8 +88,11 @@ public:
 	}
 
 	void showPackages(){
-		for(list<Package>::iterator it=packages.begin(); it != packages.end() ;it++){
-			it->showData();
+		for(int i = 0; i< packages.size();i++){
+			Package aux = packages.front();
+			aux.showData();
+			packages.pop();
+			packages.push(aux);
 		}
 	}
 

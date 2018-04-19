@@ -34,7 +34,7 @@ public:
 	void showPersons();
 	void showRegions();
  	void countPackages();
-	void sendPackages(char codeOf);
+	void sendPackages(char* codeOf);
 	void addRegion(Region r, string office);
 
 	float toFloat(string a);

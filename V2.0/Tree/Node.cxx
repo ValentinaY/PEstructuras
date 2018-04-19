@@ -188,19 +188,18 @@ Node* Node::buscarNode(Office& val) {
 // ------------------------------------------------------------------------
 
 bool Node::buscarExistenciaNode(Office& val) {
-	Node *p_it = NULL;
+	bool be = false;
 
 	if(this->getData() == val){
 		return true;
 	}
 	else{
-		for (typename TList::iterator it = this->desc.begin(); it != this->desc.end() && (p_it==NULL); it++){
-			p_it = (*it)->buscarNode(val);
+		for (typename TList::iterator it = this->desc.begin(); it != this->desc.end() && (be==false); it++){
+			be = (*it)->buscarExistenciaNode(val);
 		}
 	}
 
-	return false;
-
+		return be;
 }
 
 // ------------------------------------------------------------------------
@@ -288,8 +287,10 @@ void Node::nivelOrden(int nivel, int lvActual) {
 		}
 	}
 	else if (nivel == lvActual){
-		this->dato.showData();
-		//		std::cout<<this->dato.getCode()<<"\t";
+		if(altura() == 1)
+			this->dato.showData();
+		else if(altura() ==0)
+			this->dato.showDataR();
 	}
 }
 

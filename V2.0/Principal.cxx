@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <list>
+#include <queue>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ void Principal::loadPersons(char* file){
 			}
 			if(!si){
 				persona.showData();
-				persons.push_front(persona);
+				persons.push_back(persona);
 			}
 			getline(lector, linea, ',');
 			si = false;
@@ -99,7 +100,7 @@ void Principal::loadPackages(char* file){
 			for(list<Person>::iterator it = persons.begin(); it != persons.end() && continuar; it++){
 				if(linea.compare((*it).getId())==0){
 					persona = (*it);
-					paquete.setSender(&persona);
+					paquete.setSender(persona);
 					esta = true;
 					break;
 				}
@@ -115,7 +116,7 @@ void Principal::loadPackages(char* file){
 			for(list<Person>::iterator it = persons.begin(); it != persons.end() && continuar; it++){
 				if(linea.compare((*it).getId())==0){
 					persona = *it;
-					paquete.setReceiver(&persona);
+					paquete.setReceiver(persona);
 					esta = true;
 					break;
 				}
@@ -161,12 +162,12 @@ void Principal::loadPackages(char* file){
 				oficina.setCity(linea);
 
 			//Code Region
-			getline(entrada, linea);
+			getline(entrada, linea, ',');
 			if(continuar)
 				region.setCode(linea);
 
 			//Nombre Region
-			getline(entrada, linea);
+			getline(entrada, linea, ',');
 			if(continuar)
 				region.setName(linea);
 
@@ -174,8 +175,7 @@ void Principal::loadPackages(char* file){
 			getline(entrada, linea, ',');
 
 			if(continuar){
-				cout<<"Paquete con número guía "<<paquete.getGuiden()<<"leído"<<endl;
-
+				
 				Node* nodo = NULL;
 				nodo = offices.search(oficina);
 
@@ -183,22 +183,40 @@ void Principal::loadPackages(char* file){
 					list<Region> regs = nodo->getData().getRegions();
 					esta = false;
 					for(list<Region>::iterator it = regs.begin(); it != regs.end(); it++){
-						if(region.getCode().compare((*it).getCode())==0){
+						if(region == *it){
 							region = *(it);
-							paquete.setRegion(&region);
+							paquete.setRegion(region);
 							esta = true;
 							break;
 						}
 					}
-					if(esta)
-						nodo->getData().addPackage(paquete);
+					if(esta){
+						bool ex = false;
+						queue<Package> cola = nodo->getData().getPackages();
+						Package auxPak;
+						for(int i = 0; i<cola.size();i++){
+							auxPak = cola.front();
+							if(auxPak.getGuiden() == paquete.getGuiden()){
+								ex = true;
+							}
+							cola.pop();
+							cola.push(auxPak);
+						}
+						if(!ex){
+							nodo->getData().addPackage(paquete);
+							cout<<"Paquete con número guía "<<paquete.getGuiden()<<" leído"<<endl;	
+						}else{
+							cout<<"Paquete con número guía "<<paquete.getGuiden()<<" ya existe"<<endl;
+						}
+					}
+
 					else
-						cout<<"El código de la región no existe\n";
+						cout<<"El código de la región no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
 
 
 				}
 				else{
-					cout<<"El código de oficina no existe\n";
+					cout<<"El código de oficina no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
 				}
 
 			}
@@ -208,8 +226,6 @@ void Principal::loadPackages(char* file){
 	}
 	else
 		cout<<"La información desde "<<file<<" no ha podido ser cargada"<<endl;
-
-
 }
 
 //Cargar las oficinas.
@@ -235,18 +251,34 @@ void Principal::loadOffices(char* file){
 				actual.setAddress(line);
 				getline(reader,line);
 				actual.setCity(line);
-				offices.insert( actual );
-				printf("Cargando oficina...\n");
+
+				if(offices.existence(actual) == false){
+					
+					Node* auxiliar = offices.searchGeneral(actual.getCity());
+					if(auxiliar != NULL){
+						auxiliar->insertNode(actual);
+						cout<<"Carganda oficina "<<actual.getCode()<<endl;
+					}
+					else{
+						offices.insert(actual);
+						cout<<"Carganda oficina "<<actual.getCode()<<endl;
+					}
+				}
+				else
+					cout<<"Error en oficina "<<actual.getCode()<<endl;
 			}
 		}
 		reader.close();
 	}
+
+	printf("Oficinas cargadas \n \n");
 }
 
 //Cargar las regiones.
 void Principal::loadRegions(char* file){
 	ifstream reader;
 	Region actual;
+	printf("Cargando regiones...\n");
 	reader.open(file);
 	if(!reader.is_open()){
 		printf("Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n");
@@ -256,18 +288,31 @@ void Principal::loadRegions(char* file){
 		getline(reader,line);	//Se omite la cabecera del archivo.
 		while(!reader.eof()){
 			getline(reader,line,',');
-			printf("Cargando región...\n");
 			actual.setCode(line);
 			getline(reader,line,',');
 			actual.setName(line);
 			getline(reader,line);
+
 			Node* node = offices.find(line);
 			if(node!= NULL){
+				list<Region> regs = node->getData().getRegions();
+				list<Region>::iterator it = regs.begin();
+				bool x = true;
+				for(unsigned int i = 0; i<regs.size(); i++, it++){
+					if(actual.getCode()==(*it).getCode()){
+						cout<<"Región "<<actual.getCode()<<" no fue cargada. "<<endl;
+						x = false;
+					}
+				}
+				if(x){
+
+					cout<<"Región "<<actual.getCode()<<" cargada. "<<endl;
+				}
 				node->getData().addRegion(actual);
 			}
 		}
 	}
-	printf("Regiones cargadas.\n");
+	printf("Regiones cargadas. \n \n");
 	reader.close();
 }
 
@@ -327,7 +372,7 @@ void Principal::regPackages(){
 		for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
 			if(temp.compare((*it).getId())==0){
 				persona = *it;
-				paquete.setSender(&persona);
+				paquete.setSender(persona);
 				esta = true;
 				tempAux = temp;
 				break;
@@ -352,7 +397,7 @@ void Principal::regPackages(){
 			for(list<Person>::iterator it = persons.begin(); it != persons.end(); it++){
 				if(temp.compare((*it).getId())==0){
 					persona = *it;
-					paquete.setReceiver(&persona);
+					paquete.setReceiver(persona);
 					esta = true;
 					break;
 				}
@@ -400,7 +445,7 @@ void Principal::regPackages(){
 		nodoOffice = offices.search(oficina);
 		if(nodoOffice != NULL){
 			esta = true;
-			cout<<"Oficina hallada";
+			cout<<"Oficina hallada\n";
 		}
 
 		if(!esta)
@@ -419,7 +464,7 @@ void Principal::regPackages(){
 		for(list<Region>::iterator it = regs.begin(); it != regs.end(); it++){
 			if(temp.compare((*it).getCode())==0){
 				reg = *it;
-				paquete.setRegion(&reg);
+				paquete.setRegion(reg);
 				esta = true;
 				break;
 			}
@@ -434,9 +479,26 @@ void Principal::regPackages(){
 		}
 	}while(esta ==  false);
 
-	nodoOffice->getData().addPackage(paquete);
-	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
-	paquete.showData();
+	bool ex = false;
+	queue<Package> cola = nodoOffice->getData().getPackages();
+	Package auxPak;
+	for(int i = 0; i<cola.size();i++){
+		auxPak = cola.front();
+		if(auxPak.getGuiden() == paquete.getGuiden()){
+			ex = true;
+		}
+		cola.pop();
+		cola.push(auxPak);
+	}
+	if(!ex){
+		nodoOffice->getData().addPackage(paquete);
+		cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
+		paquete.showData();
+	}
+	else{
+		cout<<endl<<"El paquete con ese número de guía ya existe"<<endl;
+	}
+	
 
 }
 
@@ -545,10 +607,12 @@ void Principal::showPackages(char* codeOf){
 	Office ofAux;
 	ofAux.setCode(codigo);
 	Node* x = offices.search(ofAux);
-	if(x != NULL)
+	if(x != NULL){
+		cout<<"La oficina tiene "<<x->getData().getPackages().size()<<" paquetes\n";
 		x->getData().showPackages();
+	}
 	else
-		cout<<"La oficina con código"<<codigo<<" no existe";
+		cout<<"La oficina con código "<<codigo<<" no existe";
 }
 
 //Mostrar personas.
@@ -565,28 +629,62 @@ void Principal::showRegions(){
 
 //MÉTODOS EXTRA
 void Principal::countPackages(){
-	cout<<"Contando Packages..."<<endl;
+	cout<<"Contando Paquetes..."<<endl;
 
 	list<Office> oficinas = offices.getAllData();
-
 	for(list<Office>::iterator ito = oficinas.begin(); ito != oficinas.end(); ito++){
 		list<Region> regiones = ito->getRegions();
 
 		for(list<Region>::iterator itr = regiones.begin();itr != regiones.end(); itr++){
-			int i = 0;
-			for(list<Package>::iterator itp = ito->getPackages().begin(); itp != ito->getPackages().end(); itp++){
-				if(itr->getCode() == itp->getRegion()->getCode())
-					i++;
-			}
-			if(i>0)
-				cout<<"Hay "<<i<<"paquetes en la oficina "<< ito->getCode()<<
+			int k = 0;
+			queue<Package> cola = ito->getPackages();
+			Package auxPak;
+			for(int i=0;i<cola.size();i++){
+				auxPak = cola.front();
+				if(itr->getCode() == auxPak.getRegion().getCode())
+					k++;
+				cola.pop();
+				cola.push(auxPak);
+			} 
+			if(k>0)
+				cout<<"Hay "<<k<<" paquetes en la oficina "<< ito->getCode()<<
 				" con la region de reparto "<<itr->getCode();
 		}
 	}
 }
 
-void Principal::sendPackages(char codeOf){
-	printf("Esta función no está disponible, para animarnos a terminarla puede donar a paypal.me/Blossom0 \n");
+void Principal::sendPackages(char* codeOf){
+	cout<<"Repartiendo paquetes..."<<endl;
+	
+	Package APack;
+	string codigo = codeOf;
+	Office ofAux;
+	ofAux.setCode(codigo);
+	Node* oficinaGeneral = offices.search(ofAux);
+	if(oficinaGeneral != NULL){
+		if(oficinaGeneral->altura()==1){
+			list<Node*> oficinas =  oficinaGeneral->getDesc();
+			for(list<Node*>::iterator ito = oficinas.begin();ito != oficinas.end(); ito++){
+				queue<Package> cola = (*ito)->getData().getPackages();
+				Package auxPak;
+				for(int i=0;i<cola.size();i++){
+					auxPak = cola.front();
+					if(auxPak.isActive() == false){
+						auxPak.send();
+						cout<<"El paquete "<<auxPak.getGuiden()<<" se entregó\n ";	
+					}
+					cola.pop();
+					cola.push(auxPak);
+				}
+				(*ito)->getData().setPackages(cola);
+			}
+		}
+		else
+			cout<<"no es una oficina general \n";
+	}
+	else{
+		cout<<"Este código no se encuentra en el sistema \n";
+	}
 }
 
 float Principal::toFloat(string a){

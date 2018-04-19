@@ -2,7 +2,6 @@
 
 Office::Office(){
 	this->regions.clear();
-	this->packages.clear();
 }
 
 void Office::setCode(string ncode){
@@ -31,17 +30,19 @@ void Office::addRegion(Region reg){
 	this->regions.push_back(reg);
 }
 
-void Office::setPackages(list <Package> paq){
+void Office::setPackages(queue <Package> paq){
 	this->packages = paq;
 }
 
 void Office::addPackage(Package paq){
-	this->packages.push_back(paq);
+	this->packages.push(paq);
 }
 
-void Office::addPackages(list <Package> paq){
-	for(list<Package>::iterator it=paq.begin(); it != paq.end() ;it++){
-		this->packages.push_back((*it));
+void Office::addPackages(queue <Package> paq){
+	int a = paq.size();
+	for(int i=0;i<a;i++){
+		this->packages.push(paq.front());
+		paq.pop();
 	}
 }
 
