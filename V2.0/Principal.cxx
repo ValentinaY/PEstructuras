@@ -89,8 +89,9 @@ void Principal::loadPackages(char* file){
 		getline(entrada, linea);
 
 		//Id sender
-		getline(entrada, linea, ',');
+		
 		while(!entrada.eof()){
+			getline(entrada, linea, ',');
 			continuar = true;
 			Package paquete;
 			Person persona;
@@ -167,12 +168,9 @@ void Principal::loadPackages(char* file){
 				region.setCode(linea);
 
 			//Nombre Region
-			getline(entrada, linea, ',');
+			getline(entrada, linea);
 			if(continuar)
 				region.setName(linea);
-
-			//Id Sender / EOF
-			getline(entrada, linea, ',');
 
 			if(continuar){
 				
