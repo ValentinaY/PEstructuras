@@ -54,7 +54,7 @@ public:
 		return active;
 	}
 
-	void sendPackage();
+	void send();
 
 	void showData(){
 		cout<<"Id. Remitente: "<<sender->getId()<<endl;

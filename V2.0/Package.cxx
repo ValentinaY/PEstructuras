@@ -28,7 +28,7 @@ void Package::setType(string ntype){
 void Package::setGuiden(string nguiden){
 	this->guideN=nguiden;
 }
-void Package::sendPackage(){
+void Package::send(){
 	active = true;
 }
 
