@@ -22,11 +22,6 @@ int main(){
 	bool finished=false;
 	//Esto puede funcionar con un break. Pero, sería una mala práctica, etc. y en el taller de anagramas se usaba así.22
 
-		principal.loadPersons("per");
-		principal.loadOffices("ofi");
-		principal.loadRegions("reg");
-		principal.loadPackages("pak");
-
 	while(!finished){
 		road = new char[106]; read= new char[6]; file = new char[100];
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
