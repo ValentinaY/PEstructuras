@@ -15,6 +15,7 @@ private:
 	float weight;
 	string type;
 	string guideN;
+	bool active;
 
 public:
 	Package();
@@ -49,6 +50,12 @@ public:
 	}
 	void setGuiden(string nguide);
 
+	bool isActive(){
+		return active;
+	}
+
+	void sendPackage();
+
 	void showData(){
 		cout<<"Id. Remitente: "<<sender->getId()<<endl;
 		cout<<"Id. Destinatario: "<<receiver->getId()<<endl;
@@ -57,7 +64,6 @@ public:
 		cout<<"Tipo: "<<type<<endl;
 		cout<<"Número Guía: "<<guideN<<endl;
 	}
-
 };
 
 #endif

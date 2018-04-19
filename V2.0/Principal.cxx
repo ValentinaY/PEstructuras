@@ -260,11 +260,10 @@ void Principal::loadRegions(char* file){
 			getline(reader,line,',');
 			actual.setName(line);
 			getline(reader,line);
-			Node* node = Principal::offices.find(line);
+			Node* node = offices.find(line);
 			if(node!= NULL){
 				node->getData().addRegion(actual);
 			}
-			//Principal::addRegion(actual,line); r office
 		}
 	}
 	printf("Regiones cargadas.\n");
@@ -297,7 +296,7 @@ void Principal::regOffices(){
 
 	Node* auxiliar = offices.searchGeneral(newOffice.getCity());
 	if(auxiliar != NULL){
-		auxiliar->insertarNode(newOffice);
+		auxiliar->insertNode(newOffice);
 		cout<<"La información ha sido cargada exitosamente así:"<<endl;
 		newOffice.showDataR();
 	}
@@ -563,17 +562,7 @@ void Principal::showRegions(){
 	offices.showRegions();
 }
 
-//MÉTODOS DE AGREGACIÓN-------------------------------------------------------------------------------------------
-//Agregar región.
-/*
-void Principal::addRegion(Region r, string office){
-	Node* node = Principal::offices.find(office);
-	if(node!= NULL){
-		string s= node->getData().getCode();
-		node->getData().addRegion(r);
-	}
-}*/
-
+//MÉTODOS EXTRA
 void Principal::countPackages(){
 	cout<<"Contando Packages..."<<endl;
 

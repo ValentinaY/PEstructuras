@@ -42,7 +42,7 @@ void Tree::setRoot(Node* nraiz) {
 bool Tree::insert(Office& padre, Office& n) {
 	bool ins = false;
 	if (!this->isEmpty()) {
-		ins = this->root->insertarNode(padre,n);
+		ins = this->root->insertNode(padre,n);
 	}
 	return ins;
 }
@@ -52,7 +52,7 @@ bool Tree::insert(Office& padre, Office& n) {
 bool Tree::insert(Office& n) {
 
 	if (!this->isEmpty()) {
-		this->root->insertarNode(n);
+		this->root->insertNode(n);
 		return true;
 	}
 	else{
@@ -70,7 +70,7 @@ bool Tree::erase(Office& n) {
 		root=NULL;
 		return true;
 	}
-	return root->eliminarNode(n);
+	return root->eraseNode(n);
 }
 
 // ------------------------------------------------------------------------
@@ -81,7 +81,7 @@ Node* Tree::search(Office& val) {
 
 //-------------------------------------------------------------------------
 Node* Tree::find(string code){
-	return root->findnode(code);
+	return root->findNode(code);
 }
 
 // ------------------------------------------------------------------------

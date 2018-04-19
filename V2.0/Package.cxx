@@ -7,6 +7,7 @@ Package::Package(){
 	receiver = NULL;
 	region = NULL;
 	weight = -1;
+	active = false;
 }
 
 void Package::setSender(Person* nsender){
@@ -26,5 +27,8 @@ void Package::setType(string ntype){
 }
 void Package::setGuiden(string nguiden){
 	this->guideN=nguiden;
+}
+void Package::sendPackage(){
+	active = true;
 }
 

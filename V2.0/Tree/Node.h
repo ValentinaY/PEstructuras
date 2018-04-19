@@ -27,14 +27,14 @@ public:
 	void adicionarDesc(Office& nval);
 	bool eliminarDesc(Office& val);
 	Node* buscarDesc(Office& val);
-	Node* findnode(string code);
+	Node* findNode(string code);
 	void limpiarLista();
 	unsigned int numDesc();
 
 	//operaciones para arbol
-	bool insertarNode(Office& padre, Office& n);
-	bool insertarNode(Office& n);
-	bool eliminarNode(Office& n);
+	bool insertNode(Office& padre, Office& n);
+	bool insertNode(Office& n);
+	bool eraseNode(Office& n);
 	Node* buscarNode(Office& val);
 	bool buscarExistenciaNode(Office& val);
 	int altura();

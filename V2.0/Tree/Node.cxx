@@ -47,7 +47,7 @@ void Node::setDesc(TList& listaDesc) {
 
 void Node::adicionarDesc(Office& nval) {
 	Node *nNode = new Node;
-	nNode->dato = nval;	
+	nNode->dato = nval;
 	this->desc.push_back(nNode);
 }
 
@@ -85,7 +85,7 @@ Node* Node::buscarDesc(Office& val) {
 }
 
 //-------------------------------------------------------------------------
-Node* Node::findnode(string code){
+Node* Node::findNode(string code){
 	Node *p_it = NULL;
 	string codef=code;
 	if( codef.size() >=8  && this->getData().getCode().size() >= 8 ){
@@ -95,7 +95,7 @@ Node* Node::findnode(string code){
 		else{
 			typename TList::iterator it;
 			for (it = this->desc.begin(); it != this->desc.end(); it++) {
-				p_it = (*it)->findnode(code);
+				p_it = (*it)->findNode(code);
 				if (p_it != NULL){
 					break;
 				}
@@ -120,7 +120,7 @@ unsigned int Node::numDesc() {
 using namespace std;
 // ------------------------------------------------------------------------
 
-bool Node::insertarNode(Office& padre, Office& n) {
+bool Node::insertNode(Office& padre, Office& n) {
 	bool exit= false;
 
 	if(padre == this->getData()){
@@ -132,13 +132,13 @@ bool Node::insertarNode(Office& padre, Office& n) {
 	}
 	else
 		for(typename TList::iterator it = this->desc.begin(); !exit && it != this->desc.end();it++)
-			exit = (*it)->insertarNode(padre,n);
+			exit = (*it)->insertNode(padre,n);
 	return exit;
 }
 
 // ------------------------------------------------------------------------
 
-bool Node::insertarNode(Office& n) {
+bool Node::insertNode(Office& n) {
 
 	Node *nNode = new Node;
 	nNode->dato = n;
@@ -150,7 +150,7 @@ bool Node::insertarNode(Office& n) {
 // ------------------------------------------------------------------------
 //pista: recursividad
 
-bool Node::eliminarNode(Office& n) {
+bool Node::eraseNode(Office& n) {
 	bool i = false;
 
 	for (typename TList::iterator it = this->desc.begin(); it != this->desc.end() && (!i); it++){
@@ -160,7 +160,7 @@ bool Node::eliminarNode(Office& n) {
 			break;
 		}
 		if(!i){
-			i =  (*it)->eliminarNode(n);
+			i =  (*it)->eraseNode(n);
 		}
 	}
 	return i;

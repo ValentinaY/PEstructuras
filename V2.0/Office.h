@@ -16,6 +16,7 @@ protected:
 	string city;
 	list<Region> regions;
 	list<Package> packages;
+
 public:
 
 	Office();
@@ -88,6 +89,7 @@ public:
 			it->showData();
 		}
 	}
+
 
 	bool operator == (Office o){
 		return codeID == o.getCode();
