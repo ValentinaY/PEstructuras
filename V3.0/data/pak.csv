@@ -1,0 +1,5 @@
+cedulaRemitente,cedulaDestinatario,peso,tipoContenido,numGuia,codigoOficina,nombreOficina,direccionOficina,ciudadOficina,codigoRegion,nombreRegion
+3789856342,3456673356,2000,prenda de vestir,RTY657,CHA98765,Oficina Chapinero,Carrera 7- #46-34,Bogotá,MAR3445,Marly
+3456673356,3789856342,5000,calefactor electrico,OPQ456,TEU65356,Oficina Teusaquillo,Carrera 30 #12-10,Bogotá,BEL9755,Teusaquillo
+88288425383,42752076851,880,Consola PS4,NHG334,CHA98765,Oficina Chapinero,Cra 122 #12-12,Bogotá,ECA9245,El Castillo
+8698943991,2144908119,1348,Libros,BYY900,TEU65356,Oficina Teusaquillo,Cra 12 #12-134,Bogotá,LSO9715,La soledad
