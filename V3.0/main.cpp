@@ -63,6 +63,11 @@ int main(){
 			principal.loadRegions(file);
 			break;
 		}
+		case str2int("carco"):{
+			cout<<"Comando fallido, contacte un administrador del sistema\n";
+			//principal.loadConection(file);
+			break;
+		}
 
 		case str2int("regpe"):{
 			principal.regPersons();
@@ -88,7 +93,11 @@ int main(){
 			principal.sendPackages(file);
 			break;
 		}
-
+		case str2int("rutre"):{
+			cout<<"Comando fallido, contacte un administrador del sistema\n";
+//			principal.sendRoute(file);
+			break;
+		}
 		case str2int("mospe"):{
 			principal.showPersons();
 			break;
@@ -127,6 +136,7 @@ void showhelp(){
 	cout<<" carpa [nombre_de_archivo]	\t Agrega los paquetes al sistema.\n";
 	cout<<" carof [nombre_de_archivo]	\t Agrega las oficinas al sistema.\n";
 	cout<<" carre [nombre_de_archivo]	\t Agrega las regiones al sistema.\n";
+	cout<<" carco [nombre_de_archivo]	\t Agrega conexiones al sistema.\n";
 
 	cout<<">>> Carga por registro:\n";
 	cout<<" regpe	\t Registra personas en el sistema.\n";
@@ -137,6 +147,7 @@ void showhelp(){
 	cout<<">>> Manejo de paquetes:\n";
 	cout<<" cntpa	\t Cuenta todos los paquetes sin entregar.\n";
 	cout<<" entpa [codigo_oficina]	\t Entrega los paquetes de una oficina.\n";
+	cout<<" rutre [cod_ofi_origen] [cod_ofi_destino] Muestra la ruta más corta entre las dos oficinas.\n";
 
 	cout<<">>> Ver datos en sistema:\n";
 	cout<<" mospe	\t Muestra las personas en el sistema.\n";

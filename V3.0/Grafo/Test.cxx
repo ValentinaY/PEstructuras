@@ -1,6 +1,6 @@
 #include "Graph.h"
 #include <iostream>
-
+/*
 int main(int argc, char const *argv[]) {
   Graph<char> *grafo= new Graph<char>(true);
   grafo->addVertex('A');
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
   std::cout<<std::endl;
   grafo->breadthfirstsearch('B');
   std::cout<<std::endl;
-  */
+ //
   grafo->addEdge('A','B', 4);
   grafo->addEdge('A','D', 4);
   grafo->addEdge('B','B', 1);
@@ -42,3 +42,4 @@ int main(int argc, char const *argv[]) {
   grafo->dijkstra('E','C');
   return 0;
 }
+*/

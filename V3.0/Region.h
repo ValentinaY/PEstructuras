@@ -2,7 +2,6 @@
 #define Region_H
 
 #include <string>
-#include <list>
 #include <iostream>
 
 using namespace std;

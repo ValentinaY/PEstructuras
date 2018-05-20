@@ -48,7 +48,7 @@ public:
 	// Metodos Oficina
 	Node* searchGeneral(string ciudad);
 	void showRegions();
-	list<Office> getAllData(list<Office> run);
+	vector<Office> getAllData(vector<Office> run);
 
 protected:
 	Office dato;

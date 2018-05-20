@@ -2,6 +2,7 @@
 
 Office::Office(){
 	this->regions.clear();
+	this->packages.clear();
 }
 
 void Office::setCode(string ncode){
@@ -16,13 +17,13 @@ void Office::setAddress(string naddress){
 void Office::setCity(string ncity){
 	this->city=ncity;
 }
-void Office::setRegions(list <Region> reg){
+void Office::setRegions(vector <Region> reg){
 	this->regions = reg;
 }	
 
-void Office::addRegions(list <Region> reg){
-	for(list<Region>::iterator it=reg.begin(); it != reg.end() ;it++){
-		this->regions.push_back((*it));
+void Office::addRegions(vector <Region> reg){
+	for(int i=0;i<reg.size();i++){
+		this->regions.push_back(reg[i]);
 	}
 }
 
@@ -30,19 +31,17 @@ void Office::addRegion(Region reg){
 	this->regions.push_back(reg);
 }
 
-void Office::setPackages(queue <Package> paq){
+void Office::setPackages(vector <Package> paq){
 	this->packages = paq;
 }
 
 void Office::addPackage(Package paq){
-	this->packages.push(paq);
+	this->packages.push_back(paq);
 }
 
-void Office::addPackages(queue <Package> paq){
-	int a = paq.size();
-	for(int i=0;i<a;i++){
-		this->packages.push(paq.front());
-		paq.pop();
+void Office::addPackages(vector <Package> paq){
+	for(int i=0;i<paq.size();i++){
+		this->packages.push_back(paq[i]);
 	}
 }
 

@@ -64,7 +64,7 @@ public:
 		cout<<"\tTipo: "<<type<<endl;
 		cout<<"\tNúmero Guía: "<<guideN<<endl;
 		if(active)
-			cout<<"\t El paquete ya fue repartido"<<endl;
+			cout<<"\t El paquete fue repartido"<<endl;
 	}
 };
 

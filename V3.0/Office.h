@@ -3,8 +3,7 @@
 
 #include "Region.h"
 #include "Package.h"
-#include <list>
-#include <queue>
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -15,8 +14,8 @@ protected:
 	string name;
 	string address;
 	string city;
-	list<Region> regions;
-	queue<Package> packages;
+	vector<Region> regions;
+	vector<Package> packages;
 
 public:
 
@@ -42,21 +41,21 @@ public:
 	}
 	void setCity(string ncity);
 
-	list<Region> getRegions(){
+	vector<Region> getRegions(){
 		return regions;
 	}
 
-	void addRegions(list <Region> reg);
+	void addRegions(vector <Region> reg);
 	void addRegion(Region nregion);
-	void setRegions(list <Region> reg);
+	void setRegions(vector <Region> reg);
 
-	queue<Package> getPackages(){
+	vector<Package> getPackages(){
 		return packages;
 	}
 
-	void setPackages(queue <Package> paq);
+	void setPackages(vector <Package> paq);
 	void addPackage(Package paq);
-	void addPackages(queue <Package> paq);
+	void addPackages(vector <Package> paq);
 
 	void showData(){
 		cout<<"Código: "<<codeID<<endl;
@@ -75,24 +74,21 @@ public:
 		if(regions.empty())
 			cout<<"No tiene regiones asociadas"<<endl;
 		else
-			for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
-				cout<<"\t Código: "<<it->getName()<<endl;
+			for(int i=0;i<(int)regions.size();i++){
+				cout<<"\t Código: "<<regions[i].getName()<<endl;
 			}
 		cout<<endl;
 	}
 
 	void showRegions(){
-		for(list<Region>::iterator it=regions.begin(); it != regions.end() ;it++){
-			it->showData();
+		for(int i = 0;i<(int)regions.size();i++){
+			regions[i].showData();
 		}
 	}
 
 	void showPackages(){
-		for(int i = 0; i< packages.size();i++){
-			Package aux = packages.front();
-			aux.showData();
-			packages.pop();
-			packages.push(aux);
+		for(int i = 0; i<(int)packages.size();i++){
+			packages[i].showData();
 		}
 	}
 

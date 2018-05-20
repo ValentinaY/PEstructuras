@@ -327,7 +327,7 @@ void Node::showRegions(){
 		this->dato.showRegions();
 }
 
-list<Office> Node::getAllData(list<Office> run){
+vector<Office> Node::getAllData(vector<Office> run){
 
 	run.push_back(this->dato);
 	if (this->numDesc() != 0) {

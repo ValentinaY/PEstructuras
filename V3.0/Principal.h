@@ -8,7 +8,7 @@
 //Clase principal, equivalente a Empresa.
 class Principal{
 protected:
-	list<Person> persons;
+	vector<Person> persons;
 	Tree offices;
 	Node raiz;
 public:
@@ -30,7 +30,7 @@ public:
 	void regPersons();
 	void regRegions();
 	void showOffices();
-	void showPackages(char* codeOf); //TODO
+	void showPackages(char* codeOf);
 	void showPersons();
 	void showRegions();
  	void countPackages();
@@ -39,7 +39,7 @@ public:
 
 	float toFloat(string a);
 
-	list<Person> getpersons(){
+	vector<Person> getpersons(){
 		return persons;
 	}
 	Tree getoffices(){

@@ -161,8 +161,8 @@ void Tree::showRegions(){
 }
 
 
-list<Office> Tree::getAllData(){
-	list<Office> run;
+vector<Office> Tree::getAllData(){
+	vector<Office> run;
 	run.clear();
 	run = this->root->getAllData(run);
 	return run;
