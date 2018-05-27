@@ -1,7 +1,7 @@
 all: main
 
 main: Person.cxx Package.cxx Region.cxx Office.cxx Principal.cxx main.cpp Tree/Node.cxx Tree/Tree.cxx 
-	g++ -std=c++11 -o main Person.cxx Package.cxx Region.cxx Office.cxx Principal.cxx main.cpp Tree/Node.cxx Tree/Tree.cxx && ./main
+	clear && g++ -std=c++11 -o main Person.cxx Package.cxx Region.cxx Office.cxx Principal.cxx main.cpp Tree/Node.cxx Tree/Tree.cxx
 
 rmaall:
 	rm main
