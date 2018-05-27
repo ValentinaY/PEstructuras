@@ -157,3 +157,5 @@ void showhelp(){
 
 	cout<<"salir 	\t Salir del sistema.\n";
 }
+
+// TODO: De preferencia arreglar el registrar region

@@ -287,11 +287,14 @@ void Principal::loadRegions(char* file){
 			actual.setCode(line);
 			getline(reader,line,',');
 			actual.setName(line);
-			getline(reader,line);
+			getline(reader,line,',');
 
 			Office aux;
 			aux.setCode(line);
 			long index = offices.getIndexOf(aux);
+			getline(reader,line);
+			int auxint = stoi(line);
+			actual.setDistanceUp(auxint);
 			if(index > -1){
 				Node* reg = offices.getNode(index).getRegions().search(actual);
 				bool x = true;
@@ -303,6 +306,7 @@ void Principal::loadRegions(char* file){
 					}
 				}
 				if(!x){
+
 					cout<<"Región "<<actual.getCode()<<" cargada. "<<endl;
 					offices.getNode(index).addRegion(actual,true);
 					leidos++;
@@ -577,6 +581,10 @@ void Principal::regRegions(){
 	cout<<"Código: ";
 	cin>> aux;
 	newRegion.setCode(aux);
+	int auxint;
+	cout<<"Distancia hasta la oficina: ";
+	cin>> auxint;
+	newRegion.setDistanceUp(auxint);
 
 	Node* reg = office->getRegions().search(newRegion);
 	if(reg != NULL){
@@ -621,18 +629,24 @@ void Principal::showPersons(){
 
 //Mostrar regiones.
 void Principal::showRegions(){
-//	offices.showRegions();
+	vector<Office> all = offices.getVertexes();
+	for(int i=0;i<all.size();i++){
+		all[i].getRegions().nivelOrden();
+	}
 }
 
 //MÉTODOS EXTRA
-void Principal::countPackages(){/*
+void Principal::countPackages(){
 	cout<<"Contando Paquetes..."<<endl;
 
-	vector<Office> oficinas = offices.getAllData();
+	vector<Office> oficinas = offices.getVertexes();
 	for(unsigned int i=0;i<oficinas.size();i++){
-		vector<Region> regiones = oficinas[i].getRegions();
+		vector<Region> regiones;
+		vector<Region> aux = oficinas[i].getRegions().getAllData();
+		for(unsigned int k=0;k<aux.size();k++)
+			regiones.push_back(aux[k]);
 
-		for(unsigned int j;j<regiones.size();j++){
+		for(unsigned int j=0;j<regiones.size();j++){
 			int k = 0;
 			vector<Package> paks = oficinas[i].getPackages();
 			for(unsigned int k=0;k<paks.size();k++){
@@ -643,7 +657,7 @@ void Principal::countPackages(){/*
 				cout<<"Hay "<<k<<" paquetes en la oficina "<< oficinas[i].getCode()<<
 				" con la region de reparto "<<regiones[j].getCode();
 		}
-	}*/
+	}
 }
 
 void Principal::sendPackages(char* codeOf){

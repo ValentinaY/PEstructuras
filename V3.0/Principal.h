@@ -44,39 +44,3 @@ public:
 
 #endif
 
-/*
-long index = offices.getIndexOf(oficina);
-if(index > -1){
-	Node* reg = offices.getNode(index).getRegions().search(region);
-	if(reg!=NULL){
-		paquete.setRegion(reg->getData());
-		esta = true;
-	}
-
-	if(esta){
-		bool ex = false;
-		vector<Package> paks = offices.getNode(index).getPackages();
-		for(int i = 0; i< (int) paks.size();i++){
-			if(paks[i].getGuiden() == paquete.getGuiden()){
-				ex = true;
-				break;
-			}
-		}
-		if(!ex){
-			offices.getNode(index).addPackage(paquete);
-			cout<<"Paquete con número guía "<<paquete.getGuiden()<<" leído"<<endl;
-			leidos++;
-		}else{
-			cout<<"Paquete con número guía "<<paquete.getGuiden()<<" ya existe"<<endl;
-		}
-	}
-
-	else
-		cout<<"El código de la región no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
-
-
-}
-else{
-	cout<<"El código de oficina no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
-}
-*/
