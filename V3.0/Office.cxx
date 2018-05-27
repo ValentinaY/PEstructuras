@@ -1,7 +1,6 @@
 #include "Office.h"
 
 Office::Office(){
-	this->regions.clear();
 	this->packages.clear();
 }
 
@@ -17,19 +16,19 @@ void Office::setAddress(string naddress){
 void Office::setCity(string ncity){
 	this->city=ncity;
 }
-void Office::setRegions(vector <Region> reg){
+void Office::setRegions(Tree reg){
 	this->regions = reg;
 }	
 
-void Office::addRegions(vector <Region> reg){
-	for(int i=0;i<reg.size();i++){
-		this->regions.push_back(reg[i]);
-	}
+
+void Office::addRegion(Region reg, Region padre){
+	this->regions.insert(padre,reg);
 }
 
-void Office::addRegion(Region reg){
-	this->regions.push_back(reg);
+void Office::addRegion(Region reg, bool sig){
+	this->regions.insert(reg);
 }
+
 
 void Office::setPackages(vector <Package> paq){
 	this->packages = paq;

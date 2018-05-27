@@ -11,7 +11,7 @@ Tree::Tree() : root(NULL){
 
 // ------------------------------------------------------------------------
 
-Tree::Tree(const Office& val) {
+Tree::Tree(const Region& val) {
 	Node *nNode = new Node(val);
 	this->root = nNode;
 }
@@ -39,7 +39,15 @@ void Tree::setRoot(Node* nraiz) {
 
 // ------------------------------------------------------------------------
 
-bool Tree::insert(Office& padre, Office& n) {
+void Tree::setRoot(Region raiz) {
+	Node* nraiz;
+	nraiz->setData(raiz);
+	this->root = nraiz;
+}
+
+// ------------------------------------------------------------------------
+
+bool Tree::insert(Region& padre, Region& n) {
 	bool ins = false;
 	if (!this->isEmpty()) {
 		ins = this->root->insertNode(padre,n);
@@ -49,7 +57,7 @@ bool Tree::insert(Office& padre, Office& n) {
 
 // ------------------------------------------------------------------------
 
-bool Tree::insert(Office& n) {
+bool Tree::insert(Region& n) {
 
 	if (!this->isEmpty()) {
 		this->root->insertNode(n);
@@ -65,7 +73,7 @@ bool Tree::insert(Office& n) {
 
 // ------------------------------------------------------------------------
 
-bool Tree::erase(Office& n) {
+bool Tree::erase(Region& n) {
 	if(root->getData() == n){
 		root=NULL;
 		return true;
@@ -75,7 +83,7 @@ bool Tree::erase(Office& n) {
 
 // ------------------------------------------------------------------------
 
-Node* Tree::search(Office& val) {
+Node* Tree::search(Region& val) {
 	return root->buscarNode(val);
 }
 
@@ -86,7 +94,7 @@ Node* Tree::find(string code){
 
 // ------------------------------------------------------------------------
 
-bool Tree::existence(Office& val) {
+bool Tree::existence(Region& val) {
 	return root->buscarExistenciaNode(val);
 }
 
@@ -149,20 +157,10 @@ void Tree::nivelOrden() {
 }
 
 
-// Métodos de oficinas
+// Métodos de regiones
 
-// ------------------------------------------------------------------------
-Node* Tree::searchGeneral(string ciudad){
-	return this->root->searchGeneral(ciudad);
-}
-
-void Tree::showRegions(){
-	this->root->showRegions();
-}
-
-
-vector<Office> Tree::getAllData(){
-	vector<Office> run;
+vector<Region> Tree::getAllData(){
+	vector<Region> run;
 	run.clear();
 	run = this->root->getAllData(run);
 	return run;

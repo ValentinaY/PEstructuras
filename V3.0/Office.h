@@ -3,6 +3,7 @@
 
 #include "Region.h"
 #include "Package.h"
+#include "Tree/Tree.h"
 #include <vector>
 #include <iostream>
 
@@ -14,7 +15,7 @@ protected:
 	string name;
 	string address;
 	string city;
-	vector<Region> regions;
+	Tree regions;
 	vector<Package> packages;
 
 public:
@@ -41,13 +42,13 @@ public:
 	}
 	void setCity(string ncity);
 
-	vector<Region> getRegions(){
+	Tree getRegions(){
 		return regions;
 	}
 
-	void addRegions(vector <Region> reg);
-	void addRegion(Region nregion);
-	void setRegions(vector <Region> reg);
+	void addRegion(Region nregion, Region padre);
+	void addRegion(Region nregion, bool sig);
+	void setRegions(Tree reg);
 
 	vector<Package> getPackages(){
 		return packages;
@@ -71,18 +72,22 @@ public:
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Regiones :"<<endl;
-		if(regions.empty())
+		if(regions.isEmpty())
 			cout<<"No tiene regiones asociadas"<<endl;
-		else
-			for(int i=0;i<(int)regions.size();i++){
-				cout<<"\t Código: "<<regions[i].getName()<<endl;
+		else{
+			vector<Region> regs = regions.getAllData();
+			for(unsigned int i=0;i< regs.size();i++){
+				cout<<"\t Código: "<<regs[i].getName()<<endl;
 			}
+		}
+
 		cout<<endl;
 	}
 
 	void showRegions(){
-		for(int i = 0;i<(int)regions.size();i++){
-			regions[i].showData();
+		vector<Region> regs = regions.getAllData();
+		for(int i = 0;i<(int)regs.size();i++){
+			regs[i].showData();
 		}
 	}
 

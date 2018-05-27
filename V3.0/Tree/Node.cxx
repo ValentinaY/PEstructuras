@@ -11,23 +11,20 @@ Node::Node() {
 
 // ------------------------------------------------------------------------
 
-Node::Node(const Office& val) {
+Node::Node(const Region& val) {
 	this->dato = val;
 	this->desc.clear();
 }
 
 // ------------------------------------------------------------------------
 
-Office& Node::getData() {
+Region& Node::getData() {
 	return this->dato;
 }
 
-Office Node::getdata(){
-	return this->dato;
-}
 // ------------------------------------------------------------------------
 
-void Node::setData(Office& val) {
+void Node::setData(Region& val) {
 	this->dato = val;
 }
 
@@ -45,7 +42,7 @@ void Node::setDesc(TList& listaDesc) {
 
 // ------------------------------------------------------------------------
 
-void Node::adicionarDesc(Office& nval) {
+void Node::adicionarDesc(Region& nval) {
 	Node *nNode = new Node;
 	nNode->dato = nval;
 	this->desc.push_back(nNode);
@@ -53,7 +50,7 @@ void Node::adicionarDesc(Office& nval) {
 
 // ------------------------------------------------------------------------
 
-bool Node::eliminarDesc(Office& val) {
+bool Node::eliminarDesc(Region& val) {
 	bool i = false;
 	if(this->dato == val){
 		this->desc.clear();
@@ -67,7 +64,7 @@ bool Node::eliminarDesc(Office& val) {
 
 // ------------------------------------------------------------------------
 
-Node* Node::buscarDesc(Office& val) {
+Node* Node::buscarDesc(Region& val) {
 	Node *p_it = NULL;
 
 	if(this->dato == val){
@@ -88,20 +85,19 @@ Node* Node::buscarDesc(Office& val) {
 Node* Node::findNode(string code){
 	Node *p_it = NULL;
 	string codef=code;
-	if( codef.size() >=8  && this->getData().getCode().size() >= 8 ){
-		if( codef.compare(0, 8,this->getData().getCode()) == 0 ){
-			p_it = this;
-		}
-		else{
-			typename TList::iterator it;
-			for (it = this->desc.begin(); it != this->desc.end(); it++) {
-				p_it = (*it)->findNode(code);
-				if (p_it != NULL){
-					break;
-				}
+	if( codef.compare(this->getData().getCode()) == 0 ){
+		p_it = this;
+	}
+	else{
+		typename TList::iterator it;
+		for (it = this->desc.begin(); it != this->desc.end(); it++) {
+			p_it = (*it)->findNode(code);
+			if (p_it != NULL){
+				break;
 			}
 		}
 	}
+
 	return p_it;
 }
 
@@ -120,7 +116,7 @@ unsigned int Node::numDesc() {
 using namespace std;
 // ------------------------------------------------------------------------
 
-bool Node::insertNode(Office& padre, Office& n) {
+bool Node::insertNode(Region& padre, Region& n) {
 	bool exit= false;
 
 	if(padre == this->getData()){
@@ -138,7 +134,7 @@ bool Node::insertNode(Office& padre, Office& n) {
 
 // ------------------------------------------------------------------------
 
-bool Node::insertNode(Office& n) {
+bool Node::insertNode(Region& n) {
 
 	Node *nNode = new Node;
 	nNode->dato = n;
@@ -150,7 +146,7 @@ bool Node::insertNode(Office& n) {
 // ------------------------------------------------------------------------
 //pista: recursividad
 
-bool Node::eraseNode(Office& n) {
+bool Node::eraseNode(Region& n) {
 	bool i = false;
 
 	for (typename TList::iterator it = this->desc.begin(); it != this->desc.end() && (!i); it++){
@@ -169,7 +165,7 @@ bool Node::eraseNode(Office& n) {
 
 // ------------------------------------------------------------------------
 
-Node* Node::buscarNode(Office& val) {
+Node* Node::buscarNode(Region& val) {
 	Node *p_it = NULL;
 
 	if(this->getData() == val){
@@ -187,7 +183,7 @@ Node* Node::buscarNode(Office& val) {
 
 // ------------------------------------------------------------------------
 
-bool Node::buscarExistenciaNode(Office& val) {
+bool Node::buscarExistenciaNode(Region& val) {
 	bool be = false;
 
 	if(this->getData() == val){
@@ -286,12 +282,9 @@ void Node::nivelOrden(int nivel, int lvActual) {
 			(*it)->nivelOrden(nivel, lvActual+1);
 		}
 	}
-	else if (nivel == lvActual){
-		if(altura() == 1)
-			this->dato.showData();
-		else if(altura() ==0)
-			this->dato.showDataR();
-	}
+	else if (nivel == lvActual)
+		this->dato.showData();
+
 }
 
 void Node::nivelOrdenR(int nivel, int lvActual) {
@@ -302,32 +295,13 @@ void Node::nivelOrdenR(int nivel, int lvActual) {
 		}
 	}
 	else if (nivel == lvActual){
-		this->dato.showDataR();
+		this->dato.showData();
 		//		std::cout<<this->dato.getCode()<<"\t";
 	}
 }
 
-Node* Node::searchGeneral(string ciudad){
-	for (TList::iterator it = desc.begin(); it != desc.end(); it++) {
-		if((*it)->getData().getCity() == ciudad){
-			return *it;
-		}
-	}
-	return NULL;
-}
 
-void Node::showRegions(){
-	if (this->numDesc() != 0) {
-		typename TList::iterator it;
-		for (it = desc.begin(); it != desc.end(); it++) {
-			(*it)->showRegions();
-		}
-	}
-	if(this->dato.getCode()!="Principal")
-		this->dato.showRegions();
-}
-
-vector<Office> Node::getAllData(vector<Office> run){
+vector<Region> Node::getAllData(vector<Region> run){
 
 	run.push_back(this->dato);
 	if (this->numDesc() != 0) {

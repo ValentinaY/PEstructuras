@@ -72,6 +72,17 @@ bool Graph<V, C>::deleteEdge(const long& a, const long& b) {
 
 *************************************************************/
 template<class V, class C>
+bool Graph<V, C>::vertexExist(V& a)  {
+	for(unsigned int i=0;i<this->vertices.size();i++){
+		if(vertices[i] == a){
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<class V, class C>
 const bool Graph<V, C>::edgeExist(const long& a, const long& b) const {
 	typename AdjacencyMatrix::const_iterator row = this->adjacencyMatrix.find(a);
 	if(row != this->adjacencyMatrix.end()){
@@ -95,12 +106,12 @@ const long Graph<V, C>::getIndexOf(const V& vertex) {
 	if(it != this->vertices.end()){
 		return (long) std::distance(this->vertices.begin(), it);
 	}
-	throw std::domain_error("\nERROR: The vertex isn't exists.\n\n");
+	return -1;
 }
 
 template<class V, class C>
-const V& Graph<V, C>::getNode(const long& index) {
-	if(index < this->vertices.size()) {
+V& Graph<V, C>::getNode(const long& index) {
+	if((unsigned int)index < this->vertices.size()) {
 		return this->vertices[index];
 	}
 	throw std::domain_error("\nERROR: The vertex isn't exists.\n\n");
@@ -109,6 +120,11 @@ const V& Graph<V, C>::getNode(const long& index) {
 template<class V, class C>
 const int Graph<V, C>::getNumberOfVertices() const {
 	return this->vertices.size();
+}
+
+template<class V, class C>
+std::vector<V>& Graph<V, C>::getVertexes(){
+	return this->vertices;
 }
 
 /*************************************************************
@@ -417,8 +433,7 @@ bool Graph<V, C>::euler(std::vector<std::vector<bool> > bools, long suma, long i
 		return true;
 	}
 	for(long j = 0;j<this->vertices.size();j++){
-		if(i == j);
-		else{
+		if(i != j){
 			if(bools[i][j]){
 				bools[i][j] = false;
 				bools[j][i] = false;
@@ -434,4 +449,10 @@ bool Graph<V, C>::euler(std::vector<std::vector<bool> > bools, long suma, long i
 		}
 	}
 	return false;
+}
+
+
+template<class V, class C>
+int Graph<V, C>::size(){
+	return vertices.size();
 }

@@ -2,8 +2,9 @@
 #define NODE_H
 
 #include <iostream>
+#include <vector>
 #include <list>
-#include "../Office.h"
+#include "../Region.h"
 
 class Node {
 public:
@@ -13,30 +14,30 @@ public:
 public:
 	//constructores
 	Node();
-	Node(const Office& val);
+	Node(const Region& val);
 	//manipuladores dato
-	Office& getData();
-	Office getdata();
-	void setData(Office& val);
+	Region& getData();
+	Region getdata();
+	void setData(Region& val);
 
 	//manipuladores lista descendientes
 	TList& getDesc();
 	void setDesc(TList& listaDesc);
 
 	//modificadores lista descendientes
-	void adicionarDesc(Office& nval);
-	bool eliminarDesc(Office& val);
-	Node* buscarDesc(Office& val);
+	void adicionarDesc(Region& nval);
+	bool eliminarDesc(Region& val);
+	Node* buscarDesc(Region& val);
 	Node* findNode(string code);
 	void limpiarLista();
 	unsigned int numDesc();
 
 	//operaciones para arbol
-	bool insertNode(Office& padre, Office& n);
-	bool insertNode(Office& n);
-	bool eraseNode(Office& n);
-	Node* buscarNode(Office& val);
-	bool buscarExistenciaNode(Office& val);
+	bool insertNode(Region& padre, Region& n);
+	bool insertNode(Region& n);
+	bool eraseNode(Region& n);
+	Node* buscarNode(Region& val);
+	bool buscarExistenciaNode(Region& val);
 	int altura();
 	unsigned int tamano();
 	void preOrden();
@@ -45,13 +46,11 @@ public:
 	void nivelOrden(int nivel, int lvActual);
 	void nivelOrdenR(int nivel, int lvActual);
 
-	// Metodos Oficina
-	Node* searchGeneral(string ciudad);
-	void showRegions();
-	vector<Office> getAllData(vector<Office> run);
+	// Metodos Region
+	vector<Region> getAllData(vector<Region> run);
 
 protected:
-	Office dato;
+	Region dato;
 	TList desc;
 };
 

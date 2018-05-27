@@ -55,11 +55,13 @@ class Graph {
 		/*************************************************************
 							METODOS DE ACCESO
 		*************************************************************/
+		bool vertexExist(V& a) ;
 		const bool edgeExist(const long& a, const long& b) const;
 		const C& getCost(const long& a, const long& b);
 		const long getIndexOf(const V& vertex);
-		const V& getNode(const long& index);
+		V& getNode(const long& index);
 		const int getNumberOfVertices() const;
+		std::vector<V>& getVertexes();
 
 		/*************************************************************
 							METODOS DE RECORRIDOS
@@ -79,6 +81,7 @@ class Graph {
 		long findRoot(const std::vector<long>& mst, const long& index);
 		bool euler(std::vector<std::vector<bool> > bools, long suma, long i);
 		bool eulerPath();
+		int size();
 };
 
 # include "Graph.hxx"

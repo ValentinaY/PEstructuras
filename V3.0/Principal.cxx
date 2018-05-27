@@ -9,6 +9,7 @@ using namespace std;
 //MÉTODOS DE CARGA------------------------------------------------------------------------------------------------
 //Cargar las personas.
 void Principal::loadPersons(char* file){
+
 	bool si = false;
 	int leidos = 0;
 	Person persona;
@@ -174,22 +175,17 @@ void Principal::loadPackages(char* file){
 
 			if(continuar){
 
-				Node* nodo = NULL;
-				nodo = offices.search(oficina);
-
-				if(nodo != NULL){
-					vector<Region> regs = nodo->getData().getRegions();
-					esta = false;
-					for(int i = 0;i< (int) regs.size();i++){
-						if(region == regs[i]){
-							paquete.setRegion(regs[i]);
-							esta = true;
-							break;
-						}
+				long index = offices.getIndexOf(oficina);
+				if(index > -1){
+					Node* reg = offices.getNode(index).getRegions().search(region);
+					if(reg!=NULL){
+						paquete.setRegion(reg->getData());
+						esta = true;
 					}
+
 					if(esta){
 						bool ex = false;
-						vector<Package> paks = nodo->getData().getPackages();
+						vector<Package> paks = offices.getNode(index).getPackages();
 						for(int i = 0; i< (int) paks.size();i++){
 							if(paks[i].getGuiden() == paquete.getGuiden()){
 								ex = true;
@@ -197,7 +193,7 @@ void Principal::loadPackages(char* file){
 							}
 						}
 						if(!ex){
-							nodo->getData().addPackage(paquete);
+							offices.getNode(index).addPackage(paquete);
 							cout<<"Paquete con número guía "<<paquete.getGuiden()<<" leído"<<endl;	
 							leidos++;
 						}else{
@@ -249,17 +245,18 @@ void Principal::loadOffices(char* file){
 				getline(reader,line);
 				actual.setCity(line);
 
-				if(offices.existence(actual) == false){
+				if(offices.vertexExist(actual) == false){
 					leidos++;
-					Node* auxiliar = offices.searchGeneral(actual.getCity());
-					if(auxiliar != NULL){
-						auxiliar->insertNode(actual);
-						cout<<"Carganda oficina "<<actual.getCode()<<endl;
-					}
-					else{
-						offices.insert(actual);
-						cout<<"Carganda oficina "<<actual.getCode()<<endl;
-					}
+					Region esta;
+					esta.setCode(actual.getCode());
+					esta.setName(actual.getName());
+					Tree arbol;
+					arbol.setRoot(esta);
+					actual.setRegions(arbol);
+
+					offices.insertVertex(actual);
+					cout<<"Carganda oficina "<<actual.getCode()<<endl;
+
 				}
 				else
 					cout<<"Error en oficina "<<actual.getCode()<<endl;
@@ -292,20 +289,36 @@ void Principal::loadRegions(char* file){
 			actual.setName(line);
 			getline(reader,line);
 
-			Node* node = offices.find(line);
-			if(node!= NULL){
-				vector<Region> regs = node->getData().getRegions();
+			Office aux;
+			aux.setCode(line);
+			long index = offices.getIndexOf(aux);
+			if(index > -1){
+				Node* reg = offices.getNode(index).getRegions().search(actual);
 				bool x = true;
-				for(unsigned int i = 0; i<regs.size(); i++){
-					if(actual.getCode()==regs[i].getCode()){
+
+				if(reg!= NULL){
+					if(actual.getCode()==reg->getData().getCode()){
 						cout<<"Región "<<actual.getCode()<<" no fue cargada, ya existe. "<<endl;
 						x = false;
 					}
 				}
 				if(!x){
 					cout<<"Región "<<actual.getCode()<<" cargada. "<<endl;
-					node->getData().addRegion(actual);
+					offices.getNode(index).addRegion(actual,true);
 					leidos++;
+				}
+			}
+			else{
+				vector<Office> oficinas = offices.getVertexes();
+				for(unsigned int i=0;i<oficinas.size();i++){
+					Node* reg = oficinas[i].getRegions().find(line);
+					if(reg != NULL){
+						index = offices.getIndexOf(oficinas[i]);
+						offices.getNode(index).getRegions().insert(reg->getData(),actual);
+						cout<<"Región "<<actual.getCode()<<" cargada. "<<endl;
+						leidos++;
+						break;
+					}
 				}
 			}
 		}
@@ -336,17 +349,13 @@ void Principal::regOffices(){
 	cin>>aux;
 	newOffice.setCity(aux);
 
-	if(offices.existence(newOffice))
+	long index = offices.getIndexOf(newOffice);
+	if(index ==-1){
+		cout<<"La oficina con ese cogigo ya existe"<<endl;
 		return;
-
-	Node* auxiliar = offices.searchGeneral(newOffice.getCity());
-	if(auxiliar != NULL){
-		auxiliar->insertNode(newOffice);
-		cout<<"La información ha sido cargada exitosamente así:"<<endl;
-		newOffice.showDataR();
 	}
 	else{
-		offices.insert(newOffice);
+		offices.insertVertex(newOffice);
 		cout<<"La información ha sido cargada exitosamente así:"<<endl;
 		newOffice.showData();
 	}
@@ -367,7 +376,7 @@ void Principal::regPackages(){
 	do{
 		cout<<"Identificador del remitente: \n >";
 		cin>>temp;
-		for(int i = 0;i<persons.size();i++){
+		for(unsigned int i = 0;i<persons.size();i++){
 			if(temp.compare(persons[i].getId())==0){
 				paquete.setSender(persons[i]);
 				esta = true;
@@ -391,7 +400,7 @@ void Principal::regPackages(){
 		cout<<"Identificador del destinatario: \n >";
 		cin>>temp;
 		if(temp != tempAux){
-			for(int i = 0;i<persons.size();i++){
+			for(unsigned int i = 0;i<persons.size();i++){
 				if(temp.compare(persons[i].getId())==0){
 					paquete.setReceiver(persons[i]);
 					esta = true;
@@ -424,7 +433,7 @@ void Principal::regPackages(){
 	getline(cin, tempAux);
 	paquete.setGuiden(tempAux);
 
-	Node* nodoOffice = NULL;
+	long indexOffice;
 
 	esta = false;
 	contador = 0;
@@ -438,10 +447,9 @@ void Principal::regPackages(){
 		getline(cin, temp);
 		oficina.setCode(temp);
 
-		nodoOffice = offices.search(oficina);
-		if(nodoOffice != NULL){
+		indexOffice = offices.getIndexOf(oficina);
+		if(indexOffice > -1){
 			esta = true;
-			cout<<"Oficina hallada\n";
 		}
 
 		if(!esta)
@@ -452,17 +460,16 @@ void Principal::regPackages(){
 	contador = 0;
 	esta = false;
 	do{
-		vector<Region> regs = nodoOffice->getData().getRegions();
 		cout<<"Codigo de Región: \n >";
 		cin>>temp;
 
-		for(int i = 0;i<regs.size();i++){
-			if(temp.compare(regs[i].getCode())==0){
-				paquete.setRegion(regs[i]);
-				esta = true;
-				break;
-			}
+		Node* reg = offices.getNode(indexOffice).getRegions().search(region);
+		if(reg != NULL){
+			paquete.setRegion(reg->getData());
+			esta = true;
+			break;
 		}
+
 		if(esta == false){
 			cout<<"Esta región no se encuentra en nuestro registro\n";
 		}
@@ -474,15 +481,15 @@ void Principal::regPackages(){
 	}while(esta ==  false);
 
 	bool ex = false;
-	vector<Package> paks = nodoOffice->getData().getPackages();
-	for(int i = 0; i<paks.size();i++){
+	vector<Package> paks = offices.getNode(indexOffice).getPackages();
+	for(unsigned int i = 0; i<paks.size();i++){
 		if(paks[i].getGuiden() == paquete.getGuiden()){
 			ex = true;
 			break;
 		}
 	}
 	if(!ex){
-		nodoOffice->getData().addPackage(paquete);
+		offices.getNode(indexOffice).addPackage(paquete);
 		cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
 		paquete.showData();
 	}
@@ -520,7 +527,7 @@ void Principal::regPersons(){
 	persona.setPhone(aux);
 
 
-	for(int i=0; i < persons.size();i++){
+	for(unsigned int i=0; i < persons.size();i++){
 		if(persona.getId().compare(persons[i].getId())==0){
 			cout<<persons[i].getId()<<endl;
 			cout<<"La persona ya existe."<<endl;
@@ -539,7 +546,7 @@ void Principal::regRegions(){
 	cout<<"Registro de Regiones:\n";
 
 	Region newRegion;
-	Node* nodoOffice = NULL;
+	long indexOffice;
 	Office* office;
 	Office of;
 	string aux;
@@ -553,8 +560,8 @@ void Principal::regRegions(){
 		getline(cin, aux);
 		of.setCode(aux);
 
-		nodoOffice = offices.search(of);
-		if(nodoOffice != NULL)
+		indexOffice = offices.getIndexOf(of);
+		if(indexOffice >-1)
 			find = false;
 
 		if(find)
@@ -562,7 +569,7 @@ void Principal::regRegions(){
 		cont ++;
 	}
 
-	office = &(nodoOffice->getData());
+	office = &(offices.getNode(indexOffice));
 
 	cout<<"Nombre de la región: ";
 	getline(cin, aux);
@@ -571,16 +578,14 @@ void Principal::regRegions(){
 	cin>> aux;
 	newRegion.setCode(aux);
 
-	vector<Region> regs = office->getRegions();
-	for(unsigned int i = 0; i<office->getRegions().size(); i++){
-		if(newRegion.getCode().compare(regs[i].getCode())==0){
-			cout<<"Error :"<<regs[i].getCode()<<endl;
-			cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
-			return;
-		}
+	Node* reg = office->getRegions().search(newRegion);
+	if(reg != NULL){
+		cout<<"Error :"<<reg->getData().getCode()<<endl;
+		cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
+		return;
 	}
 
-	office->addRegion(newRegion);
+	office->addRegion(newRegion,true);
 	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
 	cout<<"Codigo Oficina: "<<office->getCode()<<endl;
 	newRegion.showData();
@@ -590,21 +595,21 @@ void Principal::regRegions(){
 
 //Mostrar oficinas.
 void Principal::showOffices(){
-	offices.nivelOrden();
+	vector<Office> x = offices.getVertexes();
+	for(unsigned int i = 0;i<x.size();i++){
+		x[i].showData();
+	}
+
 }
 
 //Mostrar paquetes.
 void Principal::showPackages(char* codeOf){
-	string codigo = codeOf;
-	Office ofAux;
-	ofAux.setCode(codigo);
-	Node* x = offices.search(ofAux);
-	if(x != NULL){
-		cout<<"La oficina tiene "<<x->getData().getPackages().size()<<" paquetes\n";
-		x->getData().showPackages();
+
+	vector<Office> x = offices.getVertexes();
+	for(unsigned int i=0;i<x.size();i++){
+		if(x[i].getCode().compare(codeOf)==0)
+		x[i].showPackages();
 	}
-	else
-		cout<<"La oficina con código "<<codigo<<" no existe";
 }
 
 //Mostrar personas.
@@ -616,11 +621,11 @@ void Principal::showPersons(){
 
 //Mostrar regiones.
 void Principal::showRegions(){
-	offices.showRegions();
+//	offices.showRegions();
 }
 
 //MÉTODOS EXTRA
-void Principal::countPackages(){
+void Principal::countPackages(){/*
 	cout<<"Contando Paquetes..."<<endl;
 
 	vector<Office> oficinas = offices.getAllData();
@@ -638,7 +643,7 @@ void Principal::countPackages(){
 				cout<<"Hay "<<k<<" paquetes en la oficina "<< oficinas[i].getCode()<<
 				" con la region de reparto "<<regiones[j].getCode();
 		}
-	}
+	}*/
 }
 
 void Principal::sendPackages(char* codeOf){
@@ -675,7 +680,7 @@ void Principal::sendPackages(char* codeOf){
 	else{
 		cout<<"Este código no se encuentra en el sistema \n";
 	}
-	*/
+	 */
 }
 
 float Principal::toFloat(string a){

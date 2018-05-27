@@ -33,7 +33,7 @@ public:
 	Region getRegion(){
 		return region;
 	}
-	void setRegion(Region &nregion);
+	void setRegion(Region& nregion);
 
 	float getWeight(){
 		return weight;

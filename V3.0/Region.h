@@ -10,6 +10,7 @@ class Region{
 private:
 	string name;
 	string code;
+	int distanceUp;
 
 public:
 	Region();
@@ -18,11 +19,16 @@ public:
 		return name;
 	}
 	void setName(string nname);
-	
+
 	string getCode(){
 		return code;
 	}
 	void setCode(string ncode);
+
+	int getDistanceUp(){
+		return distanceUp;
+	}
+	void setDistanceUp(int dist);
 
 	void showData(){
 		cout<<"Nombre: "<<name<<endl;

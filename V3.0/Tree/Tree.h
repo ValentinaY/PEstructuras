@@ -2,7 +2,7 @@
 #define TREE_H
 
 #include "Node.h"
-#include "../Office.h"
+#include "../Region.h"
 
 class Tree {
 protected:
@@ -15,19 +15,20 @@ public:
 public:
 	//constructores
 	Tree();
-	Tree(const Office& val);
+	Tree(const Region& val);
 	//verificador
 	bool isEmpty();
 	//manipuladores raiz
 	Node* getRoot();
 	void setRoot(Node* nraiz);
+	void setRoot(Region raiz);
 	//modificadores Tree
-	bool insert(Office& padre, Office& n);
-	bool insert(Office& n);
-	bool erase(Office& n);
-	Node* search(Office& val);
+	bool insert(Region& padre, Region& n);
+	bool insert(Region& n);
+	bool erase(Region& n);
+	Node* search(Region& val);
 	Node* find(string code);
-	bool existence(Office& val);
+	bool existence(Region& val);
 	int height();
 	unsigned int size();
 	void preOrden();
@@ -35,10 +36,8 @@ public:
 	void inOrden();
 	void nivelOrden();
 
-	// Métodos de oficinas
-	Node* searchGeneral(string ciudad);
-	void showRegions();
-	vector<Office> getAllData();
+	// Métodos de regiones
+	vector<Region> getAllData();
 };
 
 #endif // __Tree__H__
