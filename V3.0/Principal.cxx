@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 #include <vector>
 
 using namespace std;
@@ -65,147 +66,89 @@ void Principal::loadPersons(char* file){
 //Cargar los paquetes.
 void Principal::loadPackages(char* file){
 
-	bool esta = false, continuar;
+	int existsperson = 0;
+	bool existsoffice=false;
+	bool remain;
 	int total=0;
 
-	ifstream entrada;
+	string sender, receiver;
 	string linea;
-	entrada.open(file);
-	if(entrada.is_open()){
+	
+	Package paquete;
+	Person senderper, receiverper;
+	Region region;
+	Office oficina;
+	std::vector<Office> v = offices.getVertexes();
+
+	ifstream reader;
+	reader.open(file);
+	if(reader.is_open()){
 		cout<<"Cargando paquetes...\n";
-		getline(entrada, linea);
+		getline(reader, linea);
 
-		while(!entrada.eof()){
-			getline(entrada, linea, ',');
-			continuar = true;
-			Package paquete;
-			Person persona;
-			Region region;
-			Office oficina;
-
-			for(int i = 0;i< (int) persons.size() && continuar;i++){
-				if(linea.compare(persons[i].getId())==0){
-					paquete.setSender(persons[i]);
-					esta = true;
-					break;
-				}
+		while(!reader.eof()){
+			getline(reader, sender, ',');
+			getline(reader, receiver, ',');
+			if(sender.compare(receiver) == 0){
+				printf("El remitente no puede ser igual al destinatario.\n");
+				getline(reader, linea);
+				remain=false;
 			}
-			if(esta == false){
-				continuar = false;
-				cout<<"Esa persona no se encuentra en nuestro registro\n";
-			}
-			esta = false;
-
-			//Id receiver
-			getline(entrada, linea, ',');
-			for(int i = 0;i< (int) persons.size() && continuar;i++){
-				if(linea.compare(persons[i].getId())==0){
-					paquete.setReceiver(persons[i]);
-					esta = true;
-					break;
-				}
-			}
-			if(esta == false){
-				continuar = false;
-				cout<<"Esa persona no se encuentra en nuestro registro\n";
-			}
-
-			// Peso
-			getline(entrada, linea, ',');
-			if(continuar)
-				paquete.setWeight(toFloat(linea)); //función de string a float
-
-			// Tipo
-			getline(entrada, linea, ',');
-			if(continuar)
-				paquete.setType(linea);
-
-			// Guide Number
-			getline(entrada, linea, ',');
-			if(continuar)
-				paquete.setGuiden(linea);
-
-			// Codigo Oficina
-			getline(entrada, linea, ',');
-			if(continuar)
-				oficina.setCode(linea);
-
-			// Nombre Oficina
-			getline(entrada, linea, ',');
-			if(continuar)
-				oficina.setName(linea);
-
-			// Direcc Oficina
-			getline(entrada, linea, ',');
-			if(continuar)
-				oficina.setAddress(linea);
-
-			// Ciudad Oficina
-			getline(entrada, linea, ',');
-			if(continuar)
-				oficina.setCity(linea);
-
-			//Code Region
-			getline(entrada, linea, ',');
-			if(continuar)
-				region.setCode(linea);
-
-			//Nombre Region
-			getline(entrada, linea);
-			if(continuar)
-				region.setName(linea);
-
-			/*if(continuar){
-
-				Node* nodo = NULL;
-				nodo = offices.search(oficina);
-
-				if(nodo != NULL){
-					vector<Region> regs = nodo->getData().getRegions();
-					esta = false;
-					for(int i = 0;i< (int) regs.size();i++){
-						if(region == regs[i]){
-							paquete.setRegion(regs[i]);
-							esta = true;
-							break;
-						}
+			if(remain){
+				for(int i = 0;i< (int) persons.size() && remain;i++){
+					if(sender.compare(persons[i].getId())==0){
+						senderper=persons[i];
+						existsperson++;
+						printf("-1\n");
 					}
-					if(esta){
-						bool ex = false;
-						vector<Package> paks = nodo->getData().getPackages();
-						for(int i = 0; i< (int) paks.size();i++){
-							if(paks[i].getGuiden() == paquete.getGuiden()){
-								ex = true;
-								break;
-							}
-						}
-						if(!ex){
-							nodo->getData().addPackage(paquete);
-							cout<<"Paquete con número guía "<<paquete.getGuiden()<<" leído"<<endl;	
-							leidos++;
-						}else{
-							cout<<"Paquete con número guía "<<paquete.getGuiden()<<" ya existe"<<endl;
-						}
+					if(receiver.compare(persons[i].getId())==0){
+						receiverper=persons[i];
+						existsperson++;
+						printf("-2\n");
 					}
-
-					else
-						cout<<"El código de la región no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
-
-
+				}
+				if(existsperson == 2 ){
+					paquete.setSender(senderper);
+					paquete.setReceiver(receiverper);
 				}
 				else{
-					cout<<"El código de oficina no existe, paquete "<<paquete.getGuiden()<<" no cargado\n";
+					cout<<"Verifique que las personas se encuentran en el registro\n";
+					getline(reader, linea);
+					remain=false;
 				}
+				existsperson=0;
+			}//if remain
+			if(remain){
+				getline(reader, linea,',');
+				paquete.setWeight(toFloat(linea));
+				getline(reader, linea,',');
+				paquete.setType(linea);
+				getline(reader, linea,',');
+				paquete.setGuiden(linea);
+				getline(reader, linea);
+				string oficecode=linea;
+				string oficeinvectorcode;
+				if(v.size() == 0) printf("No hay oficinas.\n");
 
+				printf("Agregando paquete...\n");
+				for(int i=0; i<v.size(); i++){
+					oficeinvectorcode=v.at(i).getCode();
+					if(strcmp(oficeinvectorcode.c_str(), oficecode.c_str()) == 0){
+						oficina=v.at(i);
+						oficina.getPackages().push_back(paquete);
+						total++;
+						break;
+					}
+				}
+			}//if remain	
+			else{
+				printf("El paquete no se agregó.\n");
 			}
-		}//while
-		entrada.close();
-		cout<<"La información desde "<<file<<" ha sido cargada exitosamente."<<endl;
-		cout<<"Se leyeron "<<leidos<<" paquetes."<<endl;*/
-		}
-	}
-	else
-		cout<<"Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n";
+			remain=true;
+		}//while !reader.eof()
+	printf("Se agregaron %d paquetes.\n", total);
+	}//if reader.is_open()
+	reader.close();
 }
 
 //Cargar las oficinas.
@@ -247,7 +190,7 @@ void Principal::loadOffices(char* file){
 				if(!exists){
 					total++;
 					offices.insertVertex(actual);
-					cout<<"Carganda oficina "<<actual.getCode()<<endl;
+					cout<<"Cargada oficina "<<actual.getCode()<<endl;
 				}
 				else{
 					printf("Ya existe una oficina con ese número de identificción.\n");
@@ -267,6 +210,7 @@ void Principal::loadRegions(char* file){
 	bool exists = false;
 	//Se guardan temporalmente las oficinas para verificar si la que se intenta cargar ya existe.
 	std::vector<Office> v = offices.getVertexes();
+	Office office;
 
 	int total;
 	ifstream reader;
@@ -285,23 +229,15 @@ void Principal::loadRegions(char* file){
 			getline(reader,line,',');
 			actual.setName(line);
 			getline(reader,line);
-			/*Office temp=
-			Node* node = offices.find(line);
-			if(node!= NULL){
-				vector<Region> regs = node->getData().getRegions();
-				bool x = true;
-				for(unsigned int i = 0; i<regs.size(); i++){
-					if(actual.getCode()==regs[i].getCode()){
-						cout<<"Región "<<actual.getCode()<<" no fue cargada, ya existe. "<<endl;
-						x = false;
-					}
+			for(int i=0; i<v.size(); i++){
+				if(line.compare(v.at(i).getCode()) == 0 ){
+					office=v.at(i);
 				}
-				if(!x){
-					cout<<"Región "<<actual.getCode()<<" cargada. "<<endl;
-					node->getData().addRegion(actual);
-					total++;
-				}
-			}*/
+			}
+			getline(reader,line);
+			int distance = atoi(line.c_str());
+			actual.setDistanceUp(distance);
+			office.getRegions().insert(actual);
 		}
 	}
 	cout<<"La información desde "<<file<<" ha sido cargada exitosamente."<<endl;
@@ -451,11 +387,11 @@ void Principal::regPackages(){
 		for(int i = 0;i<regs.size();i++){
 			if(temp.compare(regs[i].getCode())==0){
 				paquete.setRegion(regs[i]);
-				esta = true;
+				existsperson = true;
 				break;
 			}
 		}
-		if(esta == false){
+		if(existsperson == false){
 			cout<<"Esta región no se encuentra en nuestro registro\n";
 		}
 		cont++;
@@ -463,7 +399,7 @@ void Principal::regPackages(){
 			cout<<"Numero de intentos excedido.\n";
 			return;
 		}
-	}while(esta ==  false);*/
+	}while(existsperson ==  false);*/
 /*
 	bool ex = false;
 	vector<Package> paks = nodoOffice->getData().getPackages();
@@ -495,7 +431,7 @@ void Principal::regPersons(){
 	string aux;
 	do{
 		cout<<"Numero de identificacion: \n >";
-		cin>>aux;
+		getline(cin, aux);
 		existsperson=false;
 		for(int i=0; i < persons.size();i++){
 			if(persona.getId().compare(persons[i].getId())==0){
