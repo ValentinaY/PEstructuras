@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include "utils.cpp"
 
 using namespace std;
 
@@ -99,12 +100,10 @@ void Principal::loadPackages(char* file){
 					if(sender.compare(persons[i].getId())==0){
 						senderper=persons[i];
 						existsperson++;
-						printf("-1\n");
 					}
 					if(receiver.compare(persons[i].getId())==0){
 						receiverper=persons[i];
 						existsperson++;
-						printf("-2\n");
 					}
 				}
 				if(existsperson == 2 ){
@@ -129,11 +128,9 @@ void Principal::loadPackages(char* file){
 				string oficecode=linea;
 				string oficeinvectorcode;
 				if(v.size() == 0) printf("No hay oficinas.\n");
-
-				printf("Agregando paquete...\n");
 				for(int i=0; i<v.size(); i++){
 					oficeinvectorcode=v.at(i).getCode();
-					if(strcmp(oficeinvectorcode.c_str(), oficecode.c_str()) == 0){
+					if(comparecodes(oficecode.c_str(), oficecode.c_str() ) ) {
 						oficina=v.at(i);
 						oficina.getPackages().push_back(paquete);
 						total++;
@@ -619,13 +616,4 @@ void Principal::sendPackages(char* codeOf){
 		cout<<"Este código no se encuentra en el sistema \n";
 	}
 	*/
-}
-
-float Principal::toFloat(string a){
-	float x= 0;
-	for(unsigned int i=0;i<a.size();i++){
-		x = x*10;
-		x+= (int) (a[i]) - 48;
-	}
-	return x;
 }
