@@ -312,42 +312,50 @@ void Principal::loadRegions(char* file){
 //MÉTODOS DE REGISTRO---------------------------------------------------------------------------------------------
 //Registrar las oficinas.
 void Principal::regOffices(){
+
+	cout<<"Registro de oficinas:\n";
 	//Si el id ya existe.
-	bool exists = false;
+	bool exists = true;
 	//Se guardan temporalmente las oficinas para verificar si la que se intenta cargar ya existe.
 	std::vector<Office> v = offices.getVertexes();
 	
 	//La oficina que se registrará.
 	Office office;
-
-	cout<<"Registro de oficinas:\n";
 	string aux;
-	cout<<"Nombre de la oficina: \n >";
-	getline(cin, aux);
-	office.setName(aux);
-	cout<<"Código: \n >";
-	getline(cin, aux);
-	office.setCode(aux);
-	cout<<"Dirección: \n >";
-	cin>>aux;
-	office.setAddress(aux);
-	cout<<"Ciudad: \n >";
-	cin>>aux;
-	office.setCity(aux);
 
 	//Se verifica si el id que se intenta registrar ya existe.
-	for(int i=0; i<v.size();i++){
-		if(v.at(i).getCode().compare(office.getCode())){
-			exists=true;
+	int cont=0;
+	while(exists){
+	cout<<"Código: \n >";
+	getline(cin, aux);
+		exists=false;
+		for(int i=0; i<v.size();i++){
+			if(v.at(i).getCode().compare(aux) ==0 ){
+				printf("Ya existe una oficina con ese código.\n");
+				exists=true;
+				break;
+			}
 		}
+		cont++;
+		if(cont==5) {printf("Ha superado el límite máximo de intentos.\n"); break;}
 	}
-
+	
 	if(!exists){
+		office.setCode(aux);
+		cout<<"Nombre de la oficina: \n >";
+		getline(cin, aux);
+		office.setName(aux);
+		cout<<"Dirección: \n >";
+		getline(cin, aux);
+		office.setAddress(aux);
+		cout<<"Ciudad: \n >";
+		getline(cin, aux);
+		office.setCity(aux);
 		offices.insertVertex(office);
-		return;
 	}
+	//Si ya existe, se nuncia que no se agregó.
 	else{
-		printf("Ya existe una oficina con el mismo código.\n");
+		printf("La oficina no se agregó.\n");
 	}
 	exists=false;
 }
@@ -480,44 +488,48 @@ void Principal::regPackages(){
 //Registrar personas.
 void Principal::regPersons(){
 	bool existsperson=false;
+	int cont=0;
+
 	cout<<"Registro de personas\n";
 	Person persona;
 	string aux;
-	cout<<"Nombre de la persona: \n >";
-	getline(cin, aux);
-	persona.setName(aux);
-	cout<<"Apellidos de la persona: \n >";
-	getline(cin, aux);
-	persona.setLname(aux);
-	cout<<"Numero de identificacion: \n >";
-	cin>>aux;
-	persona.setId(aux);
-	cout<<"Ciudad: \n >";
-	cin>>aux;
-	persona.setCity(aux);
-	cout<<"Direccion: \n >";
-	getline(cin, aux);
-	getline(cin, aux);
-	persona.setAddress(aux);
-	cout<<"Telefono: \n >";
-	cin>>aux;
-	persona.setPhone(aux);
-
-	for(int i=0; i < persons.size();i++){
-		if(persona.getId().compare(persons[i].getId())==0){
-			cout<<persons[i].getId()<<endl;
-			cout<<"La persona ya existe."<<endl;
-			existsperson=true;
-			break;
+	do{
+		cout<<"Numero de identificacion: \n >";
+		cin>>aux;
+		existsperson=false;
+		for(int i=0; i < persons.size();i++){
+			if(persona.getId().compare(persons[i].getId())==0){
+				cout<<persons[i].getId()<<endl;
+				cout<<"La persona con el id ya está registrada.\n"<<endl;
+				existsperson=true;
+				break;
+			}
 		}
-	}
+		if(cont==5){printf("Ha superado el límite máximo de intentos.\n"); break;}
+	}while(existsperson);
 	if(!existsperson){
+		persona.setId(aux);
+		cout<<"Nombre de la persona: \n >";
+		getline(cin, aux);
+		persona.setName(aux);
+		cout<<"Apellidos de la persona: \n >";
+		getline(cin, aux);
+		persona.setLname(aux);
+		cout<<"Ciudad: \n >";
+		getline(cin, aux);
+		persona.setCity(aux);
+		cout<<"Direccion: \n >";
+		getline(cin, aux);
+		persona.setAddress(aux);
+		cout<<"Telefono: \n >";
+		getline(cin, aux);
+		persona.setPhone(aux);
 		persons.push_back(persona);
 		cout<<"La información ha sido cargada exitosamente así:"<<endl;
 		persona.showData();
 	}
 	else{
-		printf("La persona ya existe.\n");
+		printf("La persona no se agregó.\n");
 	}
 
 }
@@ -526,49 +538,59 @@ void Principal::regPersons(){
 void Principal::regRegions(){
 	cout<<"Registro de Regiones:\n";
 
-	Region newRegion;
+	Region region;  
+	std::vector<Office> v= offices.getVertexes();
 	Office office;
-	string aux;
+	string codeoffice;
 	int cont = 0;
-	bool find = true;
-	while(find){
-		if(cont >= 2)
-			return;
+	bool existsoffice = false;
+	bool existsregion=false;
 
-		cout<<"Código de la Oficina: ";
-		getline(cin, aux);
-/*
-		nodoOffice = offices.search(of);
-		if(nodoOffice != NULL)
-			find = false;
-*/
-		if(find)
-			cout<<"El código de oficina no existe, intente nuevamente \n";
-		cont ++;
-	}
-
-	//office = &(nodoOffice->getData());
-
-	cout<<"Nombre de la región: ";
-	getline(cin, aux);
-	newRegion.setName(aux);
-	cout<<"Código: ";
-	cin>> aux;
-	newRegion.setCode(aux);
-
-	vector<Region> regs = office.getRegions().getAllData();
-	for(unsigned int i = 0; i<regs.size(); i++){
-		if(newRegion.getCode().compare(regs[i].getCode())==0){
-			cout<<"Error :"<<regs[i].getCode()<<endl;
-			cout<<"La región con ese código ya existe, la información no fue cargada"<<endl;
-			return;
+	while(!existsoffice){
+		printf("Código de la oficina: \n>");
+		getline(cin, codeoffice);
+		for(int i=0; i<v.size();i++){
+			if(codeoffice.compare(v.at(i).getCode()) == 0){ office=v.at(i);	existsoffice=true;	break;}
 		}
+		if(!existsoffice)	cout<<"El código de oficina no existe, intente nuevamente \n>";
+		
+		cont ++;
+		if(cont == 5){printf("Ha superado el número máximo de intentos.\n"); break;}
 	}
 
-	//office.addRegion(newRegion);
-	cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
-	//cout<<"Codigo Oficina: "<<office->getCode()<<endl;
-	newRegion.showData();
+	string aux;
+	cout<<"Nombre de la región:\n>";
+	getline(cin, aux);
+	region.setName(aux);
+
+	if(office.getRegions().isEmpty()){	existsregion=false;}
+	else{
+		vector<Region> regs = office.getRegions().getAllData();
+		do{
+			cout<<"Código de la región: ";
+			cin>> aux;
+			existsregion=false;
+			for(int i = 0; i<regs.size(); i++){
+				if(region.getCode().compare(regs[i].getCode())==0){
+					cout<<"La región con ese código ya existe."<<endl;
+					existsregion=true;
+				}
+			}
+		cont ++;
+		//Se limitan el número de intentos
+		if(cont == 5){printf("Ha superado el número máximo de intentos.\n"); break;}
+		}while(existsregion);
+		region.setCode(aux);
+	}
+	if(!existsregion){
+		office.getRegions().insert(region);
+		cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
+		region.showData();
+	}
+	else{
+		printf("No se agregó la región.\n");
+	}
+
 }
 
 //MÉTODOS DE VISUALIZACIÓN----------------------------------------------------------------------------------------
