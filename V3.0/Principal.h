@@ -16,6 +16,7 @@ public:
 		persons.clear();
 	};
 
+	void loadConnections(char* file);
 	void loadOffices(char* file);
 	void loadPackages(char* file);
 	void loadPersons(char* file);
@@ -31,8 +32,6 @@ public:
  	void countPackages();
 	void sendPackages(char* codeOf);
 	void addRegion(Region r, string office);
-
-	float toFloat(string a);
 
 	vector<Person> getpersons(){
 		return persons;

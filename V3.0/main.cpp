@@ -64,8 +64,7 @@ int main(){
 			break;
 		}
 		case str2int("carco"):{
-			cout<<"Comando fallido, contacte un administrador del sistema\n";
-			//principal.loadConection(file);
+			principal.loadConnections(file);
 			break;
 		}
 

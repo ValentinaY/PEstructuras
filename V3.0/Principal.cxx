@@ -9,6 +9,58 @@
 using namespace std;
 
 //MÉTODOS DE CARGA------------------------------------------------------------------------------------------------
+//Cargar conexiones
+void Principal::loadConnections(char* file){
+	ifstream reader;
+	string line;
+	string ofi1, ofi2;
+	Office offi1, offi2;
+	long index1, index2;
+
+	int found=0;
+	std::vector<Office> v = offices.getVertexes();
+	int cost, costemp;
+	reader.open(file);
+	if(reader.is_open()){
+		getline(reader, line);
+		try{
+			while(!reader.eof()){
+				getline(reader, ofi1,',');
+				getline(reader, ofi2,',');
+				getline(reader, line);
+				cost=atoi(line.c_str());
+				for(int i=0; i<v.size(); i++){
+					if(comparecodes(ofi1.c_str(),v[i].getCode().c_str())){
+						offi1=v.at(i); found++;
+					}
+					if(comparecodes(ofi2.c_str(),v[i].getCode().c_str())){
+						offi2=v.at(i); found+=2;
+					}
+				}
+				index1 = offices.getIndexOf(offi1);
+				index2 = offices.getIndexOf(offi2);
+				if(found==3){
+					if(offices.edgeExist(index1, index2)){
+						costemp=offices.getCost(index1, index2);
+						if(cost<costemp){
+							offices.deleteEdge(index1, index2);
+							offices.insertEdge(index1, index2, cost);
+						}
+					}
+					else{
+						offices.insertEdge(index1, index2, cost);
+					}
+					printf("Se ha creado la conexión.\n");
+				}
+				found=0;
+			}
+		}
+		catch(invalid_argument& e){
+
+		}
+	}
+}
+
 //Cargar las personas.
 void Principal::loadPersons(char* file){
 	//Check if the person exists
@@ -61,7 +113,7 @@ void Principal::loadPersons(char* file){
 	}
 	catch(invalid_argument& e){
 		printf("Ocurrió un error mientras se leía el archivo, verifique que los datos están en el formato correcto. \n");
-	}
+		}
 }
 
 //Cargar los paquetes.

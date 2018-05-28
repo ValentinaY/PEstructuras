@@ -1,4 +1,4 @@
-float Principal::toFloat(string a){
+float toFloat(string a){
 	float x= 0;
 	for(unsigned int i=0;i<a.size();i++){
 		x = x*10;
