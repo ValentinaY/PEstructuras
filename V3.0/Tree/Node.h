@@ -4,12 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <vector>
 #include "../Region.h"
 
 class Node {
 public:
 	//definicion mas corta del tipo
-	typedef std::list<Node*> TList;
+	typedef std::vector<Node*> TList;
 
 public:
 	//constructores

@@ -162,7 +162,9 @@ void Tree::nivelOrden() {
 vector<Region> Tree::getAllData(){
 	vector<Region> run;
 	run.clear();
-	run = this->root->getAllData(run);
+	if(this->root != NULL){
+		run = this->root->getAllData(run);
+	}
 	return run;
 }
 

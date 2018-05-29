@@ -3,7 +3,8 @@
 
 #include "Region.h"
 #include "Package.h"
-#include "Tree/Tree.h"
+#include <map>
+#include <iterator>
 #include <vector>
 #include <iostream>
 
@@ -15,7 +16,7 @@ protected:
 	string name;
 	string address;
 	string city;
-	Tree regions;
+	map<string, Region> regions;
 	vector<Package> packages;
 
 public:
@@ -42,13 +43,11 @@ public:
 	}
 	void setCity(string ncity);
 
-	Tree getRegions(){
+	map<string, Region> getRegions(){
 		return regions;
 	}
 
-	void addRegion(Region nregion, Region padre);
-	void addRegion(Region nregion, bool sig);
-	void setRegions(Tree reg);
+	void addRegion(Region nregion);
 
 	vector<Package> getPackages(){
 		return packages;
@@ -72,12 +71,12 @@ public:
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Regiones :"<<endl;
-		if(regions.isEmpty())
+		if(regions.empty())
 			cout<<"No tiene regiones asociadas"<<endl;
 		else{
-			vector<Region> regs = regions.getAllData();
-			for(unsigned int i=0;i< regs.size();i++){
-				cout<<"\t Código: "<<regs[i].getName()<<endl;
+			map<string, Region>::iterator it;
+			for(it=regions.begin(); it!= regions.end(); it++){
+				cout<<"\t Código: "<<it->second.getName()<<endl;
 			}
 		}
 
@@ -85,10 +84,7 @@ public:
 	}
 
 	void showRegions(){
-		vector<Region> regs = regions.getAllData();
-		for(int i = 0;i<(int)regs.size();i++){
-			regs[i].showData();
-		}
+		map<string, Region>::iterator it;
 	}
 
 	void showPackages(){
@@ -97,6 +93,16 @@ public:
 		}
 	}
 
+	bool existsRegion(Region region){
+		bool t=false;
+		map<string, Region>::iterator it;
+		for(it=regions.begin(); it!= regions.end(); it++){
+			if(region.getCode().compare( (it->second).getCode() ) == 0){
+				t=true;
+			}
+		}
+		return t;
+	}
 
 	bool operator == (Office o){
 		return codeID == o.getCode();

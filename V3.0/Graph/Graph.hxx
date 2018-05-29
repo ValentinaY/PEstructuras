@@ -126,7 +126,6 @@ template<class V, class C>
 std::vector<V>& Graph<V, C>::getVertexes(){
 	return this->vertices;
 }
-
 /*************************************************************
 
 					METODOS DE RECORRIDOS

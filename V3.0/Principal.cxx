@@ -219,32 +219,31 @@ void Principal::loadOffices(char* file){
 		getline(reader,line);	//Se omite la cabecera del archivo.
 		Office actual;
 		while(!reader.eof()){
+			Office actual;
 			getline(reader,line,',');
-			if(line.size() == 8){	//Se verifica que las oficinas sean válidas.
-				Office actual;
-				actual.setCode(line);
-				getline(reader,line,',');
-				actual.setName(line);
-				getline(reader,line,',');
-				actual.setAddress(line);
-				getline(reader,line);	
-				actual.setCity(line);
-				
-				for(int i=0; i<v.size();i++){
-					if(v.at(i).getCode().compare(actual.getCode())){
-						exists=true;
-					}
-				}
-				//Si la oficina no existe entonces se agrega en el grafo.
-				if(!exists){
-					total++;
-					offices.insertVertex(actual);
-					cout<<"Cargada oficina "<<actual.getCode()<<endl;
-				}
-				else{
-					printf("Ya existe una oficina con ese número de identificción.\n");
+			actual.setCode(line);
+			getline(reader,line,',');
+			actual.setName(line);
+			getline(reader,line,',');
+			actual.setAddress(line);
+			getline(reader,line);	
+			actual.setCity(line);
+			
+			for(int i=0; i<v.size();i++){
+				if(v.at(i).getCode().compare(actual.getCode()) == 0){
+					exists=true;
 				}
 			}
+			//Si la oficina no existe entonces se agrega en el grafo.
+			if(!exists){
+				total++;
+				offices.insertVertex(actual);
+				cout<<"Se cargó la oficina "<<actual.getCode()<<endl;
+			}
+			else{
+				printf("Ya existe una oficina con ese número de identificación.\n");
+			}
+			exists=false;
 		}
 		reader.close();
 	}
@@ -256,14 +255,14 @@ void Principal::loadOffices(char* file){
 //Cargar las regiones.
 void Principal::loadRegions(char* file){
 	//Si el id ya existe.
-	bool exists = false;
+	bool existsregion = false;
+	bool existsoffice=false;
 	//Se guardan temporalmente las oficinas para verificar si la que se intenta cargar ya existe.
 	std::vector<Office> v = offices.getVertexes();
-	Office office;
-
-	int total;
+	Office* office;
+	Region tempregion;
+	int total=0;
 	ifstream reader;
-	Region actual;
 	reader.open(file);
 	if(!reader.is_open()){
 		cout<<"Ocurrió un error al leer el archivo, verifique el nombre e intente nuevamente.\n";
@@ -271,22 +270,46 @@ void Principal::loadRegions(char* file){
 	else{
 		cout<<"Cargando regiones...\n";
 		string line="";
+		map<string, Region> temp;
+		int i=0, cont;
 		getline(reader,line);	//Se omite la cabecera del archivo.
 		while(!reader.eof()){
+			v = offices.getVertexes();
+			Region actual;
 			getline(reader,line,',');
 			actual.setCode(line);
 			getline(reader,line,',');
 			actual.setName(line);
-			getline(reader,line);
-			for(int i=0; i<v.size(); i++){
-				if(line.compare(v.at(i).getCode()) == 0 ){
-					office=v.at(i);
+			getline(reader,line, ',');
+			for(i=0; i<v.size(); i++){
+				if(line.compare(v[i].getCode()) == 0 ){
+					office = &offices.getVertexes()[i];
+					existsoffice=true;
+					break;
 				}
 			}
 			getline(reader,line);
 			int distance = atoi(line.c_str());
-			actual.setDistanceUp(distance);
-			office.getRegions().insert(actual);
+			if(existsoffice){
+				temp=office->getRegions();
+				if(office->getRegions().size()!=0){
+					if( office->existsRegion(actual) ){
+						cout<<"Se intenta cargar una región con un código que ya existe"<<endl;
+						existsregion=true;
+					}
+				}
+				if(!existsregion){
+					actual.setDistanceUp(distance);
+					office->addRegion(actual);
+					cout<<"Se cargó la región "<<actual.getCode()<<endl;
+					total++;
+				}
+				else{
+					cout<<"No se cargó la región "<<actual.getCode()<<endl;
+				}
+			}
+			existsregion=false;
+			existsoffice=false;
 		}
 	}
 	cout<<"La información desde "<<file<<" ha sido cargada exitosamente."<<endl;
@@ -484,8 +507,7 @@ void Principal::regPersons(){
 		existsperson=false;
 		for(int i=0; i < persons.size();i++){
 			if(persona.getId().compare(persons[i].getId())==0){
-				cout<<persons[i].getId()<<endl;
-				cout<<"La persona con el id ya está registrada.\n"<<endl;
+				cout<<"La persona con el id"<<persona.getId()<<"ya está registrada.\n"<<endl;
 				existsperson=true;
 				break;
 			}
@@ -525,17 +547,19 @@ void Principal::regRegions(){
 
 	Region region;  
 	std::vector<Office> v= offices.getVertexes();
-	Office office;
+	Office* office;
 	string codeoffice;
 	int cont = 0;
 	bool existsoffice = false;
 	bool existsregion=false;
+	
+	string aux;
 
 	while(!existsoffice){
-		printf("Código de la oficina: \n>");
+		printf("Código de la oficina:\n>");
 		getline(cin, codeoffice);
 		for(int i=0; i<v.size();i++){
-			if(codeoffice.compare(v.at(i).getCode()) == 0){ office=v.at(i);	existsoffice=true;	break;}
+			if(codeoffice.compare(v.at(i).getCode()) == 0){ office=&v[i];	existsoffice=true;	break;}
 		}
 		if(!existsoffice)	cout<<"El código de oficina no existe, intente nuevamente \n>";
 		
@@ -543,37 +567,30 @@ void Principal::regRegions(){
 		if(cont == 5){printf("Ha superado el número máximo de intentos.\n"); break;}
 	}
 
-	string aux;
-	cout<<"Nombre de la región:\n>";
-	getline(cin, aux);
-	region.setName(aux);
+	if(existsoffice){
+		cout<<"Nombre de la región:\n>";
+		getline(cin, aux);
+		region.setName(aux);
 
-	if(office.getRegions().isEmpty()){	existsregion=false;}
-	else{
-		vector<Region> regs = office.getRegions().getAllData();
 		do{
-			cout<<"Código de la región: ";
-			cin>> aux;
-			existsregion=false;
-			for(int i = 0; i<regs.size(); i++){
-				if(region.getCode().compare(regs[i].getCode())==0){
-					cout<<"La región con ese código ya existe."<<endl;
-					existsregion=true;
-				}
-			}
-		cont ++;
+			cout<<"Código de la región:\n>";
+			getline(cin, aux);
+			region.setCode(aux);
+			existsregion=office->existsRegion(region);
+			if(existsregion) cout<<"Ya existe una región con el código "<<region.getCode()<<"."<<endl;			
+			cont ++;
 		//Se limitan el número de intentos
 		if(cont == 5){printf("Ha superado el número máximo de intentos.\n"); break;}
 		}while(existsregion);
-		region.setCode(aux);
 	}
+
 	if(!existsregion){
-		office.getRegions().insert(region);
-		cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
-		region.showData();
-	}
-	else{
-		printf("No se agregó la región.\n");
+		int distance;
+		cout<<"Distancia a la oficina principal:\n>"<<endl;
+		cin>>distance;
+		region.setDistanceUp(distance);
+		office->addRegion(region);
+		cout<<"Se cargó la región "<<region.getCode()<<endl;
 	}
 
 }
@@ -617,18 +634,20 @@ void Principal::countPackages(){
 
 	vector<Office> oficinas = offices.getVertexes();
 	for(unsigned int i=0;i<oficinas.size();i++){
-		vector<Region> regiones = oficinas[i].getRegions().getAllData();
+		map<string, Region>::iterator it;
 
-		for(unsigned int j;j<regiones.size();j++){
+		for(it=oficinas[i].getRegions().begin();it!=oficinas[i].getRegions().end();it++){
 			int k = 0;
+			Region region;
 			vector<Package> paks = oficinas[i].getPackages();
 			for(unsigned int k=0;k<paks.size();k++){
-				if(regiones[j].getCode() == paks[k].getRegion().getCode())
+				region=it->second;
+				if(region.getCode().compare(paks[k].getRegion().getCode()))
 					k++;
 			} 
 			if(k>0)
 				cout<<"Hay "<<k<<" paquetes en la oficina "<< oficinas[i].getCode()<<
-				" con la region de reparto "<<regiones[j].getCode();
+				" con la region de reparto "<<region.getCode();
 		}
 	}
 }

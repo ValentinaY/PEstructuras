@@ -110,6 +110,7 @@ void Node::limpiarLista() {
 // ------------------------------------------------------------------------
 
 unsigned int Node::numDesc() {
+	printf("113\n");
 	return this->desc.size();
 }
 
@@ -302,15 +303,24 @@ void Node::nivelOrdenR(int nivel, int lvActual) {
 
 
 vector<Region> Node::getAllData(vector<Region> run){
-
-	run.push_back(this->dato);
+	std::vector<Region> v=run;
+	printf("3021\n");
+	printf("306\n");
+	Region r;
+	r.setCode(this->getData().getCode());
+	r.setName(this->getData().getName());
+	printf("307\n");
+	v.push_back(r);
+	printf("308\n");
 	if (this->numDesc() != 0) {
+		printf("309\n");
 		typename TList::iterator it;
 		for (it = desc.begin(); it != desc.end(); it++) {
-			run = (*it)->getAllData(run);
+			printf("43\n");
+			v = (*it)->getAllData(v);
 		}
 	}
-	return run;
+	return v;
 }
 
 // eof - Node.hxx

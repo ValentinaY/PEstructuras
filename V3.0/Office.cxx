@@ -2,6 +2,7 @@
 
 Office::Office(){
 	this->packages.clear();
+	this->regions.clear();
 }
 
 void Office::setCode(string ncode){
@@ -16,17 +17,9 @@ void Office::setAddress(string naddress){
 void Office::setCity(string ncity){
 	this->city=ncity;
 }
-void Office::setRegions(Tree reg){
-	this->regions = reg;
-}	
 
-
-void Office::addRegion(Region reg, Region padre){
-	this->regions.insert(padre,reg);
-}
-
-void Office::addRegion(Region reg, bool sig){
-	this->regions.insert(reg);
+void Office::addRegion(Region reg){
+	this->regions.insert(regions.begin(),std::pair<string, Region>(reg.getCode(), reg));
 }
 
 
