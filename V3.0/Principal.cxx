@@ -374,11 +374,12 @@ void Principal::regPackages(){
 	bool existsoffice=false;
 	bool existsreceiver=false;
 	bool existssender=false;
+	bool existsregion=false;
 
 	string receivertemp, sendertemp;
 	int weight;
 	string temp;
-	Office office;
+	Office* office;
 	Region region;
 	Package paquete;
 	int cont = 0;
@@ -428,69 +429,39 @@ void Principal::regPackages(){
 	existsoffice=false;
 	cont = 0;
 	while(!existsoffice){
-		if(cont >= 2){
-			cout<<"Numero de intentos excedido.\n";
-			return;
-		}
-
 		cout<<"Código de la Oficina: \n >";
 		getline(cin, temp);
-		office.setCode(temp);
-
-		/*nodoOffice = offices.search(oficina);
-		if(nodoOffice != NULL){
-			existsoffice = true;
-			cout<<"Oficina hallada\n";
-		}
-
-		if(!existsoffice)
-			cout<<"El código de oficina no existe, intente nuevamente \n";
-		cont ++;*/
-	}
-
-	cont = 0;
-	existsoffice = false;
-	/*
-	do{
-		vector<Region> regs = nodoOffice->getData().getRegions();
-		cout<<"Codigo de Región: \n >";
-		cin>>temp;
-
-		for(int i = 0;i<regs.size();i++){
-			if(temp.compare(regs[i].getCode())==0){
-				paquete.setRegion(regs[i]);
-				existsperson = true;
-				break;
+		office->setCode(temp);
+		std::vector<Office> v=offices.getVertexes();
+		for(int i=0; i<v.size();i++){
+			if(v[i].getCode().compare(office->getCode()) == 0){
+				existsoffice=true;
+				office=&v[i];
 			}
 		}
-		if(existsperson == false){
-			cout<<"Esta región no se encuentra en nuestro registro\n";
-		}
+		if(cont == 5){
+			cout<<"Numero de intentos excedido.\n";
+			return;
+		}	
 		cont++;
-		if(cont==5) {
+	}
+	cont=0;
+	while(!existsregion){
+		cout<<"Código de la Región: \n >";
+		getline(cin, temp);
+		Region region;
+		region.setCode(temp);
+		existsregion=office->existsRegion(region);
+		if(cont == 5){
 			cout<<"Numero de intentos excedido.\n";
 			return;
 		}
-	}while(existsperson ==  false);*/
-/*
-	bool ex = false;
-	vector<Package> paks = nodoOffice->getData().getPackages();
-	for(int i = 0; i<paks.size();i++){
-		if(paks[i].getGuiden() == paquete.getGuiden()){
-			ex = true;
-			break;
-		}
 	}
-	if(!ex){
-		nodoOffice->getData().addPackage(paquete);
-		cout<<endl<<"La información ha sido cargada exitosamente así:"<<endl;
-		paquete.showData();
-	}
-	else{
-		cout<<endl<<"El paquete con ese número de guía ya existe"<<endl;
-	}
+	Region newregion = office->getRegions()[temp];
+	paquete.setRegion(newregion);
+	cont = 0;
+	existsoffice = false;
 
-*/
 }
 
 //Registrar personas.
