@@ -1,10 +1,10 @@
 Nombre,Apellidos,Cedula,Direccion,Ciudad,Telefono,Region
-Daniela Paola,Beltran Saavedra,53923218705,Carrera 43 # 6-6,Bogot�,3177456453,SUC5793
-Juan Jose,Camacho Cala,15338887604,Carrera 67 # 3-3,Bogot�,31848681,PAR8728
-Claudia,Castro Zamora,37898563423,Carrera 10 #43-20 apto 302,Bogot�,3104583934,ELO11111
-Karen Juliana,Celis Buitrago,78647971330,Carrera 13 # 1-4,Bogot�,3192914301,CIU3539
-Nicolas,Duarte Ospina,8228310068,Carrera 89 # 8-6,Bogot�,3138380992,GAL161335
-Maria Fernanda,Garces Cala,30367825533,Carrera 19 # 0-6,Bogot�,316760773,PAR3614
+Daniela Paola,Beltran Saavedra,53923218705,Carrera 43 # 6-6,Bogot�,3177456453,SUC5793,
+Juan Jose,Camacho Cala,15338887604,Carrera 67 # 3-3,Bogot�,31848681,PAR8728,
+Claudia,Castro Zamora,37898563423,Carrera 10 #43-20 apto 302,Bogot�,3104583934,ELO11111,
+Karen Juliana,Celis Buitrago,78647971330,Carrera 13 # 1-4,Bogot�,3192914301,CIU3539,
+Nicolas,Duarte Ospina,8228310068,Carrera 89 # 8-6,Bogot�,3138380992,GAL161335,
+Maria Fernanda,Garces Cala,30367825533,Carrera 19 # 0-6,Bogot�,316760773,PAR3614,
 Adrian Esteban,Garcia Ardila,70900356948,Carrera 54 # 10-40,Bogot�,313290662,LOS8831
 Brayan Ricardo,Garcia Morales,43796477115,Carrera 80 # 4-6,Bogot�,3165066667,POR1672
 David Leonardo,Gomez Macareno,73054416599,Carrera 62 # 3-2,Bogot�,3186516713,CIU11667

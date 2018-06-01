@@ -11,8 +11,8 @@ void Principal::fastboot(){
 	loadOffices("data/ofi.csv");
 	loadRegions("data/reg.csv");
 	loadPersons("data/per.csv");
-	loadPackages("data/pak.csv");
-	loadConnections("data/cnx.csv");
+//	loadPackages("data/pak.csv");
+//	loadConnections("data/cnx.csv");
 
 }
 
@@ -84,7 +84,7 @@ void Principal::loadPersons(char* file){
 	try{
 
 		if(reader.is_open()){
-			cout<<"Cargando personas...\n";
+			cout<<"Cargando personas....\n";
 			string linea;
 			getline(reader, linea);
 			getline(reader, linea, ',');
@@ -102,26 +102,29 @@ void Principal::loadPersons(char* file){
 				//Ciudad
 				getline(reader, linea, ',');
 				persona.setCity(linea);
-				//Telefono
+				
+
+				//Region
 				getline(reader, linea, ',');
-				persona.setPhone(linea);
-				//Region y fin del linea
-				getline(reader, linea);
 				Region reg;
 				for(unsigned int i=0;i<op.size();i++){
 					if(op[i].getRegions().find(linea) != op[i].getRegions().end()){
-						reg = op[i].getRegions()[linea];
+						cout<<"XMEN: "<<linea<<"."<<endl;
+						cout<<"XMEN: "<<op[i].getRegions()[linea].getName()<<"."<<endl;
+
+						reg = op[i].getRegions().at(linea);
 						exists = true;
+						reg.showData();
 						break;
 					}
 				}
+				bool x2 = false;
 				if(exists){
-					exists = false;
 					persona.setRegion(reg);
 					for(int i=0;i< (int) persons.size();i++){
 						if(persona.getId().compare(persons[i].getId())==0){
 							cout<<"La persona con documento "<<persona.getId()<<" ya existe."<<endl;
-							exists = true;
+							x2 = true;
 							break;
 						}
 					}
@@ -129,10 +132,19 @@ void Principal::loadPersons(char* file){
 				else{
 					cout<<"La region "<<linea<<" no existe."<<endl;
 				}
-				if(!exists){
-					cout<<"Cargado ID: "<<persona.getId()<<endl;
+
+				//Telefono y fin del linea
+				getline(reader, linea);
+				persona.setPhone(linea);
+				
+
+				if(!x2){
+					cout<<"\t\tCargado ID: "<<persona.getId()<<endl;
 					persons.push_back(persona);
 					total++;
+				}
+				else{
+					cout<<"Persona no cargada"<<endl;
 				}
 				// Nombre
 				getline(reader, linea, ',');
@@ -225,6 +237,7 @@ void Principal::loadPackages(char* file){
 						aux1.addPackage(paquete);
 						offices.getVertexes()[i] = aux1;
 						iceman = false;
+						total++;
 						break;
 					}
 				}
@@ -341,7 +354,7 @@ void Principal::loadRegions(char* file){
 				temp=office->getRegions();
 				if(office->getRegions().size()!=0){
 					if( office->existsRegion(actual) ){
-						cout<<"Se intenta cargar una región con un código que ya existe"<<endl;
+						cout<<"Se intentó cargar una región con un código que ya existe."<<endl;
 						existsregion=true;
 					}
 				}
@@ -351,9 +364,9 @@ void Principal::loadRegions(char* file){
 					cout<<"Se cargó la región "<<actual.getCode()<<endl;
 					total++;
 				}
-				else{
-					cout<<"No se cargó la región "<<actual.getCode()<<endl;
-				}
+			}
+			else{
+				cout<<"La oficina que se intenta relacionar no existe.\n";
 			}
 			existsregion=false;
 			existsoffice=false;

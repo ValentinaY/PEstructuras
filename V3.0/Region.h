@@ -32,7 +32,7 @@ public:
 
 	void showData(){
 		cout<<"Nombre: "<<name<<endl;
-		cout<<"Código: "<<code<<endl;
+		cout<<"Código: "<<code<<endl<<endl;
 	}
 
 	bool operator == (Region o){
