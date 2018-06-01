@@ -16,6 +16,7 @@ public:
 		persons.clear();
 	};
 
+	
 	void loadConnections(char* file);
 	void loadOffices(char* file);
 	void loadPackages(char* file);
@@ -26,6 +27,7 @@ public:
 	void regPersons();
 	void regRegions();
 	void showOffices();
+	void showPackages();
 	void showPackages(char* codeOf);
 	void showPersons();
 	void showRegions();

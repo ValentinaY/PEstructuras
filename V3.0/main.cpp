@@ -23,6 +23,7 @@ int main(){
 	//Esto puede funcionar con un break. Pero, sería una mala práctica, etc. y en el taller de anagramas se usaba así.22
 
 	while(!finished){
+		bool go = false;
 		road = new char[106]; read= new char[6]; file = new char[100];
 		cout<<"Bienvenido al sistema de reparto. Puede ver la lista de comandos con el comando 'ayuda'";
 		cout<<"\n$";
@@ -33,6 +34,9 @@ int main(){
 		if(f.length()>6){
 			f=f.substr(6,23);
 			strcpy(file,f.c_str());
+		}
+		else{
+			go = true;
 		}
 
 		strcpy(read,r.c_str());
@@ -102,7 +106,10 @@ int main(){
 			break;
 		}
 		case str2int("mospa"):{
-			principal.showPackages(file);
+			if(go)
+				principal.showPackages();
+			else
+				principal.showPackages(file);
 			break;
 		}
 		case str2int("mosof"):{

@@ -11,8 +11,8 @@ void Principal::fastboot(){
 	loadOffices("data/ofi.csv");
 	loadRegions("data/reg.csv");
 	loadPersons("data/per.csv");
-//	loadPackages("data/pak.csv");
-//	loadConnections("data/cnx.csv");
+	loadPackages("data/pak.csv");
+	loadConnections("data/cnx.csv");
 
 }
 
@@ -124,7 +124,6 @@ void Principal::loadPersons(char* file){
 						if(chiste[j].getCode() == linea){
 							reg = chiste[j];
 							exists = true;
-							reg.showData();
 							break;
 						}
 					}
@@ -242,14 +241,26 @@ void Principal::loadPackages(char* file){
 				Region inicial = paquete.getReceiver().getRegion();
 				bool iceman = true;
 				for(unsigned int i=0;i<offices.getVertexes().size();i++){
-					if(offices.getVertexes()[i].getRegions().find(inicial.getCode()) != offices.getVertexes()[i].getRegions().end()){
-						Office aux1 = offices.getVertexes()[i];
-						aux1.addPackage(paquete);
-						offices.getVertexes()[i] = aux1;
-						iceman = false;
-						total++;
-						break;
+					map<string,Region> regiones = offices.getVertexes()[i].getRegions();
+					vector<Region> chiste;
+
+					map<string,Region>::iterator it = regiones.begin();
+					while(it!=regiones.end()){
+						chiste.push_back(it->second);
+						it++;
 					}
+					for(unsigned int j=0;j<chiste.size();j++){
+						cout<<chiste[j].getCode()<<" - "<<inicial.getCode()<<endl;
+						if(chiste[j].getCode() == inicial.getCode()){
+							Office aux1 = offices.getVertexes()[i];
+							aux1.addPackage(paquete);
+							offices.getVertexes()[i] = aux1;
+							iceman = true;
+							break;
+						}
+					}
+					
+					chiste.clear();
 				}
 
 				if(iceman)
@@ -647,6 +658,14 @@ void Principal::showOffices(){
 }
 
 //Mostrar paquetes.
+void Principal::showPackages(){
+	for(unsigned int i=0;i<offices.getVertexes().size();i++){
+		cout<<"-"<<offices.getVertexes()[i].getCode()<<" tiene ";
+		cout<<offices.getVertexes()[i].getPackages().size()<<" paquetes"<<endl;
+	}
+}
+
+//Mostrar paquetes de una oficina.
 void Principal::showPackages(char* codeOf){
 	for(unsigned int i=0;i<offices.getVertexes().size();i++){
 		if(offices.getVertexes()[i].getCode().compare(codeOf) == 0){
@@ -688,7 +707,7 @@ void Principal::countPackages(){
 	map<string,Region>aux;
 	for(unsigned int i=0;i<offices.getVertexes().size();i++){
 		aux = offices.getVertexes()[i].getRegions();
-		for(unsigned int j=0;j<offices.getVertexes().size();j++){
+		for(unsigned int j=0;j<offices.getVertexes()[i].getPackages().size();j++){
 			paks.push_back(offices.getVertexes()[i].getPackages()[j]);
 		}
 		map<string,Region>::iterator j = aux.begin();
@@ -699,7 +718,6 @@ void Principal::countPackages(){
 	}
 	for(unsigned int i=0;i<full.size();i++){
 		int cont = 0;
-		full[i].showData();
 		for(unsigned int j=0;j<paks.size();j++){
 			if(paks[j].isActive()){
 				if(full[i].getCode() == paks[j].getSender().getRegion().getCode()){
@@ -718,44 +736,37 @@ void Principal::countPackages(){
 }
 
 void Principal::sendPackages(char* codeOf){
-	cout<<"Funcion comentada por el bien común\n";
-	/*
-	 * Hay que:
-	 * Buscar la oficina
-	 * Poner todos los paquetes con active = true
-	 * quitarlos y ponerlos en la nueva oficina
-	cout<<"Repartiendo paquetes..."<<endl;
+	for(unsigned int i=0;i<offices.getVertexes().size();i++){
+		if(offices.getVertexes()[i].getCode().compare(codeOf) == 0){
+			Office aux1 = offices.getVertexes()[i];
+			aux1.getPackages();
+			for(unsigned int k=0;k<aux1.getPackages().size();k++){
+				bool normal = true;
+				if(!aux1.getPackages()[k].isActive()){
+					string region = aux1.getPackages()[k].getReceiver().getRegion().getCode();
+					for(unsigned int open=0;open<offices.getVertexes().size() && normal;open++){
+						map<string,Region> aux2 = offices.getVertexes()[open].getRegions();
+						map<string,Region>::iterator j = aux2.begin();
+						while(j != aux2.end()){
+							if(region == j->second.getCode()){
+								aux1.getPackages()[k].send();
+								offices.getVertexes()[open].getPackages().push_back(aux1.getPackages()[k]);
+								aux1.getPackages().erase(aux1.getPackages().begin() + k);
+								normal = false;
+								offices.getVertexes()[i] = aux1;
+								break;
+							}
+							j++;
+						}
 
-	Package APack;
-	string codigo = codeOf;
-	Office ofAux;
-	ofAux.setCode(codigo);
-	Node* oficinaGeneral = offices.search(ofAux);
-	if(oficinaGeneral != NULL){
-		if(oficinaGeneral->altura()==1){
-			list<Node*> oficinas =  oficinaGeneral->getDesc();
-			for(list<Node*>::iterator ito = oficinas.begin();ito != oficinas.end(); ito++){
-				queue<Package> cola = (*ito)->getData().getPackages();
-				Package auxPak;
-				for(int i=0;i<cola.size();i++){
-					auxPak = cola.front();
-					if(auxPak.isActive() == false){
-						auxPak.send();
-						cout<<"El paquete "<<auxPak.getGuiden()<<" se entregó\n ";	
 					}
-					cola.pop();
-					cola.push(auxPak);
 				}
-				(*ito)->getData().setPackages(cola);
+				
+				
 			}
 		}
-		else
-			cout<<"no es una oficina general \n";
 	}
-	else{
-		cout<<"Este código no se encuentra en el sistema \n";
-	}
-	 */
+
 }
 
 bool Principal::comparecodes(const char* g, const char* f){

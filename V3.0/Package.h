@@ -59,6 +59,7 @@ public:
 		cout<<"\tNúmero Guía: "<<guideN<<endl;
 		if(active)
 			cout<<"\t El paquete fue repartido"<<endl;
+		cout<<endl;
 	}
 };
 
