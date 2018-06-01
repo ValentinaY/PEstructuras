@@ -102,7 +102,7 @@ void Principal::loadPersons(char* file){
 				//Ciudad
 				getline(reader, linea, ',');
 				persona.setCity(linea);
-				
+
 
 				//Telefono y fin del linea
 				getline(reader, linea,',');
@@ -127,7 +127,7 @@ void Principal::loadPersons(char* file){
 							break;
 						}
 					}
-					
+
 					chiste.clear();
 				}
 				bool x2 = false;
@@ -145,7 +145,7 @@ void Principal::loadPersons(char* file){
 					cout<<"La region "<<linea<<" no existe."<<endl;
 				}
 
-				
+
 
 				if(!x2){
 					cout<<"\t\tCargado ID: "<<persona.getId()<<endl;
@@ -259,7 +259,7 @@ void Principal::loadPackages(char* file){
 							break;
 						}
 					}
-					
+
 					chiste.clear();
 				}
 
@@ -736,33 +736,51 @@ void Principal::countPackages(){
 }
 
 void Principal::sendPackages(char* codeOf){
+	/*
+	Por cada oficina un paquete
+	de ese paquete verificar si ya fue enviado
+	si no, buscar su region entre las otras regiones de las otras oficinas
+	cambiar el active a true
+	dejar de buscar en las otras regiones y oficinas
+	 */
+
+	// Cada oficina salida i
 	for(unsigned int i=0;i<offices.getVertexes().size();i++){
 		if(offices.getVertexes()[i].getCode().compare(codeOf) == 0){
-			Office aux1 = offices.getVertexes()[i];
-			aux1.getPackages();
-			for(unsigned int k=0;k<aux1.getPackages().size();k++){
-				bool normal = true;
-				if(!aux1.getPackages()[k].isActive()){
-					string region = aux1.getPackages()[k].getReceiver().getRegion().getCode();
-					for(unsigned int open=0;open<offices.getVertexes().size() && normal;open++){
-						map<string,Region> aux2 = offices.getVertexes()[open].getRegions();
-						map<string,Region>::iterator j = aux2.begin();
-						while(j != aux2.end()){
-							if(region == j->second.getCode()){
-								aux1.getPackages()[k].send();
-								offices.getVertexes()[open].getPackages().push_back(aux1.getPackages()[k]);
-								aux1.getPackages().erase(aux1.getPackages().begin() + k);
-								normal = false;
-								offices.getVertexes()[i] = aux1;
+			Office oficinaSalida = offices.getVertexes()[i];
+
+			// Sacar un paquede de cada oficina j
+			for(unsigned int j=0;j<oficinaSalida.getPackages().size();j++){
+
+				// Si no fue repartido
+				if(!oficinaSalida.getPackages()[j].isActive()){
+
+					bool falta = true;
+					// Cada oficina destino k
+					for(unsigned int k=0;k<offices.getVertexes().size() && falta;k++){
+						Office oficinaDest = offices.getVertexes()[k];
+						// Cada region de la oficina destino l
+						for(map<string,Region>::iterator l = oficinaDest.getRegions().begin();l != oficinaDest.getRegions().end();l++){
+
+							// Si los codigos son iguales
+							if(oficinaSalida.getPackages()[j].getReceiver().getRegion().getCode() == l->second.getCode()){
+								// Activar, añadir al destino, borrar salida
+								oficinaSalida.getPackages()[j].send();
+								oficinaDest.addPackage(oficinaSalida.getPackages()[j]);
+								oficinaSalida.getPackages().erase(oficinaSalida.getPackages().begin() + j);
+
+								offices.getVertexes()[i] = oficinaSalida;
+								offices.getVertexes()[k] = oficinaDest;
+								j--;
+								falta = false;
 								break;
 							}
-							j++;
 						}
 
 					}
 				}
-				
-				
+
+
 			}
 		}
 	}
