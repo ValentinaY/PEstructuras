@@ -20,5 +20,8 @@ void Person::setCity(string ncity){
 void Person::setPhone(string nphone){
 	this->phone=nphone;
 }
+void Person::setRegion(Region &nregion){
+	this->region=nregion;
+}
 
 

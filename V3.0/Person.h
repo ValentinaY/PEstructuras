@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include "Region.h"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ private:
 	string address;
 	string city;
 	string phone;
+	Region region;
 public:
 
 	Person();
@@ -47,6 +49,11 @@ public:
 		return phone;
 	}
 	void setPhone(string nphone);
+
+	Region getRegion(){
+		return region;
+	}
+	void setRegion(Region &nregion);
 
 	void showData(){
 		cout<<"Nombre: "<<name<<endl;

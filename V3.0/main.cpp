@@ -118,6 +118,10 @@ int main(){
 			finished=true;
 			break;
 		}
+		case str2int("fastb"):{
+			principal.fastboot();
+			break;
+		}
 		default:{
 			cout<<"El comando ingresado es desconocido. Escriba 'ayuda' para ver la lista de comandos.\n";
 			break;

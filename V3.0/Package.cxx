@@ -13,9 +13,6 @@ void Package::setSender(Person &nsender){
 void Package::setReceiver(Person &nreceiver){
 	this->receiver=nreceiver;
 }
-void Package::setRegion(Region &nregion){
-	this->region=nregion;
-}
 void Package::setWeight(float nweight){
 	this->weight=nweight;
 }

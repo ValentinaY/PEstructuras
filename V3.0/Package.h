@@ -3,7 +3,6 @@
 
 #include <string>
 #include <iostream>
-#include "Region.h"
 #include "Person.h"
 using namespace std;
 
@@ -29,11 +28,6 @@ public:
 		return receiver;
 	}
 	void setReceiver(Person &nreceiver);
-
-	Region getRegion(){
-		return region;
-	}
-	void setRegion(Region& nregion);
 
 	float getWeight(){
 		return weight;

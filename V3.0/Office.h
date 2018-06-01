@@ -62,14 +62,13 @@ public:
 		cout<<"Nombre: "<<name<<endl;
 		cout<<"Dirección: "<<address<<endl;
 		cout<<"Ciudad: "<<city<<endl;
-		cout<<endl;
-	}
-
-	void showDataR(){
-		cout<<"Código: "<<codeID<<endl;
-		cout<<"Nombre: "<<name<<endl;
-		cout<<"Dirección: "<<address<<endl;
-		cout<<"Ciudad: "<<city<<endl;
+		cout<<"Paquetes: ";
+		if(packages.size()==0){
+			cout<<"No tiene paquetes asociados"<<endl;
+		}
+		else{
+			cout<<packages.size()<<endl;
+		}
 		cout<<"Regiones :"<<endl;
 		if(regions.empty())
 			cout<<"No tiene regiones asociadas"<<endl;

@@ -32,6 +32,8 @@ public:
  	void countPackages();
 	void sendPackages(char* codeOf);
 	void addRegion(Region r, string office);
+	bool comparecodes(const char* g, const char* f);
+	void fastboot();
 
 	vector<Person> getpersons(){
 		return persons;
