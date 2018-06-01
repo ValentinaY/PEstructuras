@@ -23,6 +23,6 @@ void Package::setGuiden(string nguiden){
 	this->guideN=nguiden;
 }
 void Package::send(){
-	active = true;
+	this->active = true;
 }
 

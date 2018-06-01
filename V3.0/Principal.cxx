@@ -751,37 +751,47 @@ void Principal::sendPackages(char* codeOf){
 
 			// Sacar un paquede de cada oficina j
 			for(unsigned int j=0;j<oficinaSalida.getPackages().size();j++){
-
 				// Si no fue repartido
 				if(!oficinaSalida.getPackages()[j].isActive()){
+					/*try{
+						bool falta = true;
+						// Cada oficina destino k
+						for(unsigned int k=0;k<offices.getVertexes().size() && falta;k++){
+							cout<<"k"<<endl;
+							Office oficinaDest = offices.getVertexes()[k];
+							// Cada region de la oficina destino l
+							if(!oficinaDest.getRegions().empty()){
+								vector<Region> reg = oficinaDest.getVRegions();
+								
+								for(unsigned int l=0;l<reg.size();l++){
+									// Si los codigos son iguales
+									if(oficinaSalida.getPackages()[j].getReceiver().getRegion().getCode() == reg[l].getCode()){
+										cout<<"m"<<endl;
+										// Activar, añadir al destino, borrar salida
+										oficinaSalida.getPackages()[j].send();
+										oficinaDest.addPackage(oficinaSalida.getPackages()[j]);
+										oficinaSalida.getPackages().erase(oficinaSalida.getPackages().begin() + j);
 
-					bool falta = true;
-					// Cada oficina destino k
-					for(unsigned int k=0;k<offices.getVertexes().size() && falta;k++){
-						Office oficinaDest = offices.getVertexes()[k];
-						// Cada region de la oficina destino l
-						for(map<string,Region>::iterator l = oficinaDest.getRegions().begin();l != oficinaDest.getRegions().end();l++){
-
-							// Si los codigos son iguales
-							if(oficinaSalida.getPackages()[j].getReceiver().getRegion().getCode() == l->second.getCode()){
-								// Activar, añadir al destino, borrar salida
-								oficinaSalida.getPackages()[j].send();
-								oficinaDest.addPackage(oficinaSalida.getPackages()[j]);
-								oficinaSalida.getPackages().erase(oficinaSalida.getPackages().begin() + j);
-
-								offices.getVertexes()[i] = oficinaSalida;
-								offices.getVertexes()[k] = oficinaDest;
-								j--;
-								falta = false;
-								break;
+										offices.getVertexes()[i] = oficinaSalida;
+										offices.getVertexes()[k] = oficinaDest;
+										j--;
+										falta = false;
+										break;
+									}
+								}
 							}
 						}
-
 					}
+					catch{*/
+						Package x = offices.getVertexes()[i].getPackages()[j];
+						x.send();
+						x.showData();
+						offices.getVertexes()[i].getPackages()[j] = x;
+				//	}
+					
 				}
-
-
 			}
+			break;
 		}
 	}
 

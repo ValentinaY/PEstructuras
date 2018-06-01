@@ -46,6 +46,15 @@ public:
 	map<string, Region> getRegions(){
 		return regions;
 	}
+	
+	vector<Region> getVRegions(){
+		vector<Region> regs;
+		for(map<string,Region>::iterator l = regions.begin();l != regions.end();l++){
+			regs.push_back(l->second);
+		}
+		return regs;
+	}
+	
 
 	void addRegion(Region nregion);
 
