@@ -104,19 +104,32 @@ void Principal::loadPersons(char* file){
 				persona.setCity(linea);
 				
 
+				//Telefono y fin del linea
+				getline(reader, linea,',');
+				persona.setPhone(linea);
+
 				//Region
-				getline(reader, linea, ',');
+				getline(reader, linea);
 				Region reg;
 				for(unsigned int i=0;i<op.size();i++){
-					if(op[i].getRegions().find(linea) != op[i].getRegions().end()){
-						cout<<"XMEN: "<<linea<<"."<<endl;
-						cout<<"XMEN: "<<op[i].getRegions()[linea].getName()<<"."<<endl;
+					map<string,Region> regiones = op[i].getRegions();
+					vector<Region> chiste;
 
-						reg = op[i].getRegions().at(linea);
-						exists = true;
-						reg.showData();
-						break;
+					map<string,Region>::iterator it = regiones.begin();
+					while(it!=regiones.end()){
+						chiste.push_back(it->second);
+						it++;
 					}
+					for(unsigned int j=0;j<chiste.size();j++){
+						if(chiste[j].getCode() == linea){
+							reg = chiste[j];
+							exists = true;
+							reg.showData();
+							break;
+						}
+					}
+					
+					chiste.clear();
 				}
 				bool x2 = false;
 				if(exists){
@@ -133,9 +146,6 @@ void Principal::loadPersons(char* file){
 					cout<<"La region "<<linea<<" no existe."<<endl;
 				}
 
-				//Telefono y fin del linea
-				getline(reader, linea);
-				persona.setPhone(linea);
 				
 
 				if(!x2){
