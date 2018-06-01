@@ -61,7 +61,8 @@ public:
 		cout<<"Identificación: "<<id<<endl;
 		cout<<"Ciudad: "<<city<<endl;
 		cout<<"Dirección: "<<address<<endl;
-		cout<<"Teléfono: "<<phone<<endl<<endl;
+		cout<<"Teléfono: "<<phone<<endl;
+		cout<<"Region: "<<region.getCode()<<endl<<endl;
 	}
 };
 

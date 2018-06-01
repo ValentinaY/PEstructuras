@@ -68,7 +68,7 @@ void Principal::loadConnections(char* file){
 		}
 	}
 	else{
-		cout<<"No se pudo abrir el archivo"<<file<<".\n";
+		cout<<"No se pudo abrir el archivo "<<file<<".\n";
 	}
 }
 
@@ -143,7 +143,7 @@ void Principal::loadPersons(char* file){
 			cout<<"Se leyeron los datos de "<<total<<" personas."<<endl;
 		}
 		else{
-			cout<<"No se pudo abrir el archivo"<<file<<".\n";
+			cout<<"No se pudo abrir el archivo "<<file<<".\n";
 		}
 	}
 	catch(invalid_argument& e){
@@ -240,7 +240,7 @@ void Principal::loadPackages(char* file){
 		cout<<"Se agregaron "<<total<<" paquetes.\n";
 	}//if reader.is_open()
 	else{
-		cout<<"No se pudo abrir el archivo"<<file<<".\n";
+		cout<<"No se pudo abrir el archivo "<<file<<".\n";
 	}
 	reader.close();
 }
@@ -298,7 +298,7 @@ void Principal::loadOffices(char* file){
 		reader.close();
 	}
 	else{
-		cout<<"No se pudo abrir el archivo"<<file<<".\n";
+		cout<<"No se pudo abrir el archivo "<<file<<".\n";
 	}
 }
 
@@ -314,7 +314,7 @@ void Principal::loadRegions(char* file){
 	int total=0;
 	ifstream reader;
 	reader.open(file);
-	if(!reader.is_open()){
+	if(reader.is_open()){
 		cout<<"Cargando regiones...\n";
 		string line="";
 		map<string, Region> temp;
@@ -364,7 +364,7 @@ void Principal::loadRegions(char* file){
 		reader.close();
 	}
 	else{
-		cout<<"No se pudo abrir el archivo"<<file<<".\n";
+		cout<<"No se pudo abrir el archivo "<<file<<".\n";
 	}
 }
 
